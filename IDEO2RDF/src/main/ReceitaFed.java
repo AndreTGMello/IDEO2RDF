@@ -13,7 +13,14 @@ public class ReceitaFed {
 	private String data;
 	private String orgaoSubordinado;
 	private String orgaoSuperior;
+	private String unidadeGestora;
 	
+	public String getUnidadeGestora() {
+		return unidadeGestora;
+	}
+	public void setUnidadeGestora(String unidadeGestora) {
+		this.unidadeGestora = unidadeGestora;
+	}
 	public String getSubalinea() {
 		return subalinea;
 	}

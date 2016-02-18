@@ -1,6 +1,8 @@
 package main;
 
 public class ReceitaFed {
+	private int id;
+	
 	private String subalinea;
 	private String alinea;
 	private String rubrica;
@@ -15,11 +17,11 @@ public class ReceitaFed {
 	private String orgaoSuperior;
 	private String unidadeGestora;
 	
-	public String getUnidadeGestora() {
-		return unidadeGestora;
+	public int getId() {
+		return id;
 	}
-	public void setUnidadeGestora(String unidadeGestora) {
-		this.unidadeGestora = unidadeGestora;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getSubalinea() {
 		return subalinea;
@@ -86,6 +88,12 @@ public class ReceitaFed {
 	}
 	public void setOrgaoSuperior(String orgaoSuperior) {
 		this.orgaoSuperior = orgaoSuperior;
+	}
+	public String getUnidadeGestora() {
+		return unidadeGestora;
+	}
+	public void setUnidadeGestora(String unidadeGestora) {
+		this.unidadeGestora = unidadeGestora;
 	}
 	
 }

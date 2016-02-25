@@ -77,20 +77,18 @@ public class Conversor {
 
 			receitaFed.setId(rs.getInt("id_fato_receita_federal"));
 
-			// TODO: Arrumar getString e getInt
-
 			receitaFed.setAlinea(rs.getString("cd_alinea"));
-			receitaFed.setSubalinea(rs.getString("cd_alinea"));
-			receitaFed.setOrigem(rs.getString("cd_alinea"));
+			receitaFed.setSubalinea(rs.getString("cd_subalinea"));
+			receitaFed.setOrigem(rs.getString("cd_origem"));
 //			receitaFed.setCategoriaEconomica(rs.getString("cd_alinea"));
-			receitaFed.setOrgaoSuperior(rs.getString("cd_alinea"));
-			receitaFed.setAno(rs.getInt("cd_alinea"));
-//			receitaFed.setOrgaoSubordinado(rs.getString("cd_alinea"));
-			receitaFed.setMes(rs.getString("cd_alinea"));
-			receitaFed.setUnidadeGestora(rs.getString("cd_alinea"));
-			receitaFed.setData(rs.getString("cd_alinea"));
-			receitaFed.setRubrica(rs.getString("cd_alinea"));
-			receitaFed.setEspecie(rs.getString("cd_alinea"));
+			receitaFed.setOrgaoSuperior(rs.getString("cd_orgao_superior"));
+			receitaFed.setAno(rs.getInt("ano_exercicio")); //ano nao encontrado
+//			receitaFed.setOrgaoSubordinado(rs.getString("cd_orgao_subordinado"));
+			receitaFed.setMes(rs.getString("id_mes_d_rf")); //mes_extenso e anoMes nao encontrado
+			receitaFed.setUnidadeGestora(rs.getString("cd_unidade_gestora"));
+			receitaFed.setData(rs.getString("data"));
+			receitaFed.setRubrica(rs.getString("cd_rubrica"));
+			receitaFed.setEspecie(rs.getString("cd_especie"));
 
 			receitasFed.add(receitaFed);
 		}
@@ -111,7 +109,6 @@ public class Conversor {
 						+ " JOIN d_df_portador ON fato_despesa_federal.id_portador_d_df = d_df_portador.id_portador_d_df"
 						+ " JOIN d_df_orgao_superior ON fato_despesa_federal.id_orgao_superior_d_df = d_df_orgao_superior.id_orgao_superior_d_df"
 						+ " JOIN d_df_orgao ON fato_despesa_federal.id_orgao_d_df = d_df_orgao.id_orgao_d_df"
-//						+ " JOIN d_df_orgao ON fato_despesa_federal.id_orgao_d_df = d_df_orgao.id_orgao_d_df"
 						+ " JOIN d_df_nro_empenho ON fato_despesa_federal.id_nro_empenho_d_df = d_df_nro_empenho.id_nro_empenho_d_df"
 						+ " JOIN d_df_nro_convenio ON fato_despesa_federal.id_nro_convenio_d_df = d_df_nro_convenio.id_nro_convenio_d_df"
 						+ " JOIN d_df_municipio ON fato_despesa_federal.id_municipio_d_df = d_df_municipio.id_municipio_d_df"
@@ -150,38 +147,37 @@ public class Conversor {
 
 			despesaFed.setId(rs.getInt("id_fato_despesa_federal"));
 
-			// TODO: Arrumar getString e getInt
-
 			despesaFed.setPrograma(rs.getString("cd_programa"));
 			despesaFed.setAcao(rs.getString("cd_acao"));
-			despesaFed.setCategoriaDespesa(rs.getString("cd_alinea"));
-			despesaFed.setFuncao(rs.getString("cd_alinea"));
-			despesaFed.setAno(rs.getInt("cd_alinea"));
-			despesaFed.setMes(rs.getString("cd_alinea"));
-			despesaFed.setTipoDespesa(rs.getString("cd_alinea"));
-			despesaFed.setPortador(rs.getString("cd_alinea"));
-			despesaFed.setUnidadeGestora(rs.getString("cd_alinea"));
-			despesaFed.setOrgao(rs.getString("cd_alinea"));
-			despesaFed.setNroEmpenho(rs.getString("cd_alinea"));
-			despesaFed.setNroConvenio(rs.getString("cd_alinea"));
-			despesaFed.setConvenete(rs.getString("cd_programa"));
-			despesaFed.setMunicipio(rs.getString("cd_acao"));
-			despesaFed.setCredor(rs.getString("cd_alinea"));
-			despesaFed.setModalidadeDespesa(rs.getString("cd_alinea"));
-			despesaFed.setDataPagamento(rs.getString("cd_alinea"));
-			despesaFed.setLinguagemCidada(rs.getString("cd_alinea"));
-			despesaFed.setElementoDespesa(rs.getString("cd_alinea"));
-			despesaFed.setItemDespesa(rs.getString("cd_alinea"));
-			despesaFed.setExecutor(rs.getString("cd_alinea"));
-			despesaFed.setGrupoDespesa(rs.getString("cd_alinea"));
-			despesaFed.setFavorecidoBolsaFamilia(rs.getString("cd_alinea"));
-			despesaFed.setFonteRecurso(rs.getString("cd_alinea"));
-			despesaFed.setSituacaoParcel(rs.getString("cd_alinea"));
-			despesaFed.setSubfuncao(rs.getString("cd_alinea"));
-			despesaFed.setDespesa(rs.getString("cd_alinea"));
-			despesaFed.setSubtipoDespesa(rs.getString("cd_alinea"));
-			despesaFed.setRepasse(rs.getString("cd_alinea"));
-
+			despesaFed.setCategoriaDespesa(rs.getString("cd_categoria_despesa"));
+			despesaFed.setFuncao(rs.getString("cd_funcao"));
+			despesaFed.setAno(rs.getInt("ano_exercicio"));
+			despesaFed.setMes(rs.getString("mes_extenso")); //mes_referencia
+			despesaFed.setTipoDespesa(rs.getString("cd_tipo_despesa"));
+			despesaFed.setPortador(rs.getString("cd_portador"));
+			despesaFed.setUnidadeGestora(rs.getString("cd_unidade_gestora"));
+			despesaFed.setOrgao(rs.getString("cd_orgao"));
+			despesaFed.setOrgaoSuperior(rs.getString("cd_orgao_superior"));
+			despesaFed.setNroEmpenho(rs.getString("numero_documento"));
+			despesaFed.setNroConvenio(rs.getString("nro_convenio"));
+			despesaFed.setConvenete(rs.getString("cd_convenente"));
+			despesaFed.setMunicipio(rs.getString("cd_siafi_municipio")); //uf
+			despesaFed.setCredor(rs.getString("cd_credor"));
+			despesaFed.setModalidadeDespesa(rs.getString("cd_modalidade_despesa"));
+			despesaFed.setDataPagamento(rs.getString("data_pagamento"));
+			despesaFed.setLinguagemCidada(rs.getString("ds_linguagem_cidada")); //id_linguagem_cidada_d_df?
+			despesaFed.setElementoDespesa(rs.getString("cd_elemento_despesa"));
+			despesaFed.setItemDespesa(rs.getString("cd_item_despesa"));
+			despesaFed.setExecutor(rs.getString("cd_executor"));
+			despesaFed.setGrupoDespesa(rs.getString("cd_grupo_despesa"));
+			despesaFed.setFavorecidoBolsaFamilia(rs.getString("cd_favorecido_bolsa_familia"));
+			despesaFed.setFonteRecurso(rs.getString("ds_fonte_recurso")); //id_fonte_recurso_d_df?
+			despesaFed.setSituacaoParcel(rs.getString("ds_situacao_parcela"));
+			despesaFed.setSubfuncao(rs.getString("cd_subfuncao"));
+			despesaFed.setSubtipoDespesa(rs.getString("cd_subtipo_despesa"));
+			despesaFed.setRepasse(rs.getString("ds_repasse"));
+			despesaFed.setUf(rs.getString("uf"));
+			
 			despesasFed.add(despesaFed);
 		}
 		

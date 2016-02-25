@@ -33,7 +33,6 @@ public class DespesaFed {
 	private String fonteRecurso;
 	private String situacaoParcel;
 	private String subfuncao;
-	private String despesa;
 	private String subtipoDespesa;
 	private String repasse;
 	
@@ -216,12 +215,6 @@ public class DespesaFed {
 	}
 	public void setSubfuncao(String subfuncao) {
 		this.subfuncao = subfuncao;
-	}
-	public String getDespesa() {
-		return despesa;
-	}
-	public void setDespesa(String despesa) {
-		this.despesa = despesa;
 	}
 	public String getSubtipoDespesa() {
 		return subtipoDespesa;

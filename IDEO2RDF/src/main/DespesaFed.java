@@ -91,20 +91,23 @@ public class DespesaFed {
 		ResultSet rs = stmt.executeQuery();
 
 		while (rs.next()) {
-			// Cria iterativamente
+			// Cria iterativamente recursos e suas propriedades a partir do resultSet
+			
+			// Cria recursos
 			Resource Despesa = model.createResource(bra+"Despesa/"+rs.getInt("id_fato_despesa_federal"));
 
 			Resource Programa = model.createResource(bra+"Programa/"+rs.getInt("cd_programa"));
 
 //			Resource IdentificadorResultadoPrimarioDespesa = model.createResource(bra+"IdentificadorResultadoPrimarioDespesa/"+rs.getInt(""));
 
-//			Resource Iduso = model.createResource(bra+"Iduso/"+rs.getInt("id_fato_despesa_federal"));
+//			Resource Iduso = model.createResource(bra+"Iduso/"+rs.getInt(""));
 
-//			Resource Idoc = model.createResource(bra+"Idoc/"+rs.getInt("id_fato_despesa_federal"));
+//			Resource Idoc = model.createResource(bra+"Idoc/"+rs.getInt(""));
 
 			Resource OrgaoOrcamentario = model.createResource(bra+"Orgao/"+rs.getInt("cd_orgao"));
+//			Resource UnidadeOrcamentaria = model.createResource(bra+"UnidadeOrcamentaria/"+rs.getInt("cd_unidade_orcamentaria"));
 
-//			Resource Esfera = model.createResource(bra+"Esfera/"+rs.getInt("id_fato_despesa_federal"));
+//			Resource Esfera = model.createResource(bra+"Esfera/"+rs.getInt("cd_esfera"));
 
 			Resource Funcao = model.createResource(bra+"Funcao/"+rs.getInt("cd_funcao"));
 			Resource Subfuncao = model.createResource(bra+"Subfuncao/"+rs.getInt("cd_subfuncao"));
@@ -116,7 +119,7 @@ public class DespesaFed {
 			Resource GND = model.createResource(bra+"GND/"+rs.getInt("cd_grupo_despesa"));
 			Resource ModalidadeDeAplicacao = model.createResource(bra+"ModalidadeDeAplicacao/"+rs.getInt("cd_modalidade_despesa"));
 			Resource ElementoDeDespesa = model.createResource(bra+"ElementoDeDespesa/"+rs.getInt("cd_elemento_despesa"));
-//			Resource Subelemento = model.createResource(bra+"Subelemento/"+rs.getInt("id_fato_despesa_federal"));
+//			Resource Subelemento = model.createResource(bra+"Subelemento/"+rs.getInt("cd_subelemento_despesa"));
 
 			// Adiciona propriedades aos recursos criados
 
@@ -129,7 +132,8 @@ public class DespesaFed {
 //			Idoc.addProperty(tipo, bra+"Idoc");
 
 			OrgaoOrcamentario.addProperty(tipo, bra+"OrgaoOrcamentario");
-
+			OrgaoOrcamentario.addProperty(eCompostoPorUO, bra+"UnidadeOrcamentaria/"+rs.getInt("cd_unidade_orcamentaria"))
+			
 //			Esfera.addProperty(tipo, bra+"Esfera");
 
 			Funcao.addProperty(tipo, bra+"Funcao");
@@ -147,14 +151,14 @@ public class DespesaFed {
 			
 			Despesa.addProperty(tipo, bra+"Despesa");
 
-			Despesa.addProperty(temIDOC, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(temIDUSO, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(eRealizadoPorOrgao, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(pertenceAEsfera, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(atuaNaFuncao, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(temFonte, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(temCategoriaEconomicaDaDespesa, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
-			Despesa.addProperty(pertenceAPrograma, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(temIDOC, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(temIDUSO, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(eRealizadoPorOrgao, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(pertenceAEsfera, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(atuaNaFuncao, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(temFonte, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(temCategoriaEconomicaDaDespesa, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(pertenceAPrograma, bra+"temIDOC/"+rs.getInt("cd_idoc"));
 			Despesa.addLiteral(valor, rs.getInt("valor"));
 
 		}

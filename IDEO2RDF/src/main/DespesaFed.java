@@ -1,426 +1,165 @@
 package main;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+
 public class DespesaFed {
-	private int id;
-	
-	private int cdPrograma;
-	private String dsPrograma;
-	
-	private int cdAcao;
-	private String dsAcao;
-	
-	private int cdCategoriaDespesa;
-	private String dsCategoriaDespesa;
-	
-	private int cdFuncao;
-	private String dsFuncao;
+	// Prefixos
+	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
-	private int cdSubfuncao;
-	private String dsSubfuncao;
-	
-	private int cdSubtipoDespesa;
-	private String dsSubtipoDespesa;
-	
-	private int cdTipoDespesa;
-	private String dsTipoDespesa;
-	
-	private int cdPortador;
-	private String dsPortador;
-	
-	private int cdOrgaoSuperior;
-	private String dsOrgaoSuperior;
+	public static void criaRecursosDespesaFederal(Connection conn, Model model, int LIMIT, int OFFSET) {
+		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
-	private int cdUnidadeGestora;
-	private String cdsUnidadeGestora;
-	
-	private int cdOrgao;
-	private String dsOrgao;
-	
-	public int getCdPrograma() {
-		return cdPrograma;
-	}
-	public void setCdPrograma(int cdPrograma) {
-		this.cdPrograma = cdPrograma;
-	}
-	public String getDsPrograma() {
-		return dsPrograma;
-	}
-	public void setDsPrograma(String dsPrograma) {
-		this.dsPrograma = dsPrograma;
-	}
-	public int getCdAcao() {
-		return cdAcao;
-	}
-	public void setCdAcao(int cdAcao) {
-		this.cdAcao = cdAcao;
-	}
-	public String getDsAcao() {
-		return dsAcao;
-	}
-	public void setDsAcao(String dsAcao) {
-		this.dsAcao = dsAcao;
-	}
-	public int getCdCategoriaDespesa() {
-		return cdCategoriaDespesa;
-	}
-	public void setCdCategoriaDespesa(int cdCategoriaDespesa) {
-		this.cdCategoriaDespesa = cdCategoriaDespesa;
-	}
-	public String getDsCategoriaDespesa() {
-		return dsCategoriaDespesa;
-	}
-	public void setDsCategoriaDespesa(String dsCategoriaDespesa) {
-		this.dsCategoriaDespesa = dsCategoriaDespesa;
-	}
-	public int getCdFuncao() {
-		return cdFuncao;
-	}
-	public void setCdFuncao(int cdFuncao) {
-		this.cdFuncao = cdFuncao;
-	}
-	public String getDsFuncao() {
-		return dsFuncao;
-	}
-	public void setDsFuncao(String dsFuncao) {
-		this.dsFuncao = dsFuncao;
-	}
-	public int getCdSubfuncao() {
-		return cdSubfuncao;
-	}
-	public void setCdSubfuncao(int cdSubfuncao) {
-		this.cdSubfuncao = cdSubfuncao;
-	}
-	public String getDsSubfuncao() {
-		return dsSubfuncao;
-	}
-	public void setDsSubfuncao(String dsSubfuncao) {
-		this.dsSubfuncao = dsSubfuncao;
-	}
-	public int getCdSubtipoDespesa() {
-		return cdSubtipoDespesa;
-	}
-	public void setCdSubtipoDespesa(int cdSubtipoDespesa) {
-		this.cdSubtipoDespesa = cdSubtipoDespesa;
-	}
-	public String getDsSubtipoDespesa() {
-		return dsSubtipoDespesa;
-	}
-	public void setDsSubtipoDespesa(String dsSubtipoDespesa) {
-		this.dsSubtipoDespesa = dsSubtipoDespesa;
-	}
-	public int getCdTipoDespesa() {
-		return cdTipoDespesa;
-	}
-	public void setCdTipoDespesa(int cdTipoDespesa) {
-		this.cdTipoDespesa = cdTipoDespesa;
-	}
-	public String getDsTipoDespesa() {
-		return dsTipoDespesa;
-	}
-	public void setDsTipoDespesa(String dsTipoDespesa) {
-		this.dsTipoDespesa = dsTipoDespesa;
-	}
-	public int getCdPortador() {
-		return cdPortador;
-	}
-	public void setCdPortador(int cdPortador) {
-		this.cdPortador = cdPortador;
-	}
-	public String getDsPortador() {
-		return dsPortador;
-	}
-	public void setDsPortador(String dsPortador) {
-		this.dsPortador = dsPortador;
-	}
-	public int getCdOrgaoSuperior() {
-		return cdOrgaoSuperior;
-	}
-	public void setCdOrgaoSuperior(int cdOrgaoSuperior) {
-		this.cdOrgaoSuperior = cdOrgaoSuperior;
-	}
-	public String getDsOrgaoSuperior() {
-		return dsOrgaoSuperior;
-	}
-	public void setDsOrgaoSuperior(String dsOrgaoSuperior) {
-		this.dsOrgaoSuperior = dsOrgaoSuperior;
-	}
-	public int getCdUnidadeGestora() {
-		return cdUnidadeGestora;
-	}
-	public void setCdUnidadeGestora(int cdUnidadeGestora) {
-		this.cdUnidadeGestora = cdUnidadeGestora;
-	}
-	public String getCdsUnidadeGestora() {
-		return cdsUnidadeGestora;
-	}
-	public void setCdsUnidadeGestora(String cdsUnidadeGestora) {
-		this.cdsUnidadeGestora = cdsUnidadeGestora;
-	}
-	public int getCdOrgao() {
-		return cdOrgao;
-	}
-	public void setCdOrgao(int cdOrgao) {
-		this.cdOrgao = cdOrgao;
-	}
-	public String getDsOrgao() {
-		return dsOrgao;
-	}
-	public void setDsOrgao(String dsOrgao) {
-		this.dsOrgao = dsOrgao;
-	}
-	public int getCdElementoDespesa() {
-		return cdElementoDespesa;
-	}
-	public void setCdElementoDespesa(int cdElementoDespesa) {
-		this.cdElementoDespesa = cdElementoDespesa;
-	}
-	public String getDsElementoDespesa() {
-		return dsElementoDespesa;
-	}
-	public void setDsElementoDespesa(String dsElementoDespesa) {
-		this.dsElementoDespesa = dsElementoDespesa;
-	}
-	public int getCdItemDespesa() {
-		return cdItemDespesa;
-	}
-	public void setCdItemDespesa(int cdItemDespesa) {
-		this.cdItemDespesa = cdItemDespesa;
-	}
-	public String getDsItemDespesa() {
-		return dsItemDespesa;
-	}
-	public void setDsItemDespesa(String dsItemDespesa) {
-		this.dsItemDespesa = dsItemDespesa;
-	}
-	public String getUfExecutor() {
-		return ufExecutor;
-	}
-	public void setUfExecutor(String ufExecutor) {
-		this.ufExecutor = ufExecutor;
-	}
-	public String getDsExecutor() {
-		return dsExecutor;
-	}
-	public void setDsExecutor(String dsExecutor) {
-		this.dsExecutor = dsExecutor;
-	}
-	public int getCdGrupoDespesa() {
-		return cdGrupoDespesa;
-	}
-	public void setCdGrupoDespesa(int cdGrupoDespesa) {
-		this.cdGrupoDespesa = cdGrupoDespesa;
-	}
-	public String getDsGrupoDespesa() {
-		return dsGrupoDespesa;
-	}
-	public void setDsGrupoDespesa(String dsGrupoDespesa) {
-		this.dsGrupoDespesa = dsGrupoDespesa;
-	}
-	public int getCdFavorecidoBolsaFamilia() {
-		return cdFavorecidoBolsaFamilia;
-	}
-	public void setCdFavorecidoBolsaFamilia(int cdFavorecidoBolsaFamilia) {
-		this.cdFavorecidoBolsaFamilia = cdFavorecidoBolsaFamilia;
-	}
-	public String getDsFavorecidoBolsaFamilia() {
-		return dsFavorecidoBolsaFamilia;
-	}
-	public void setDsFavorecidoBolsaFamilia(String dsFavorecidoBolsaFamilia) {
-		this.dsFavorecidoBolsaFamilia = dsFavorecidoBolsaFamilia;
-	}
-	public int getNroDocumento() {
-		return nroDocumento;
-	}
-	public void setNroDocumento(int nroDocumento) {
-		this.nroDocumento = nroDocumento;
-	}
-	public String getGestaoPagamento() {
-		return gestaoPagamento;
-	}
-	public void setGestaoPagamento(String gestaoPagamento) {
-		this.gestaoPagamento = gestaoPagamento;
-	}
-	public int getNroConvenioA() {
-		return nroConvenioA;
-	}
-	public void setNroConvenioA(int nroConvenioA) {
-		this.nroConvenioA = nroConvenioA;
-	}
-	public int getCdConvenete() {
-		return cdConvenete;
-	}
-	public void setCdConvenete(int cdConvenete) {
-		this.cdConvenete = cdConvenete;
-	}
-	public String getDsConvenete() {
-		return dsConvenete;
-	}
-	public void setDsConvenete(String dsConvenete) {
-		this.dsConvenete = dsConvenete;
-	}
-	public int getNroConvenioB() {
-		return nroConvenioB;
-	}
-	public void setNroConvenioB(int nroConvenioB) {
-		this.nroConvenioB = nroConvenioB;
-	}
-	public int getCdMunicipio() {
-		return cdMunicipio;
-	}
-	public void setCdMunicipio(int cdMunicipio) {
-		this.cdMunicipio = cdMunicipio;
-	}
-	public String getDsMunicipio() {
-		return dsMunicipio;
-	}
-	public void setDsMunicipio(String dsMunicipio) {
-		this.dsMunicipio = dsMunicipio;
-	}
-	public String getUfMunicipio() {
-		return ufMunicipio;
-	}
-	public void setUfMunicipio(String ufMunicipio) {
-		this.ufMunicipio = ufMunicipio;
-	}
-	public int getCdCredor() {
-		return cdCredor;
-	}
-	public void setCdCredor(int cdCredor) {
-		this.cdCredor = cdCredor;
-	}
-	public String getDsCredor() {
-		return dsCredor;
-	}
-	public void setDsCredor(String dsCredor) {
-		this.dsCredor = dsCredor;
-	}
-	public int getCdModalidadeDespesa() {
-		return cdModalidadeDespesa;
-	}
-	public void setCdModalidadeDespesa(int cdModalidadeDespesa) {
-		this.cdModalidadeDespesa = cdModalidadeDespesa;
-	}
-	public String getDsModalidadeDespesa() {
-		return dsModalidadeDespesa;
-	}
-	public void setDsModalidadeDespesa(String dsModalidadeDespesa) {
-		this.dsModalidadeDespesa = dsModalidadeDespesa;
-	}
-	public int getDataPagamento() {
-		return dataPagamento;
-	}
-	public void setDataPagamento(int dataPagamento) {
-		this.dataPagamento = dataPagamento;
-	}
-	public String getLinguagemCidada() {
-		return linguagemCidada;
-	}
-	public void setLinguagemCidada(String linguagemCidada) {
-		this.linguagemCidada = linguagemCidada;
-	}
-	public String getFonteRecurso() {
-		return fonteRecurso;
-	}
-	public void setFonteRecurso(String fonteRecurso) {
-		this.fonteRecurso = fonteRecurso;
-	}
-	public String getSituacaoParcel() {
-		return situacaoParcel;
-	}
-	public void setSituacaoParcel(String situacaoParcel) {
-		this.situacaoParcel = situacaoParcel;
-	}
-	public String getTransacao() {
-		return transacao;
-	}
-	public void setTransacao(String transacao) {
-		this.transacao = transacao;
-	}
-	public String getUf() {
-		return uf;
-	}
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-	public String getMes() {
-		return mes;
-	}
-	public void setMes(String mes) {
-		this.mes = mes;
-	}
-	public int getAno() {
-		return ano;
-	}
-	public void setAno(int ano) {
-		this.ano = ano;
-	}
-	public String getRepasse() {
-		return repasse;
-	}
-	public void setRepasse(String repasse) {
-		this.repasse = repasse;
-	}
-	private int cdElementoDespesa;
-	private String dsElementoDespesa;
-	
-	private int cdItemDespesa;
-	private String dsItemDespesa;
-	
-	private String ufExecutor;
-	private String dsExecutor;
-	
-	private int cdGrupoDespesa;
-	private String dsGrupoDespesa;
-	
-	private int cdFavorecidoBolsaFamilia;
-	private String dsFavorecidoBolsaFamilia;
-	
-	//d_df_nro_empenho
-	private int nroDocumento;
-	private String gestaoPagamento;
+		// Propriedades
+		Property temIDResultadoPrimarioDaDespesa = model.getProperty(bra+"temIDResultadoPrimarioDaDespesa");
 
-	//d_df_nro_convenio
-	private int nroConvenioA;
-	
-	//d_df_convenente
-	private int cdConvenete;
-	private String dsConvenete;
-	private int nroConvenioB;
-	
-	//d_df_municipio
-	private int cdMunicipio;
-	private String dsMunicipio;
-	private String ufMunicipio;
-	
-	private int cdCredor;
-	private String dsCredor;
-	
-	private int cdModalidadeDespesa;
-	private String dsModalidadeDespesa;
-	
-	private int dataPagamento;
-	
-	private String linguagemCidada;
-	
-	private String fonteRecurso;
-	
-	private String situacaoParcel;
+		Property temIDOC = model.getProperty(bra+"temIDOC");
 
-	private String transacao;
-	
-	private String uf;
-	
-	private String mes;
-	
-	private int ano;
-	
-	private String repasse;
-	
-	public int getId() {
-		return id;
+		Property temIDUSO = model.getProperty(bra+"temIDUSO");
+
+		Property eRealizadoPorOrgao = model.getProperty(bra+"eRealizadoPorOrgao");
+		Property eCompostoPorUO = model.getProperty(bra+"eCompostoPorUO");
+
+
+		Property pertenceAEsfera = model.getProperty(bra+"pertenceAEsfera");
+
+		Property atuaNaFuncao = model.getProperty(bra+"atuaNaFuncao");
+		Property temSubFuncao = model.getProperty(bra+"temSubFuncao");
+
+
+		Property temFonte = model.getProperty(bra+"temFonte");
+		Property detalhaGrupoDaFonteDestinacao = model.getProperty(bra+"detalhaGrupoDaFonteDestinacao");
+
+		Property temCategoriaEconomicaDaDespesa = model.getProperty(bra+"temCategoriaEconomicaDaDespesa");
+		Property temGND = model.getProperty(bra+"temGND");
+		Property temModalidadeDeAplicacao = model.getProperty(bra+"temModalidadeDeAplicacao");
+		Property temElementoDeDespesa = model.getProperty(bra+"temElementoDeDespesa");
+		Property temSubelemento = model.getProperty(bra+"temSubelemento");
+
+		Property pertenceAPrograma = model.getProperty(bra+"pertenceAPrograma");
+
+
+		Property atuaNaSubfuncao = model.getProperty(bra+"temRubrica");
+
+		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+
+		Property valor = model.getResource(bra+"valor");
+
+		PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM fato_despesa_federal"
+						+ " JOIN d_df_repasse ON fato_despesa_federal.id_repasse_d_df = d_df_repasse.id_repasse_d_df"
+						+ " JOIN d_df_programa ON fato_despesa_federal.id_programa_d_df = d_df_programa.id_programa_d_df"
+						+ " JOIN d_df_portador ON fato_despesa_federal.id_portador_d_df = d_df_portador.id_portador_d_df"
+						+ " JOIN d_df_orgao_superior ON fato_despesa_federal.id_orgao_superior_d_df = d_df_orgao_superior.id_orgao_superior_d_df"
+						+ " JOIN d_df_orgao ON fato_despesa_federal.id_orgao_d_df = d_df_orgao.id_orgao_d_df"
+						+ " JOIN d_df_nro_empenho ON fato_despesa_federal.id_nro_empenho_d_df = d_df_nro_empenho.id_nro_empenho_d_df"
+						+ " JOIN d_df_nro_convenio ON fato_despesa_federal.id_nro_convenio_d_df = d_df_nro_convenio.id_nro_convenio_d_df"
+						+ " JOIN d_df_municipio ON fato_despesa_federal.id_municipio_d_df = d_df_municipio.id_municipio_d_df"
+						+ " JOIN d_df_modalidade_despesa ON fato_despesa_federal.id_modalidade_despesa_d_df = d_df_modalidade_despesa.id_modalidade_despesa_d_df"
+						+ " JOIN d_df_mes ON fato_despesa_federal.id_mes_d_df = d_df_mes.id_mes_d_df"
+						+ " JOIN d_df_linguagem_cidada ON fato_despesa_federal.id_linguagem_cidada_d_df = d_df_linguagem_cidada.id_linguagem_cidada_d_df"
+						//						+ " JOIN d_df_item_despesa ON fato_despesa_federal.id_item_despesa_d_df = d_df_item_despesa.id_item_despesa_d_df"
+						+ " JOIN d_df_grupo_despesa ON fato_despesa_federal.id_grupo_despesa_d_df = d_df_grupo_despesa.id_grupo_despesa_d_df"
+						+ " JOIN d_df_funcao ON fato_despesa_federal.id_funcao_d_df = d_df_funcao.id_funcao_d_df"
+						//						+ " JOIN d_df_fonte_recurso ON fato_despesa_federal.id_fonte_recurso_d_df = d_df_fonte_recurso.id_fonte_recurso_d_df"
+						//						+ " JOIN d_df_favorecidao_bolsa_familia ON fato_despesa_federal.id_favorecido_bolsa_familia_d_df = d_df_favorecidao_bolsa_familia.id_favorecido_bolsa_familia_d_df"
+						+ " JOIN d_df_executor ON fato_despesa_federal.id_executor_d_df = d_df_executor.id_executor_d_df"
+						+ " JOIN d_df_elemento_despesa ON fato_despesa_federal.id_elemento_despesa_d_df = d_df_elemento_despesa.id_elemento_despesa_d_df"
+						//						+ " JOIN d_df_data_pagameto ON fato_despesa_federal.id_data_pagamento_d_df = d_df_data_pagameto.id_data_pagamento_d_df"
+						+ " JOIN d_df_credor ON fato_despesa_federal.id_credor_d_df = d_df_credor.id_credor_d_df"
+						+ " JOIN d_df_convenente ON fato_despesa_federal.id_convenente_d_df = d_df_convenente.id_convenente_d_df"
+						+ " JOIN d_df_categoria_despesa ON fato_despesa_federal.id_categoria_despesa_d_df = d_df_categoria_despesa.id_categoria_despesa_d_df"
+						+ " JOIN d_df_ano ON fato_despesa_federal.id_ano_d_df = d_df_ano.id_ano_d_df"
+						+ " JOIN d_df_acao ON fato_despesa_federal.id_acao_d_df = d_df_acao.id_acao_d_df"
+						+ " JOIN d_df_unidade_gestora ON fato_despesa_federal.id_unidade_gestora_d_df = d_df_unidade_gestora.id_unidade_gestora_d_df"
+						+ " JOIN d_df_uf ON fato_despesa_federal.id_uf_d_df = d_df_uf.id_uf_d_df"
+						+ " JOIN d_df_transacao ON fato_despesa_federal.id_transacao_d_df = d_df_transacao.id_transacao_d_df"
+						+ " JOIN d_df_tipo_despesa ON fato_despesa_federal.id_tipo_despesa_d_df = d_df_tipo_despesa.id_tipo_despesa_d_df"
+						+ " JOIN d_df_subtipo_despesa ON fato_despesa_federal.id_subtipo_despesa_d_df = d_df_subtipo_despesa.id_subtipo_despesa_d_df"
+						+ " JOIN d_df_subfuncao ON fato_despesa_federal.id_subfuncao_d_df = d_df_subfuncao.id_subfuncao_d_df"
+						+ " JOIN d_df_situacao_parcela ON fato_despesa_federal.id_situacao_parcela_d_df = d_df_situacao_parcela.id_situacao_parcela_d_df"
+						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+
+		// Executa o select
+		ResultSet rs = stmt.executeQuery();
+
+		while (rs.next()) {
+			// Cria iterativamente
+			Resource Despesa = model.createResource(bra+"Despesa/"+rs.getInt("id_fato_despesa_federal"));
+
+			Resource Programa = model.createResource(bra+"Programa/"+rs.getInt("cd_programa"));
+
+//			Resource IdentificadorResultadoPrimarioDespesa = model.createResource(bra+"IdentificadorResultadoPrimarioDespesa/"+rs.getInt(""));
+
+//			Resource Iduso = model.createResource(bra+"Iduso/"+rs.getInt("id_fato_despesa_federal"));
+
+//			Resource Idoc = model.createResource(bra+"Idoc/"+rs.getInt("id_fato_despesa_federal"));
+
+			Resource OrgaoOrcamentario = model.createResource(bra+"Orgao/"+rs.getInt("cd_orgao"));
+
+//			Resource Esfera = model.createResource(bra+"Esfera/"+rs.getInt("id_fato_despesa_federal"));
+
+			Resource Funcao = model.createResource(bra+"Funcao/"+rs.getInt("cd_funcao"));
+			Resource Subfuncao = model.createResource(bra+"Subfuncao/"+rs.getInt("cd_subfuncao"));
+
+//			Resource EspecificacaoDaFonteDestinacao = model.createResource(bra+"EspecificacaoDaFonteDestinacao/"+rs.getInt("cd_fonte"));
+//			Resource GrupoDaFonteDestinacao = model.createResource(bra+"GrupoDaFonteDestinacao/"+rs.getInt(""));
+
+			Resource CategoriaEconomicaDaDespesa = model.createResource(bra+"CategoriaEconomicaDaDespesa/"+rs.getInt("cd_categoria_despesa"));
+			Resource GND = model.createResource(bra+"GND/"+rs.getInt("cd_grupo_despesa"));
+			Resource ModalidadeDeAplicacao = model.createResource(bra+"ModalidadeDeAplicacao/"+rs.getInt("cd_modalidade_despesa"));
+			Resource ElementoDeDespesa = model.createResource(bra+"ElementoDeDespesa/"+rs.getInt("cd_elemento_despesa"));
+//			Resource Subelemento = model.createResource(bra+"Subelemento/"+rs.getInt("id_fato_despesa_federal"));
+
+			// Adiciona propriedades aos recursos criados
+
+			Programa.addProperty(tipo, bra+"Programa");
+
+//			IdentificadorResultadoPrimarioDespesa.addProperty(tipo, bra+"IdentificadorResultadoPrimarioDespesa");
+
+//			Iduso.addProperty(tipo, bra+"Iduso");
+
+//			Idoc.addProperty(tipo, bra+"Idoc");
+
+			OrgaoOrcamentario.addProperty(tipo, bra+"OrgaoOrcamentario");
+
+//			Esfera.addProperty(tipo, bra+"Esfera");
+
+			Funcao.addProperty(tipo, bra+"Funcao");
+			Subfuncao.addProperty(tipo, bra+"Subfuncao");
+
+//			EspecificacaoDaFonteDestinacao.addProperty(tipo, bra+"EspecificacaoDaFonteDestinacao");
+//			GrupoDaFonteDestinacao.addProperty(tipo, bra+"GrupoDaFonteDestinacao");
+
+			CategoriaEconomicaDaDespesa.addProperty(tipo, bra+"CategoriaEconomicaDaDespesa");
+			GND.addProperty(tipo, bra+"GND");
+			ModalidadeDeAplicacao.addProperty(tipo, bra+"ModalidadeDeAplicacao");
+			ElementoDeDespesa.addProperty(tipo, bra+"ElementoDeDespesa");
+//			Subelemento.addProperty(tipo, bra+"Subelemento");
+
+			
+			Despesa.addProperty(tipo, bra+"Despesa");
+
+			Despesa.addProperty(temIDOC, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(temIDUSO, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(eRealizadoPorOrgao, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(pertenceAEsfera, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(atuaNaFuncao, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(temFonte, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(temCategoriaEconomicaDaDespesa, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addProperty(pertenceAPrograma, model.getResource(bra+"/temIDOC/"+rs.getInt("cd_idoc")));
+			Despesa.addLiteral(valor, rs.getInt("valor"));
+
+		}
+
+		rs.close();
+		stmt.close();
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 }

@@ -15,6 +15,8 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.util.FileManager;
 
+import com.sun.crypto.provider.DESedeParameters;
+
 public class Conversor {
 	// Prefixos
 	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
@@ -145,38 +147,61 @@ public class Conversor {
 		while (rs.next()) {
 			DespesaFed despesaFed = new DespesaFed();
 
-			despesaFed.setId(rs.getInt("id_fato_despesa_federal"));
-
-			despesaFed.setPrograma(rs.getString("cd_programa"));
-			despesaFed.setAcao(rs.getString("cd_acao"));
-			despesaFed.setCategoriaDespesa(rs.getString("cd_categoria_despesa"));
-			despesaFed.setFuncao(rs.getString("cd_funcao"));
-			despesaFed.setAno(rs.getInt("ano_exercicio"));
-			despesaFed.setMes(rs.getString("mes_extenso")); //mes_referencia
-			despesaFed.setTipoDespesa(rs.getString("cd_tipo_despesa"));
-			despesaFed.setPortador(rs.getString("cd_portador"));
-			despesaFed.setUnidadeGestora(rs.getString("cd_unidade_gestora"));
-			despesaFed.setOrgao(rs.getString("cd_orgao"));
-			despesaFed.setOrgaoSuperior(rs.getString("cd_orgao_superior"));
-			despesaFed.setNroEmpenho(rs.getString("numero_documento"));
-			despesaFed.setNroConvenio(rs.getString("nro_convenio"));
-			despesaFed.setConvenete(rs.getString("cd_convenente"));
-			despesaFed.setMunicipio(rs.getString("cd_siafi_municipio")); //uf
-			despesaFed.setCredor(rs.getString("cd_credor"));
-			despesaFed.setModalidadeDespesa(rs.getString("cd_modalidade_despesa"));
-			despesaFed.setDataPagamento(rs.getString("data_pagamento"));
-			despesaFed.setLinguagemCidada(rs.getString("ds_linguagem_cidada")); //id_linguagem_cidada_d_df?
-			despesaFed.setElementoDespesa(rs.getString("cd_elemento_despesa"));
-			despesaFed.setItemDespesa(rs.getString("cd_item_despesa"));
-			despesaFed.setExecutor(rs.getString("cd_executor"));
-			despesaFed.setGrupoDespesa(rs.getString("cd_grupo_despesa"));
-			despesaFed.setFavorecidoBolsaFamilia(rs.getString("cd_favorecido_bolsa_familia"));
-			despesaFed.setFonteRecurso(rs.getString("ds_fonte_recurso")); //id_fonte_recurso_d_df?
-			despesaFed.setSituacaoParcel(rs.getString("ds_situacao_parcela"));
-			despesaFed.setSubfuncao(rs.getString("cd_subfuncao"));
-			despesaFed.setSubtipoDespesa(rs.getString("cd_subtipo_despesa"));
-			despesaFed.setRepasse(rs.getString("ds_repasse"));
-			despesaFed.setUf(rs.getString("uf"));
+			despesaFed.setAno(rs.getInt("cd_alinea"));
+			despesaFed.setCdAcao(rs.getInt("cd_alinea"));
+			despesaFed.setCdCategoriaDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdConvenete(rs.getInt("cd_alinea"));
+			despesaFed.setCdCredor(rs.getInt("cd_alinea"));
+			despesaFed.setCdElementoDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdFavorecidoBolsaFamilia(rs.getInt("cd_alinea"));
+			despesaFed.setCdFuncao(rs.getInt("cd_alinea"));
+			despesaFed.setCdGrupoDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdItemDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdModalidadeDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdMunicipio(rs.getInt("cd_alinea"));
+			despesaFed.setCdOrgao(rs.getInt("cd_alinea"));
+			despesaFed.setCdOrgaoSuperior(rs.getInt("cd_alinea"));
+			despesaFed.setCdPortador(rs.getInt("cd_alinea"));
+			despesaFed.setCdPrograma(rs.getInt("cd_alinea"));
+			despesaFed.setCdSubfuncao(rs.getInt("cd_alinea"));
+			despesaFed.setCdSubtipoDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdsUnidadeGestora(rs.getString("ds_"));
+			despesaFed.setCdTipoDespesa(rs.getInt("cd_alinea"));
+			despesaFed.setCdUnidadeGestora(rs.getInt("cd_alinea"));
+			despesaFed.setDataPagamento(rs.getInt("cd_alinea"));
+			despesaFed.setDsAcao(rs.getString("ds_"));
+			despesaFed.setDsCategoriaDespesa(rs.getString("ds_"));
+			despesaFed.setDsConvenete(rs.getString("ds_"));
+			despesaFed.setDsCredor(rs.getString("ds_"));
+			despesaFed.setDsElementoDespesa(rs.getString("ds_"));
+			despesaFed.setDsExecutor(rs.getString("ds_"));
+			despesaFed.setDsFavorecidoBolsaFamilia(rs.getString("ds_"));
+			despesaFed.setDsFuncao(rs.getString("ds_"));
+			despesaFed.setDsGrupoDespesa(rs.getString("ds_"));
+			despesaFed.setDsItemDespesa(rs.getString("ds_"));
+			despesaFed.setDsModalidadeDespesa(rs.getString("ds_"));
+			despesaFed.setDsMunicipio(rs.getString("ds_"));
+			despesaFed.setDsOrgao(rs.getString("ds_"));
+			despesaFed.setDsOrgaoSuperior(rs.getString("ds_"));
+			despesaFed.setDsPortador(rs.getString("ds_"));
+			despesaFed.setDsPrograma(rs.getString("ds_"));
+			despesaFed.setDsSubfuncao(rs.getString("ds_"));
+			despesaFed.setDsSubtipoDespesa(rs.getString("ds_"));
+			despesaFed.setDsTipoDespesa(rs.getString("ds_"));
+			despesaFed.setFonteRecurso(rs.getString("ds_"));
+			despesaFed.setGestaoPagamento(rs.getString("ds_"));
+			despesaFed.setId(rs.getInt("cd_alinea"));
+			despesaFed.setLinguagemCidada(rs.getString("ds_"));
+			despesaFed.setMes(rs.getString("ds_"));
+			despesaFed.setNroConvenioA(rs.getInt("cd_alinea"));
+			despesaFed.setNroConvenioB(rs.getInt("cd_alinea"));
+			despesaFed.setNroDocumento(rs.getInt("cd_alinea"));
+			despesaFed.setRepasse(rs.getString("ds_"));
+			despesaFed.setSituacaoParcel(rs.getString("ds_"));
+			despesaFed.setTransacao(rs.getString("ds_"));
+			despesaFed.setUf(rs.getString("ds_"));
+			despesaFed.setUfExecutor(rs.getString("ds_"));
+			despesaFed.setUfMunicipio(String);
 			
 			despesasFed.add(despesaFed);
 		}

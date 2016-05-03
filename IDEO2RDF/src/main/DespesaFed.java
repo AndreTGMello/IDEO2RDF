@@ -14,7 +14,7 @@ public class DespesaFed {
 	// Prefixos
 	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
-	public static void criaRecursosDespesaFederal(Connection conn, Model model, int LIMIT, int OFFSET) {
+	public static void criaRecursosDespesaFederal(Connection conn, Model model, int LIMIT, int OFFSET) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Propriedades
@@ -50,7 +50,7 @@ public class DespesaFed {
 
 		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
-		Property valor = model.getResource(bra+"valor");
+		Property valor = model.getProperty(bra+"valor");
 
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_federal"
@@ -132,7 +132,7 @@ public class DespesaFed {
 //			Idoc.addProperty(tipo, bra+"Idoc");
 
 			OrgaoOrcamentario.addProperty(tipo, bra+"OrgaoOrcamentario");
-			OrgaoOrcamentario.addProperty(eCompostoPorUO, bra+"UnidadeOrcamentaria/"+rs.getInt("cd_unidade_orcamentaria"))
+			OrgaoOrcamentario.addProperty(eCompostoPorUO, bra+"UnidadeOrcamentaria/"+rs.getInt("cd_unidade_orcamentaria"));
 			
 //			Esfera.addProperty(tipo, bra+"Esfera");
 
@@ -152,13 +152,13 @@ public class DespesaFed {
 			Despesa.addProperty(tipo, bra+"Despesa");
 
 			Despesa.addProperty(temIDOC, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(temIDUSO, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(eRealizadoPorOrgao, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(pertenceAEsfera, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(atuaNaFuncao, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(temFonte, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(temCategoriaEconomicaDaDespesa, bra+"temIDOC/"+rs.getInt("cd_idoc"));
-			Despesa.addProperty(pertenceAPrograma, bra+"temIDOC/"+rs.getInt("cd_idoc"));
+			Despesa.addProperty(temIDUSO, bra+"temIDUSO/"+rs.getInt("cd_iduso"));
+			Despesa.addProperty(eRealizadoPorOrgao, bra+"eRealizadoPorOrgao/"+rs.getInt("cd_orgao"));
+			Despesa.addProperty(pertenceAEsfera, bra+"pertenceAEsfera/"+rs.getInt("cd_esfera"));
+			Despesa.addProperty(atuaNaFuncao, bra+"atuaNaFuncao/"+rs.getInt("cd_funcao"));
+			Despesa.addProperty(temFonte, bra+"temFonte/"+rs.getInt("cd_fonte"));
+			Despesa.addProperty(temCategoriaEconomicaDaDespesa, bra+"temCategoriaEconomicaDaDespesa/"+rs.getInt("cd_categoria_despesa"));
+			Despesa.addProperty(pertenceAPrograma, bra+"pertenceAPrograma/"+rs.getInt("cd_programa"));
 			Despesa.addLiteral(valor, rs.getInt("valor"));
 
 		}

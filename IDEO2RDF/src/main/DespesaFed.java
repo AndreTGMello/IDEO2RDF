@@ -3,6 +3,7 @@ package main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -89,7 +90,20 @@ public class DespesaFed {
 
 		// Executa o select
 		ResultSet rs = stmt.executeQuery();
-
+		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		System.out.println("Vai comecar:");
+		while (rs.next()) {
+			System.out.println("HasNext");
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+/* 		
 		while (rs.next()) {
 			// Cria iterativamente recursos e suas propriedades a partir do resultSet
 			
@@ -162,7 +176,7 @@ public class DespesaFed {
 			Despesa.addLiteral(valor, rs.getInt("valor"));
 
 		}
-
+*/
 		rs.close();
 		stmt.close();
 	}

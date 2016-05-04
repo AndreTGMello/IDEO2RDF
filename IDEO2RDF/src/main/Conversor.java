@@ -1,7 +1,10 @@
 package main;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +30,9 @@ public class Conversor {
 		String username = args[1]; 
 		String password = args[2];
 		String ontologia = args[3];
-
+		String fileName = args[4];
+		FileWriter out = new FileWriter(fileName);
+		
 		Connection conn = new ConnectionFactory().getConnection(db, username, password);
 
 		// Cria modelo de ontologia
@@ -43,8 +48,10 @@ public class Conversor {
 		model.setNsPrefix("bra", bra);
 
 		DespesaFed.criaRecursosDespesaFederal(conn, model, 20, 0);
+		
 
-		model.write(System.out);
+//		model.write(System.out);
+		model.write(out);
 	}
 
 }

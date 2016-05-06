@@ -37,11 +37,16 @@ public class Main {
 		// Cria prefixo bra
 		model.setNsPrefix("bra", bra);
 
+		System.out.println("Criando recursos Despesa Federal");
 		ConversorDespesa.criaRecursosDespesa(ConversorDespesa.queryDespesaFederal(conn, 10, 0), model);
 		
-
+		System.out.println("Criando recursos Receita Federal");
+		ConversorReceita.criaRecursosReceita(ConversorReceita.queryReceitaFederal(conn, 10, 0), model);
+		
+		System.out.println("\n\nFim");
 //		model.write(System.out);
 		model.write(out);
+		conn.close();
 	}
 
 }

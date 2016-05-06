@@ -1,26 +1,16 @@
 package main;
 
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.util.FileManager;
 
-import com.sun.crypto.provider.DESedeParameters;
-
-public class Conversor {
+public class Main {
 	// Prefixos
 	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
@@ -47,7 +37,7 @@ public class Conversor {
 		// Cria prefixo bra
 		model.setNsPrefix("bra", bra);
 
-		DespesaFed.criaRecursosDespesaFederal(conn, model, 20, 0);
+		ConversorDespesa.criaRecursosDespesa(ConversorDespesa.queryDespesaFederal(conn, 10, 0), model);
 		
 
 //		model.write(System.out);

@@ -8,9 +8,8 @@ import java.util.ArrayList;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
 
-public class ReceitaFed {
+public class ConversorReceita {
 
 	// Prefixos
 	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
@@ -36,7 +35,7 @@ public class ReceitaFed {
 		// Executa o SELECT
 		ResultSet rs = stmt.executeQuery();
 
-		ArrayList<ReceitaFed> receitasFed = new ArrayList<>();
+		ArrayList<ConversorReceita> receitasFed = new ArrayList<>();
 
 		while (rs.next()) {
 			// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
@@ -52,7 +51,7 @@ public class ReceitaFed {
 			Property mes = model.getProperty(bra+"mes");
 			Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
-			for (ReceitaFed receitaFed : receitasFed) {
+			for (ConversorReceita receitaFed : receitasFed) {
 					
 			}
 		}

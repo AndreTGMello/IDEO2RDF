@@ -33,19 +33,22 @@ public class Main {
 		model.read(in, null);
 		// Fecha leitor
 		in.close();
+		
+		Model triplas = ModelFactory.createDefaultModel();
 
 		// Cria prefixo bra
 		model.setNsPrefix("bra", bra);
-
+		triplas.setNsPrefix("bra", bra);
+		
 		System.out.println("Criando recursos Despesa Federal");
-		ConversorDespesa.criaRecursosDespesa(ConversorDespesa.queryDespesaFederal(conn, 1, 0), model);
+		ConversorDespesa.criaRecursosDespesa(ConversorDespesa.queryDespesaFederal(conn, 500, 0), model, triplas);
 		
 		System.out.println("Criando recursos Receita Federal");
-		ConversorReceita.criaRecursosReceita(ConversorReceita.queryReceitaFederal(conn, 1, 0), model);
+		ConversorReceita.criaRecursosReceita(ConversorReceita.queryReceitaFederal(conn, 500, 0), model, triplas);
 		
 		System.out.println("\n\nFim");
 //		model.write(System.out);
-		model.write(out);
+		triplas.write(out);
 		conn.close();
 	}
 

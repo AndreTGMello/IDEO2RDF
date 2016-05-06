@@ -196,9 +196,9 @@ public class ConversorReceita {
 						}
 					}
 				}
-			} catch (Exception e3) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e3.printStackTrace();
+				e.printStackTrace();
 			}
 			
 			try {
@@ -224,9 +224,9 @@ public class ConversorReceita {
 					}
 
 				}
-			} catch (Exception e2) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e2.printStackTrace();
+				e.printStackTrace();
 			}
 
 			try {
@@ -262,9 +262,9 @@ public class ConversorReceita {
 					}
 
 				}
-			} catch (Exception e1) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
 
 			try {

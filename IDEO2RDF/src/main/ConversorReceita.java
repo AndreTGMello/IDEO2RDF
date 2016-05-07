@@ -25,12 +25,12 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_rf_alinea ON fato_receita_federal.id_alinea_d_rf = d_rf_alinea.id_alinea_d_rf "
 						+ " LEFT JOIN d_rf_subalinea ON fato_receita_federal.id_subalinea_d_rf = d_rf_subalinea.id_subalinea_d_rf "
 						+ " LEFT JOIN d_rf_orgao_superior ON fato_receita_federal.id_orgao_superior_d_rf = d_rf_orgao_superior.id_orgao_superior_d_rf "
-						//							+ " LEFT JOIN d_rf_orgao_subordinado ON fato_receita_federal.id_orgao_subordinado_d_rf = d_rf_orgao_subordinado.id_orgao_subordinado_d_rf "
+						+ " LEFT JOIN d_rf_orgao ON fato_receita_federal.id_orgao_d_rf = d_rf_orgao.id_orgao_d_rf "
 						+ " LEFT JOIN d_rf_unidade_gestora ON fato_receita_federal.id_unidade_gestora_d_rf = d_rf_unidade_gestora.id_unidade_gestora_d_rf "
 						+ " LEFT JOIN d_rf_data ON fato_receita_federal.id_data_d_rf = d_rf_data.id_data_d_rf "
 						+ " LEFT JOIN d_rf_mes ON fato_receita_federal.id_mes_d_rf = d_rf_mes.id_mes_d_rf "
 						+ " LEFT JOIN d_rf_ano ON fato_receita_federal.id_ano_d_rf = d_rf_ano.id_ano_d_rf "
-						//							+ " LEFT JOIN d_rf_categoria_economica ON fato_receita_federal.id_categoria_economica_d_rf = d_rf_categoria_economica.id_categoria_economica_d_rf"
+						+ " LEFT JOIN d_rf_categoria ON fato_receita_federal.id_categoria_d_rf = d_rf_categoria.id_categoria_d_rf"
 						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
@@ -53,7 +53,7 @@ public class ConversorReceita {
 		return stmt;
 	}
 
-	public static void criaRecursosReceita(PreparedStatement stmt, Model model, Model triplas) throws SQLException {
+	public static void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Propriedades
@@ -112,6 +112,9 @@ public class ConversorReceita {
 			try {
 				String cdIdentificadorResultadoPrimarioReceita = rs.getString("cd_identificador_resultado");
 				if(!rs.wasNull()){
+					if(cdIdentificadorResultadoPrimarioReceita.equals("-1")){
+						cdIdentificadorResultadoPrimarioReceita = rs.getString("id_identificador_resultado_"+ente);
+					}
 					IdentificadorResultadoPrimarioReceita = triplas.createResource(bra+"Programa/"+cdIdentificadorResultadoPrimarioReceita);
 					IdentificadorResultadoPrimarioReceita.addProperty(tipo, bra+"IdentificadorResultadoPrimarioReceita");
 					IdentificadorResultadoPrimarioReceita.addLiteral(codigo, cdIdentificadorResultadoPrimarioReceita);
@@ -126,17 +129,23 @@ public class ConversorReceita {
 
 			try {
 				System.out.println("Entrou");
-				String cdCategoriaEconomicaDaReceita = rs.getString("cd_categoria_economica"); // ---> Nao existe no banco de dados
+				String cdCategoriaEconomicaDaReceita = rs.getString("cd_categoria");
 				if(!rs.wasNull()){
+					if(cdCategoriaEconomicaDaReceita.equals("-1")){
+						cdCategoriaEconomicaDaReceita = rs.getString("id_categoria_"+ente);
+					}
 					CategoriaEconomicaDaReceita = triplas.createResource(bra+"CategoriaEconomicaDaReceita/"+cdCategoriaEconomicaDaReceita);
 					CategoriaEconomicaDaReceita.addProperty(tipo, bra+"CategoriaEconomicaDaReceita");
 					CategoriaEconomicaDaReceita.addLiteral(codigo, cdCategoriaEconomicaDaReceita);
 
-					String dsCategoriaEconomicaDaReceita = rs.getString("ds_categoria_economica");
+					String dsCategoriaEconomicaDaReceita = rs.getString("ds_categoria");
 					CategoriaEconomicaDaReceita.addLiteral(titulo, dsCategoriaEconomicaDaReceita);
 
 					String cdOrigem = rs.getString("cd_origem");
 					if(!rs.wasNull()){
+						if(cdOrigem.equals("-1")){
+							cdOrigem = rs.getString("id_origem_"+ente);
+						}
 						Origem = triplas.createResource(bra+"Origem/"+rs.getInt("cd_origem"));
 						Origem.addProperty(tipo, bra+"Origem");
 						Origem.addLiteral(codigo, cdOrigem);
@@ -148,6 +157,9 @@ public class ConversorReceita {
 
 						String cdEspecie = rs.getString("cd_especie");
 						if(!rs.wasNull()){					
+							if(cdEspecie.equals("-1")){
+								cdEspecie = rs.getString("id_especie_"+ente);
+							}
 							Especie = triplas.createResource(bra+"Especie/"+cdEspecie);
 							Especie.addProperty(tipo, bra+"Especie");
 							Especie.addLiteral(codigo, cdEspecie);
@@ -160,6 +172,9 @@ public class ConversorReceita {
 
 							String cdRubrica = rs.getString("cd_rubrica");
 							if(!rs.wasNull()){
+								if(cdRubrica.equals("-1")){
+									cdRubrica = rs.getString("-1");
+								}
 								Rubrica = triplas.createResource(bra+"Rubrica/"+cdRubrica);
 								Rubrica.addProperty(tipo, bra+"Rubrica");
 								Rubrica.addLiteral(codigo, cdRubrica);
@@ -171,6 +186,9 @@ public class ConversorReceita {
 
 								String cdAlinea = rs.getString("cd_alinea");
 								if(!rs.wasNull()){
+									if(cdAlinea.equals("-1")){
+										cdAlinea = rs.getString("id_alinea_"+ente);
+									}
 									Alinea = triplas.createResource(bra+"Alinea/"+cdAlinea);
 									Alinea.addProperty(tipo, bra+"Alinea");	
 									Alinea.addLiteral(codigo, cdAlinea);
@@ -182,6 +200,9 @@ public class ConversorReceita {
 
 									String cdSubalinea = rs.getString("cd_subalinea");
 									if(!rs.wasNull()){
+										if(cdSubalinea.equals("-1")){
+											cdSubalinea = rs.getString("id_subalinea_"+ente);
+										}
 										Subalinea = triplas.createResource(bra+"Subalinea/"+cdSubalinea);
 										Subalinea.addProperty(tipo, bra+"Subalinea");	
 										Subalinea.addLiteral(codigo, cdSubalinea);
@@ -204,8 +225,11 @@ public class ConversorReceita {
 			}
 			
 			try {
-				String cdEspecificacaoDaFonteDestinacao = rs.getString("cd_fonte_recurso"); // ---> Nao existe cd_fonte_recurso?
+				String cdEspecificacaoDaFonteDestinacao = rs.getString("id_fonte_recurso"); // ---> Nao existe cd_fonte_recurso?
 				if(!rs.wasNull()){
+					if(cdEspecificacaoDaFonteDestinacao.equals("-1")){
+						cdEspecificacaoDaFonteDestinacao = rs.getString("id_fonte_recurso_"+ente);
+					}
 					EspecificacaoDaFonteDestinacao = triplas.createResource(bra+"EspecificacaoDaFonteDestinacao/"+cdEspecificacaoDaFonteDestinacao);
 					EspecificacaoDaFonteDestinacao.addProperty(tipo, bra+"EspecificacaoDaFonteDestinacao");
 					EspecificacaoDaFonteDestinacao.addLiteral(codigo, cdEspecificacaoDaFonteDestinacao);
@@ -215,6 +239,9 @@ public class ConversorReceita {
 
 					String cdGrupo = rs.getString("cd_grupo_fonte"); 
 					if(!rs.wasNull()){
+						if(cdGrupo.equals("-1")){
+							cdGrupo = rs.getString("id_grupo_fonte_"+ente);
+						}
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
 						GrupoDaFonteDestinacao.addProperty(tipo, bra+"GrupoDaFonteDestinacao");
 						GrupoDaFonteDestinacao.addLiteral(codigo, cdGrupo);
@@ -234,6 +261,9 @@ public class ConversorReceita {
 			try {
 				String cdEspecificacaoDoGrupoDaReceita = rs.getString("cd_grupo_receita");
 				if(!rs.wasNull()){
+					if(cdEspecificacaoDoGrupoDaReceita.equals("-1")){
+						cdEspecificacaoDoGrupoDaReceita = rs.getString("id_grupo_receita_"+ente);
+					}
 					EspecificacaoDoGrupoDaReceita = triplas.createResource(bra+"EspecificacaoDoGrupoDaReceitan/"+cdEspecificacaoDoGrupoDaReceita);
 					EspecificacaoDoGrupoDaReceita.addLiteral(codigo, cdEspecificacaoDoGrupoDaReceita);
 					EspecificacaoDoGrupoDaReceita.addProperty(tipo, bra+"EspecificacaoDoGrupoDaReceita");
@@ -243,6 +273,9 @@ public class ConversorReceita {
 
 					String cdSubgrupoDaReceita = rs.getString("cd_unidade_orcamentaria");
 					if(!rs.wasNull()){
+						if(cdSubgrupoDaReceita.equals("-1")){
+							cdSubgrupoDaReceita = rs.getString("id_subgrupo_receita_"+ente);
+						}
 						SubgrupoDaReceita = triplas.createResource(bra+"SubgrupoDaReceita/"+cdSubgrupoDaReceita);
 						SubgrupoDaReceita.addLiteral(codigo, cdSubgrupoDaReceita);
 
@@ -253,6 +286,9 @@ public class ConversorReceita {
 
 						String cdGrupoDaReceita = rs.getString("cd_unidade_orcamentaria");
 						if(!rs.wasNull()){
+							if(cdGrupoDaReceita.equals("-1")){
+								cdGrupoDaReceita = rs.getString("id_unidade_orcamentaria_"+ente);
+							}
 							GrupoDaReceita = triplas.createResource(bra+"GrupoDaReceita/"+cdGrupoDaReceita);
 							GrupoDaReceita.addLiteral(codigo, cdGrupoDaReceita);
 

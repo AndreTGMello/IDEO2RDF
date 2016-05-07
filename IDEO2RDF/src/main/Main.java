@@ -34,17 +34,31 @@ public class Main {
 		// Fecha leitor
 		in.close();
 		
+		// Onde serao escritas as triplas geradas por esse programa
 		Model triplas = ModelFactory.createDefaultModel();
 
 		// Cria prefixo bra
 		model.setNsPrefix("bra", bra);
 		triplas.setNsPrefix("bra", bra);
 		
+		
+		 //Receita:
+		 String rFederal = "d_rf";
+		 String rEstadoSP = "d_re";
+		 String rMunicipiosSP = "d_rm";
+		 
+		 //Despesa:
+		 String dFederal = "d_df"; 
+		 String dEstadoSP = "d_de";
+		 String dMunicipiosSP = "d_dm";
+		 String dCapitalSP = "d_dmsp"; 
+		 
+		
 		System.out.println("Criando recursos Despesa Federal");
-		ConversorDespesa.criaRecursosDespesa(ConversorDespesa.queryDespesaFederal(conn, 500, 0), model, triplas);
+		ConversorDespesa.criaRecursosDespesa(dFederal, ConversorDespesa.queryDespesaFederal(conn, 10000, 0), model, triplas);
 		
 		System.out.println("Criando recursos Receita Federal");
-		ConversorReceita.criaRecursosReceita(ConversorReceita.queryReceitaFederal(conn, 500, 0), model, triplas);
+		ConversorReceita.criaRecursosReceita(rFederal, ConversorReceita.queryReceitaFederal(conn, 10000, 0), model, triplas);
 		
 		System.out.println("\n\nFim");
 //		model.write(System.out);

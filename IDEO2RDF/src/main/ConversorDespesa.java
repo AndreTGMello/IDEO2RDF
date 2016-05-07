@@ -31,10 +31,10 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_df_grupo_despesa ON fato_despesa_federal.id_grupo_despesa_d_df = d_df_grupo_despesa.id_grupo_despesa_d_df"
 						+ " LEFT JOIN d_df_funcao ON fato_despesa_federal.id_funcao_d_df = d_df_funcao.id_funcao_d_df"
 						//nao existe			+ " LEFT JOIN d_df_fonte_recurso ON fato_despesa_federal.id_fonte_recurso_d_df = d_df_fonte_recurso.id_fonte_recurso_d_df"
-						//nao existe			+ " LEFT JOIN d_df_favorecidao_bolsa_familia ON fato_despesa_federal.id_favorecido_bolsa_familia_d_df = d_df_favorecidao_bolsa_familia.id_favorecido_bolsa_familia_d_df"
+						+ " LEFT JOIN d_df_favorecido_bolsa_familia ON fato_despesa_federal.id_favorecido_bolsa_familia_d_df = d_df_favorecido_bolsa_familia.id_favorecido_bolsa_familia_d_df"
 						+ " LEFT JOIN d_df_executor ON fato_despesa_federal.id_executor_d_df = d_df_executor.id_executor_d_df"
 						+ " LEFT JOIN d_df_elemento_despesa ON fato_despesa_federal.id_elemento_despesa_d_df = d_df_elemento_despesa.id_elemento_despesa_d_df"
-						//nao existe			+ " LEFT JOIN d_df_data_pagameto ON fato_despesa_federal.id_data_pagamento_d_df = d_df_data_pagameto.id_data_pagamento_d_df"
+						+ " LEFT JOIN d_df_data_pagamento ON fato_despesa_federal.id_data_pagamento_d_df = d_df_data_pagamento.id_data_pagamento_d_df"
 						+ " LEFT JOIN d_df_credor ON fato_despesa_federal.id_credor_d_df = d_df_credor.id_credor_d_df"
 						+ " LEFT JOIN d_df_convenente ON fato_despesa_federal.id_convenente_d_df = d_df_convenente.id_convenente_d_df"
 						+ " LEFT JOIN d_df_categoria_despesa ON fato_despesa_federal.id_categoria_despesa_d_df = d_df_categoria_despesa.id_categoria_despesa_d_df"
@@ -68,7 +68,7 @@ public class ConversorDespesa {
 		return stmt;
 	}
 
-	public static void criaRecursosDespesa(PreparedStatement stmt, Model model, Model triplas) throws SQLException {
+	public static void criaRecursosDespesa(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Executa a query

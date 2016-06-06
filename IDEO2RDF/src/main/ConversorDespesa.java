@@ -82,13 +82,9 @@ public class ConversorDespesa {
 
 		Property temIDUSO = model.getProperty(bra+"temIDUSO");
 
-		Property eRealizadoPorOrgao = model.getProperty(bra+"eRealizadoPorOrgao");
-		Property eCompostoPorUO = model.getProperty(bra+"eCompostoPorUO");
-
-
 		Property pertenceAEsfera = model.getProperty(bra+"pertenceAEsfera");
 
-		Property atuaNaFuncao = model.getProperty(bra+"atuaNaFuncao");
+		Property temFuncao = model.getProperty(bra+"temFuncao");
 		Property temSubFuncao = model.getProperty(bra+"temSubFuncao");
 
 
@@ -103,8 +99,9 @@ public class ConversorDespesa {
 
 		Property pertenceAPrograma = model.getProperty(bra+"pertenceAPrograma");
 
-		Property atuaNaSubfuncao = model.getProperty(bra+"temRubrica");
-		
+		Property temGestor = model.getProperty(bra+"temGestor");
+		Property temSubgestor = model.getProperty(bra+"temSubgestor");
+
 		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
 		Property valor = model.getProperty(bra+"valor");
@@ -121,7 +118,9 @@ public class ConversorDespesa {
 			Resource IdentificadorResultadoPrimarioDespesa = null;
 			Resource Iduso = null;
 			Resource Idoc = null;
-			Resource OrgaoOrcamentario = null;
+			Resource Orgao = null;
+			Resource OrgaoSuperior = null;
+			Resource UnidadeGestora = null;
 			Resource UnidadeOrcamentaria = null;
 			Resource Esfera = null;
 			Resource Funcao = null;
@@ -196,27 +195,75 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdOrgaoOrcamentario = rs.getString("cd_orgao");
-				if(!rs.wasNull()){
-					OrgaoOrcamentario = triplas.createResource(bra+"Orgao/"+cdOrgaoOrcamentario);
-					OrgaoOrcamentario.addLiteral(codigo, cdOrgaoOrcamentario);
-					OrgaoOrcamentario.addProperty(tipo, bra+"OrgaoOrcamentario");
-
-					String dsOrgaoOrcamentario = rs.getString("ds_orgao");
-					OrgaoOrcamentario.addLiteral(titulo, dsOrgaoOrcamentario);
-
-					String cdUnidadeOrcamentaria = rs.getString("cd_unidade_orcamentaria");
+				if(ente.equals("d_df")){
+					String cdOrgaoSuperior = rs.getString("cd_orgao_superior");
 					if(!rs.wasNull()){
-						UnidadeOrcamentaria = triplas.createResource(bra+"UnidadeOrcamentaria/"+cdUnidadeOrcamentaria);
-						UnidadeOrcamentaria.addLiteral(codigo, cdUnidadeOrcamentaria);
+						OrgaoSuperior = triplas.createResource(bra+"OrgaoSuperior/"+cdOrgaoSuperior);
+						OrgaoSuperior.addLiteral(codigo, cdOrgaoSuperior);
+						OrgaoSuperior.addProperty(tipo, bra+"OrgaoSuperior");
 
-						String dsUnidadeOrcamentaria = rs.getString("ds_unidade_orcamentaria");
-						UnidadeOrcamentaria.addLiteral(titulo, dsUnidadeOrcamentaria);
+						String dsOrgaoSuperior = rs.getString("ds_orgao_superior");
+						OrgaoSuperior.addLiteral(titulo, dsOrgaoSuperior);
 
-						OrgaoOrcamentario.addProperty(eCompostoPorUO, UnidadeOrcamentaria);
+						String cdOrgao = rs.getString("cd_orgao");
+						if(!rs.wasNull()){
+							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+							Orgao.addLiteral(codigo, cdOrgao);
+							Orgao.addProperty(tipo, bra+"Orgao");
+
+							String dsOrgao = rs.getString("ds_orgao");
+							Orgao.addLiteral(titulo, dsOrgao);
+							
+							OrgaoSuperior.addProperty(temSubgestor, Orgao);
+							String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+							if(!rs.wasNull()){
+								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
+								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
+
+								String dsUnidadeGestora = rs.getString("ds_unidade_orcamentaria");
+								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
+
+								Orgao.addProperty(temSubgestor, UnidadeOrcamentaria);
+							}		
+						}
 					}
+					
+					else if(ente.equals("d_de") || ente.equals("d_dmsp")){
+						String cdOrgao= rs.getString("cd_orgao");
+						if(!rs.wasNull()){
+							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+							Orgao.addLiteral(codigo, cdOrgao);
+							Orgao.addProperty(tipo, bra+"Orgao");
 
+							String dsOrgao = rs.getString("ds_orgao");
+							Orgao.addLiteral(titulo, dsOrgao);
+							
+							String cdUnidadeGestora = rs.getString("cd_orgao_unidade_gestora");
+							if(!rs.wasNull()){
+								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
+								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
+
+								String dsUnidadeGestora = rs.getString("ds_unidade_orcamentaria");
+								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
+
+								Orgao.addProperty(temSubgestor, UnidadeOrcamentaria);
+							}
+						}
+					}
+					
+					else if(ente.equals("d_dm")){
+						String cdOrgao= rs.getString("cd_orgao");
+						if(!rs.wasNull()){
+							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+							Orgao.addLiteral(codigo, cdOrgao);
+							Orgao.addProperty(tipo, bra+"Orgao");
+
+							String dsOrgao = rs.getString("ds_orgao");
+							Orgao.addLiteral(titulo, dsOrgao);
+						}
+					}
 				}
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -365,20 +412,65 @@ public class ConversorDespesa {
 					Resource Despesa = triplas.createResource(bra+"Despesa/"+idDespesa);			
 					Despesa.addProperty(tipo, bra+"Despesa");
 
+					if(ente.equals("d_df")){
+						if(OrgaoSuperior!=null){
+							Despesa.addProperty(temGestor, OrgaoSuperior);
+						}
+						if(Orgao!=null){
+							Despesa.addProperty(temSubgestor, Orgao);
+						}
+						if(UnidadeGestora!=null){
+							Despesa.addProperty(temSubgestor, UnidadeGestora);
+						}
+					}
+					
+					if(ente.equals("d_de")){
+						if(OrgaoSuperior!=null){
+							Despesa.addProperty(temGestor, OrgaoSuperior);
+						}
+						if(Orgao!=null){
+							Despesa.addProperty(temSubgestor, Orgao);
+						}
+						if(UnidadeGestora!=null){
+							Despesa.addProperty(temSubgestor, UnidadeGestora);
+						}
+					}
+					
+					if(ente.equals("d_dm")){
+						if(OrgaoSuperior!=null){
+							Despesa.addProperty(temGestor, OrgaoSuperior);
+						}
+						if(Orgao!=null){
+							Despesa.addProperty(temSubgestor, Orgao);
+						}
+						if(UnidadeGestora!=null){
+							Despesa.addProperty(temSubgestor, UnidadeGestora);
+						}
+					}
+					
+					if(ente.equals("d_dmsp")){
+						if(OrgaoSuperior!=null){
+							Despesa.addProperty(temGestor, OrgaoSuperior);
+						}
+						if(Orgao!=null){
+							Despesa.addProperty(temSubgestor, Orgao);
+						}
+						if(UnidadeGestora!=null){
+							Despesa.addProperty(temSubgestor, UnidadeGestora);
+						}
+					}
+					
 					if(Iduso!=null){
 						Despesa.addProperty(temIDOC, Iduso);
 					}
 					if(Idoc!=null){
 						Despesa.addProperty(temIDUSO, Idoc);
 					}
-					if(OrgaoOrcamentario!=null){
-						Despesa.addProperty(eRealizadoPorOrgao, OrgaoOrcamentario);
-					}
 					if(Esfera!=null){
 						Despesa.addProperty(pertenceAEsfera, Esfera);
 					}
 					if(Funcao!=null){
-						Despesa.addProperty(atuaNaFuncao, Funcao);
+						Despesa.addProperty(temFuncao, Funcao);
 					}
 					if(Subfuncao!=null){
 						Despesa.addProperty(temSubFuncao, Subfuncao);
@@ -392,9 +484,6 @@ public class ConversorDespesa {
 					if(Programa!=null){
 						Despesa.addProperty(pertenceAPrograma, Programa);
 					}
-					if(UnidadeOrcamentaria!=null){ // CONFIRMAR
-						Despesa.addProperty(eRealizadoPorOrgao, UnidadeOrcamentaria);
-					}
 					if(ElementoDeDespesa!=null){
 						Despesa.addProperty(temElementoDeDespesa, ElementoDeDespesa);
 					}
@@ -407,13 +496,13 @@ public class ConversorDespesa {
 					if(ModalidadeDeAplicacao!=null){
 						Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
 					}
-//					if(Subtitulo){
-//						
-//					}
-//					if(Acao){
-//						
-//					}
-					
+					//					if(Subtitulo){
+					//						
+					//					}
+					//					if(Acao){
+					//						
+					//					}
+
 					int valorPago = rs.getInt("valor");
 					if(!rs.wasNull()){
 						Despesa.addLiteral(valor, valorPago);

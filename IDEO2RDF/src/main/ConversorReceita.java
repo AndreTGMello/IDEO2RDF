@@ -91,6 +91,44 @@ public class ConversorReceita {
 		return stmt;
 	}
 
+	public static PreparedStatement queryReceitaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM fato_receita_municipios"
+						+ " LEFT JOIN d_rm_origem ON fato_receita_municipios.id_origem_d_rm = d_rm_origem.id_origem_d_rm "
+						+ " LEFT JOIN d_rm_especie ON fato_receita_municipios.id_especie_d_rm = d_rm_especie.id_especie_d_rm "
+						+ " LEFT JOIN d_rm_rubrica ON fato_receita_municipios.id_rubrica_d_rm = d_rm_rubrica.id_rubrica_d_rm "
+						+ " LEFT JOIN d_rm_alinea ON fato_receita_municipios.id_alinea_d_rm = d_rm_alinea.id_alinea_d_rm "
+						+ " LEFT JOIN d_rm_subalinea ON fato_receita_municipios.id_subalinea_d_rm = d_rm_subalinea.id_subalinea_d_rm "
+						+ " LEFT JOIN d_rm_fonte_recurso ON fato_receita_municipios.id_fonte_recurso_d_rm = d_rm_fonte_recurso.id_fonte_recurso_d_rm "
+						+ " LEFT JOIN d_rm_orgao_superior ON fato_receita_municipios.id_orgao_superior_d_rm = d_rm_orgao_superior.id_orgao_superior_d_rm "
+						+ " LEFT JOIN d_rm_municipio ON fato_receita_municipios.id_municipio_d_rm = d_rm_municipio.id_municipio_d_rm "
+						+ " LEFT JOIN d_rm_poder ON fato_receita_municipios.id_poder_d_rm = d_rm_poder.id_poder_d_rm "
+						+ " LEFT JOIN d_rm_data ON fato_receita_municipios.id_data_d_rm = d_rm_data.id_data_d_rm "
+						+ " LEFT JOIN d_rm_mes ON fato_receita_municipios.id_mes_d_rm = d_rm_mes.id_mes_d_rm "
+						+ " LEFT JOIN d_rm_ano ON fato_receita_municipios.id_ano_d_rm = d_rm_ano.id_ano_d_rm "
+						+ " LEFT JOIN d_rm_categoria ON fato_receita_municipios.id_categoria_d_rm = d_rm_categoria.id_categoria_d_rm "
+						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
+
+		/*
+		//Testa o retorno do resultSet.
+		ResultSet rs = stmt.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		System.out.println("Vai comecar:");
+		while (rs.next()) {
+			System.out.println("HasNext");
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+		 */
+
+		return stmt;
+	}
+	
 	public static void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 

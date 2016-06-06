@@ -54,6 +54,42 @@ public class ConversorReceita {
 
 		return stmt;
 	}
+	
+	public static PreparedStatement queryReceitaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM fato_receita_estado"
+						+ " LEFT JOIN d_re_origem ON fato_receita_estado.id_origem_d_re = d_re_origem.id_origem_d_re "
+						+ " LEFT JOIN d_re_especie ON fato_receita_estado.id_especie_d_re = d_re_especie.id_especie_d_re "
+						+ " LEFT JOIN d_re_rubrica ON fato_receita_estado.id_rubrica_d_re = d_re_rubrica.id_rubrica_d_re "
+						+ " LEFT JOIN d_re_alinea ON fato_receita_estado.id_alinea_d_re = d_re_alinea.id_alinea_d_re "
+						+ " LEFT JOIN d_re_subalinea ON fato_receita_estado.id_subalinea_d_re = d_re_subalinea.id_subalinea_d_re "
+						+ " LEFT JOIN d_re_fonte_recurso ON fato_receita_estado.id_fonte_recurso_d_re = d_re_fonte_recurso.id_fonte_recurso_d_re "
+						+ " LEFT JOIN d_re_orgao_superior ON fato_receita_estado.id_orgao_superior_d_re = d_re_orgao_superior.id_orgao_superior_d_re "
+						+ " LEFT JOIN d_re_gestao ON fato_receita_estado.id_orgao_gestao_d_re = d_re_gestao.id_gestao_d_re "
+						+ " LEFT JOIN d_re_unidade_gestora ON fato_receita_estado.id_unidade_gestora_d_re = d_re_unidade_gestora.id_unidade_gestora_d_re "
+						+ " LEFT JOIN d_re_ano ON fato_receita_estado.id_ano_d_re = d_re_ano.id_ano_d_re "
+						+ " LEFT JOIN d_re_categoria ON fato_receita_estado.id_categoria_d_re = d_re_categoria.id_categoria_d_re "
+						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
+
+		/*
+		//Testa o retorno do resultSet.
+		ResultSet rs = stmt.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		System.out.println("Vai comecar:");
+		while (rs.next()) {
+			System.out.println("HasNext");
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+		 */
+
+		return stmt;
+	}
 
 	public static void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array

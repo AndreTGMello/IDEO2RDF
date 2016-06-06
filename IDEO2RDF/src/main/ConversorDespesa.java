@@ -103,9 +103,8 @@ public class ConversorDespesa {
 
 		Property pertenceAPrograma = model.getProperty(bra+"pertenceAPrograma");
 
-
 		Property atuaNaSubfuncao = model.getProperty(bra+"temRubrica");
-
+		
 		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
 		Property valor = model.getProperty(bra+"valor");
@@ -381,6 +380,9 @@ public class ConversorDespesa {
 					if(Funcao!=null){
 						Despesa.addProperty(atuaNaFuncao, Funcao);
 					}
+					if(Subfuncao!=null){
+						Despesa.addProperty(temSubFuncao, Subfuncao);
+					}
 					if(EspecificacaoDaFonteDestinacao!=null){
 						Despesa.addProperty(temFonte, EspecificacaoDaFonteDestinacao);
 					}
@@ -390,7 +392,28 @@ public class ConversorDespesa {
 					if(Programa!=null){
 						Despesa.addProperty(pertenceAPrograma, Programa);
 					}
-
+					if(UnidadeOrcamentaria!=null){ // CONFIRMAR
+						Despesa.addProperty(eRealizadoPorOrgao, UnidadeOrcamentaria);
+					}
+					if(ElementoDeDespesa!=null){
+						Despesa.addProperty(temElementoDeDespesa, ElementoDeDespesa);
+					}
+					if(GND!=null){
+						Despesa.addProperty(temGND, GND);
+					}
+					if(IdentificadorResultadoPrimarioDespesa!=null){
+						Despesa.addProperty(temIDResultadoPrimarioDaDespesa, IdentificadorResultadoPrimarioDespesa);
+					}
+					if(ModalidadeDeAplicacao!=null){
+						Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
+					}
+//					if(Subtitulo){
+//						
+//					}
+//					if(Acao){
+//						
+//					}
+					
 					int valorPago = rs.getInt("valor");
 					if(!rs.wasNull()){
 						Despesa.addLiteral(valor, valorPago);

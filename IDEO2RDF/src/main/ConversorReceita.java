@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.print.attribute.standard.Destination;
+
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
@@ -322,6 +324,18 @@ public class ConversorReceita {
 					}
 					if(EspecificacaoDoGrupoDaReceita!=null){
 						Receita.addProperty(temClassificacaoDoGrupoDaReceita, EspecificacaoDoGrupoDaReceita);
+					}
+					if(Alinea!=null){
+						Receita.addProperty(temAlinea, Alinea);
+					}
+					if(Subalinea!=null){
+						Receita.addProperty(temSubalinea, Subalinea);
+					}
+					if(Origem!=null){
+						Receita.addProperty(temOrigem, Origem);
+					}
+					if(Rubrica!=null){
+						Receita.addProperty(temRubrica, Rubrica);
 					}
 					
 					int valorArrecadadoDado = rs.getInt("valor_arrecadado");

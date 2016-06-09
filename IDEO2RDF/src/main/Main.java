@@ -54,11 +54,11 @@ public class Main {
 		 String dCapitalSP = "d_dmsp"; 
 		 
 		
-		System.out.println("Criando recursos Despesa Federal");
-		ConversorDespesa.criaRecursosDespesa(dFederal, ConversorDespesa.queryDespesaFederal(conn, 10000, 0), model, triplas);
+		//System.out.println("Criando recursos Despesa Federal");
+		//ConversorDespesa.criaRecursosDespesa(dFederal, ConversorDespesa.queryDespesaFederal(conn, 100, 0), model, triplas);
 		
 		System.out.println("Criando recursos Receita Federal");
-		ConversorReceita.criaRecursosReceita(rFederal, ConversorReceita.queryReceitaFederal(conn, 10000, 0), model, triplas);
+		ConversorReceita.criaRecursosReceita(rFederal, ConversorReceita.queryReceitaFederal(conn, 100, 0), model, triplas);
 		
 		System.out.println("\n\nFim");
 //		model.write(System.out);

@@ -101,6 +101,8 @@ public class ConversorDespesa {
 
 		Property temGestor = model.getProperty(bra+"temGestor");
 		Property temSubgestor = model.getProperty(bra+"temSubgestor");
+		
+		Property temCredor = model.getProperty(bra+"temCredor");
 
 		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
@@ -122,6 +124,7 @@ public class ConversorDespesa {
 			Resource OrgaoSuperior = null;
 			Resource UnidadeGestora = null;
 			Resource UnidadeOrcamentaria = null;
+			Resource Municipio = null;
 			Resource Esfera = null;
 			Resource Funcao = null;
 			Resource Subfuncao = null;
@@ -132,6 +135,7 @@ public class ConversorDespesa {
 			Resource ModalidadeDeAplicacao = null;
 			Resource ElementoDeDespesa = null;
 			Resource Subelemento = null;
+			Resource Credor = null;
 
 			// Popula os recursos, caso existam no banco de dados
 			try {
@@ -252,14 +256,24 @@ public class ConversorDespesa {
 					}
 					
 					else if(ente.equals("d_dm")){
-						String cdOrgao= rs.getString("cd_orgao");
+						String cdMunicipio= rs.getString("cd_municipio");
 						if(!rs.wasNull()){
-							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
-							Orgao.addLiteral(codigo, cdOrgao);
-							Orgao.addProperty(tipo, bra+"Orgao");
+							Municipio = triplas.createResource(bra+"Municipio/"+cdMunicipio);
+							Municipio.addLiteral(codigo, cdMunicipio);
+							Municipio.addProperty(tipo, bra+"Municipio");
 
-							String dsOrgao = rs.getString("ds_orgao");
-							Orgao.addLiteral(titulo, dsOrgao);
+							String dsMunicipio = rs.getString("ds_municipio");
+							Municipio.addLiteral(titulo, dsMunicipio);
+							
+							String cdOrgao= rs.getString("cd_orgao");
+							if(!rs.wasNull()){
+								Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+								Orgao.addLiteral(codigo, cdOrgao);
+								Orgao.addProperty(tipo, bra+"Orgao");
+
+								String dsOrgao = rs.getString("ds_orgao");
+								Orgao.addLiteral(titulo, dsOrgao);
+							}
 						}
 					}
 				}
@@ -405,6 +419,21 @@ public class ConversorDespesa {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			try {
+				String cdCredor = rs.getString("cd_credor");
+				if(!rs.wasNull()){
+					Credor = triplas.createResource(bra+"Credor/"+cdCredor);
+					Credor.addProperty(tipo, bra+"Credor");
+					Credor.addLiteral(codigo, cdCredor);
+
+					String dsCredor = rs.getString("ds_credor");
+					Credor.addLiteral(titulo, dsCredor);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			try {
 				String idDespesa = rs.getString("id_fato_despesa_federal");
@@ -416,47 +445,17 @@ public class ConversorDespesa {
 						if(OrgaoSuperior!=null){
 							Despesa.addProperty(temGestor, OrgaoSuperior);
 						}
-						if(Orgao!=null){
-							Despesa.addProperty(temSubgestor, Orgao);
-						}
-						if(UnidadeGestora!=null){
-							Despesa.addProperty(temSubgestor, UnidadeGestora);
-						}
 					}
 					
-					if(ente.equals("d_de")){
-						if(OrgaoSuperior!=null){
-							Despesa.addProperty(temGestor, OrgaoSuperior);
-						}
+					if(ente.equals("d_de") || ente.equals("d_dmsp")){
 						if(Orgao!=null){
-							Despesa.addProperty(temSubgestor, Orgao);
-						}
-						if(UnidadeGestora!=null){
-							Despesa.addProperty(temSubgestor, UnidadeGestora);
+							Despesa.addProperty(temGestor, OrgaoSuperior);
 						}
 					}
 					
 					if(ente.equals("d_dm")){
-						if(OrgaoSuperior!=null){
+						if(Municipio!=null){
 							Despesa.addProperty(temGestor, OrgaoSuperior);
-						}
-						if(Orgao!=null){
-							Despesa.addProperty(temSubgestor, Orgao);
-						}
-						if(UnidadeGestora!=null){
-							Despesa.addProperty(temSubgestor, UnidadeGestora);
-						}
-					}
-					
-					if(ente.equals("d_dmsp")){
-						if(OrgaoSuperior!=null){
-							Despesa.addProperty(temGestor, OrgaoSuperior);
-						}
-						if(Orgao!=null){
-							Despesa.addProperty(temSubgestor, Orgao);
-						}
-						if(UnidadeGestora!=null){
-							Despesa.addProperty(temSubgestor, UnidadeGestora);
 						}
 					}
 					
@@ -495,6 +494,9 @@ public class ConversorDespesa {
 					}
 					if(ModalidadeDeAplicacao!=null){
 						Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
+					}
+					if(Credor!=null){
+						Despesa.addProperty(temCredor, Credor);
 					}
 					//					if(Subtitulo){
 					//						

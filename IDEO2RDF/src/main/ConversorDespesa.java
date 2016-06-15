@@ -223,11 +223,12 @@ public class ConversorDespesa {
 							if(!rs.wasNull()){
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-
-								String dsUnidadeGestora = rs.getString("ds_unidade_orcamentaria");
+								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
+								
+								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
 								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
 
-								Orgao.addProperty(temSubgestor, UnidadeOrcamentaria);
+								Orgao.addProperty(temSubgestor, UnidadeGestora);
 							}		
 						}
 					}
@@ -242,12 +243,13 @@ public class ConversorDespesa {
 							String dsOrgao = rs.getString("ds_orgao");
 							Orgao.addLiteral(titulo, dsOrgao);
 							
-							String cdUnidadeGestora = rs.getString("cd_orgao_unidade_gestora");
+							String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
 							if(!rs.wasNull()){
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-
-								String dsUnidadeGestora = rs.getString("ds_unidade_orcamentaria");
+								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
+								
+								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
 								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
 
 								Orgao.addProperty(temSubgestor, UnidadeOrcamentaria);
@@ -273,6 +275,8 @@ public class ConversorDespesa {
 
 								String dsOrgao = rs.getString("ds_orgao");
 								Orgao.addLiteral(titulo, dsOrgao);
+								
+								Municipio.addProperty(temSubgestor, Orgao);
 							}
 						}
 					}
@@ -327,22 +331,22 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdEspecificacao = rs.getString("cd_fonte");
+				String cdEspecificacao = rs.getString("cd_fonte_recurso");
 				if(!rs.wasNull()){
 					EspecificacaoDaFonteDestinacao = triplas.createResource(bra+"EspecificacaoDaFonteDestinacao/"+cdEspecificacao);
 					EspecificacaoDaFonteDestinacao.addProperty(tipo, bra+"EspecificacaoDaFonteDestinacao");
 					EspecificacaoDaFonteDestinacao.addLiteral(codigo, cdEspecificacao);
 
-					String dsEspecificacao = rs.getString("ds_fonte");
+					String dsEspecificacao = rs.getString("ds_fonte_recurso");
 					EspecificacaoDaFonteDestinacao.addLiteral(titulo, dsEspecificacao);
 
-					String cdGrupo = rs.getString("cd_grupo_fonte");
+					String cdGrupo = rs.getString("cd_grupo_despesa");
 					if(!rs.wasNull()){
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
 						GrupoDaFonteDestinacao.addProperty(tipo, bra+"GrupoDaFonteDestinacao");
 						GrupoDaFonteDestinacao.addLiteral(codigo, cdGrupo);
 
-						String dsGrupo = rs.getString("ds_grupo_fonte");
+						String dsGrupo = rs.getString("ds_grupo_despesa");
 						GrupoDaFonteDestinacao.addLiteral(titulo, dsGrupo);
 
 						EspecificacaoDaFonteDestinacao.addProperty(detalhaGrupoDaFonteDestinacao, GrupoDaFonteDestinacao);
@@ -382,7 +386,6 @@ public class ConversorDespesa {
 							ModalidadeDeAplicacao.addLiteral(codigo, cdModalidade);
 
 							String dsModalidade = rs.getString("ds_modalidade_despesa");
-
 							ModalidadeDeAplicacao.addLiteral(titulo, dsModalidade);
 
 							GND.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
@@ -480,20 +483,23 @@ public class ConversorDespesa {
 					if(CategoriaEconomicaDaDespesa!=null){
 						Despesa.addProperty(temCategoriaEconomicaDaDespesa, CategoriaEconomicaDaDespesa);
 					}
-					if(Programa!=null){
-						Despesa.addProperty(pertenceAPrograma, Programa);
+					if(GND!=null){
+						Despesa.addProperty(temGND, GND);
+					}
+					if(ModalidadeDeAplicacao!=null){
+						Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
 					}
 					if(ElementoDeDespesa!=null){
 						Despesa.addProperty(temElementoDeDespesa, ElementoDeDespesa);
 					}
-					if(GND!=null){
-						Despesa.addProperty(temGND, GND);
+					if(Subelemento!=null){
+						Despesa.addProperty(temSubelemento, Subelemento);
 					}
 					if(IdentificadorResultadoPrimarioDespesa!=null){
 						Despesa.addProperty(temIDResultadoPrimarioDaDespesa, IdentificadorResultadoPrimarioDespesa);
 					}
-					if(ModalidadeDeAplicacao!=null){
-						Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
+					if(Programa!=null){
+						Despesa.addProperty(pertenceAPrograma, Programa);
 					}
 					if(Credor!=null){
 						Despesa.addProperty(temCredor, Credor);

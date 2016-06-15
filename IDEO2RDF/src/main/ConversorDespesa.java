@@ -116,6 +116,7 @@ public class ConversorDespesa {
 			// Cria iterativamente recursos e suas propriedades a partir do resultSet
 
 			// Cria recursos
+			Resource Despesa = null;
 			Resource Programa = null;
 			Resource IdentificadorResultadoPrimarioDespesa = null;
 			Resource Iduso = null;
@@ -137,6 +138,17 @@ public class ConversorDespesa {
 			Resource Subelemento = null;
 			Resource Credor = null;
 
+			try {
+				String idDespesa = rs.getString("id_fato_despesa_federal");
+				if(!rs.wasNull()){
+					Despesa = triplas.createResource(bra+"Despesa/"+idDespesa);			
+					Despesa.addProperty(tipo, bra+"Despesa");
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
 			// Popula os recursos, caso existam no banco de dados
 			try {
 				String cdPrograma = rs.getString("cd_programa");
@@ -147,6 +159,8 @@ public class ConversorDespesa {
 
 					String dsPrograma = rs.getString("ds_programa");
 					Programa.addLiteral(titulo, dsPrograma);
+					
+					Despesa.addProperty(pertenceAPrograma, Programa);
 				}
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -163,6 +177,8 @@ public class ConversorDespesa {
 
 					String dsIdentificador = rs.getString("ds_identificador_primario");
 					IdentificadorResultadoPrimarioDespesa.addLiteral(titulo, dsIdentificador);
+					
+					Despesa.addProperty(temIDResultadoPrimarioDaDespesa, IdentificadorResultadoPrimarioDespesa);
 				}
 			}catch(PSQLException e){
 				System.out.println("Erro: "+e);
@@ -177,6 +193,8 @@ public class ConversorDespesa {
 
 					String dsIduso = rs.getString("ds_iduso");
 					Iduso.addLiteral(titulo, dsIduso);
+					
+					Despesa.addProperty(temIDUSO, Iduso);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -192,6 +210,8 @@ public class ConversorDespesa {
 
 					String dsIdoc = rs.getString("ds_idoc");
 					Idoc.addLiteral(titulo, dsIdoc);
+					
+					Despesa.addProperty(temIDOC, Idoc);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -209,6 +229,8 @@ public class ConversorDespesa {
 						String dsOrgaoSuperior = rs.getString("ds_orgao_superior");
 						OrgaoSuperior.addLiteral(titulo, dsOrgaoSuperior);
 
+						Despesa.addProperty(temGestor, OrgaoSuperior);
+						
 						String cdOrgao = rs.getString("cd_orgao");
 						if(!rs.wasNull()){
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
@@ -243,6 +265,8 @@ public class ConversorDespesa {
 							String dsOrgao = rs.getString("ds_orgao");
 							Orgao.addLiteral(titulo, dsOrgao);
 							
+							Despesa.addProperty(temGestor, Orgao);
+							
 							String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
 							if(!rs.wasNull()){
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
@@ -266,6 +290,8 @@ public class ConversorDespesa {
 
 							String dsMunicipio = rs.getString("ds_municipio");
 							Municipio.addLiteral(titulo, dsMunicipio);
+							
+							Despesa.addProperty(temGestor, Municipio);
 							
 							String cdOrgao= rs.getString("cd_orgao");
 							if(!rs.wasNull()){
@@ -296,6 +322,8 @@ public class ConversorDespesa {
 
 					String dsEsfera = rs.getString("ds_esfera");
 					Esfera.addLiteral(titulo, dsEsfera);
+					
+					Despesa.addProperty(pertenceAEsfera, Esfera);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -312,6 +340,7 @@ public class ConversorDespesa {
 					String dsFuncao = rs.getString("ds_funcao");
 					Funcao.addLiteral(titulo, dsFuncao);
 
+					Despesa.addProperty(temFuncao, Funcao);
 					String cdSubfuncao = rs.getString("cd_subfuncao");
 					if(!rs.wasNull()){
 						Subfuncao = triplas.createResource(bra+"Subfuncao/"+cdSubfuncao);
@@ -322,6 +351,8 @@ public class ConversorDespesa {
 						Subfuncao.addLiteral(titulo, dsSubfuncao);
 
 						Funcao.addProperty(temSubFuncao, Subfuncao);
+						
+						Despesa.addProperty(temSubFuncao, Subfuncao);
 					}
 
 				}
@@ -340,6 +371,7 @@ public class ConversorDespesa {
 					String dsEspecificacao = rs.getString("ds_fonte_recurso");
 					EspecificacaoDaFonteDestinacao.addLiteral(titulo, dsEspecificacao);
 
+					Despesa.addProperty(temFonte, EspecificacaoDaFonteDestinacao);
 					String cdGrupo = rs.getString("cd_grupo_despesa");
 					if(!rs.wasNull()){
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
@@ -368,6 +400,7 @@ public class ConversorDespesa {
 					String dsCategoria = rs.getString("ds_categoria_despesa");
 					CategoriaEconomicaDaDespesa.addLiteral(titulo, dsCategoria);
 
+					Despesa.addProperty(temCategoriaEconomicaDaDespesa, CategoriaEconomicaDaDespesa);
 					String cdGND = rs.getString("cd_grupo_despesa");
 					if(!rs.wasNull()){
 						GND = triplas.createResource(bra+"GND/"+rs.getInt("cd_grupo_despesa"));
@@ -379,6 +412,7 @@ public class ConversorDespesa {
 
 						CategoriaEconomicaDaDespesa.addProperty(temGND, GND);
 
+						Despesa.addProperty(temGND, GND);
 						String cdModalidade = rs.getString("cd_modalidade_despesa");
 						if(!rs.wasNull()){					
 							ModalidadeDeAplicacao = triplas.createResource(bra+"ModalidadeDeAplicacao/"+cdModalidade);
@@ -390,6 +424,7 @@ public class ConversorDespesa {
 
 							GND.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
 
+							Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
 							String cdElemento = rs.getString("cd_elemento_despesa");
 							if(!rs.wasNull()){
 								ElementoDeDespesa = triplas.createResource(bra+"ElementoDeDespesa/"+cdElemento);
@@ -401,6 +436,7 @@ public class ConversorDespesa {
 
 								ModalidadeDeAplicacao.addProperty(temElementoDeDespesa, ElementoDeDespesa);
 
+								Despesa.addProperty(temElementoDeDespesa, ElementoDeDespesa);
 								String cdSubelemento = rs.getString("cd_subelemento_despesa");
 								if(!rs.wasNull()){
 									Subelemento = triplas.createResource(bra+"Subelemento/"+cdSubelemento);
@@ -411,6 +447,8 @@ public class ConversorDespesa {
 									Subelemento.addLiteral(titulo, dsSubelemento);
 
 									ElementoDeDespesa.addProperty(temSubelemento, Subelemento);
+									
+									Despesa.addProperty(temSubelemento, Subelemento);
 								}
 							}	
 
@@ -432,6 +470,8 @@ public class ConversorDespesa {
 
 					String dsCredor = rs.getString("ds_credor");
 					Credor.addLiteral(titulo, dsCredor);
+					
+					Despesa.addProperty(temCredor, Credor);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -439,83 +479,9 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String idDespesa = rs.getString("id_fato_despesa_federal");
+				int valorPago = rs.getInt("valor");
 				if(!rs.wasNull()){
-					Resource Despesa = triplas.createResource(bra+"Despesa/"+idDespesa);			
-					Despesa.addProperty(tipo, bra+"Despesa");
-
-					if(ente.equals("d_df")){
-						if(OrgaoSuperior!=null){
-							Despesa.addProperty(temGestor, OrgaoSuperior);
-						}
-					}
-					
-					if(ente.equals("d_de") || ente.equals("d_dmsp")){
-						if(Orgao!=null){
-							Despesa.addProperty(temGestor, OrgaoSuperior);
-						}
-					}
-					
-					if(ente.equals("d_dm")){
-						if(Municipio!=null){
-							Despesa.addProperty(temGestor, OrgaoSuperior);
-						}
-					}
-					
-					if(Iduso!=null){
-						Despesa.addProperty(temIDOC, Iduso);
-					}
-					if(Idoc!=null){
-						Despesa.addProperty(temIDUSO, Idoc);
-					}
-					if(Esfera!=null){
-						Despesa.addProperty(pertenceAEsfera, Esfera);
-					}
-					if(Funcao!=null){
-						Despesa.addProperty(temFuncao, Funcao);
-					}
-					if(Subfuncao!=null){
-						Despesa.addProperty(temSubFuncao, Subfuncao);
-					}
-					if(EspecificacaoDaFonteDestinacao!=null){
-						Despesa.addProperty(temFonte, EspecificacaoDaFonteDestinacao);
-					}
-					if(CategoriaEconomicaDaDespesa!=null){
-						Despesa.addProperty(temCategoriaEconomicaDaDespesa, CategoriaEconomicaDaDespesa);
-					}
-					if(GND!=null){
-						Despesa.addProperty(temGND, GND);
-					}
-					if(ModalidadeDeAplicacao!=null){
-						Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
-					}
-					if(ElementoDeDespesa!=null){
-						Despesa.addProperty(temElementoDeDespesa, ElementoDeDespesa);
-					}
-					if(Subelemento!=null){
-						Despesa.addProperty(temSubelemento, Subelemento);
-					}
-					if(IdentificadorResultadoPrimarioDespesa!=null){
-						Despesa.addProperty(temIDResultadoPrimarioDaDespesa, IdentificadorResultadoPrimarioDespesa);
-					}
-					if(Programa!=null){
-						Despesa.addProperty(pertenceAPrograma, Programa);
-					}
-					if(Credor!=null){
-						Despesa.addProperty(temCredor, Credor);
-					}
-					//					if(Subtitulo){
-					//						
-					//					}
-					//					if(Acao){
-					//						
-					//					}
-
-					int valorPago = rs.getInt("valor");
-					if(!rs.wasNull()){
-						Despesa.addLiteral(valor, valorPago);
-					}
-
+					Despesa.addLiteral(valor, valorPago);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

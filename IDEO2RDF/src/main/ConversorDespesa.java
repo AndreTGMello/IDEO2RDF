@@ -190,7 +190,7 @@ public class ConversorDespesa {
 
 		Property temIDUSO = model.getProperty(bra+"temIDUSO");
 
-		Property pertenceAEsfera = model.getProperty(bra+"pertenceAEsfera");
+		Property temEsfera = model.getProperty(bra+"temEsfera");
 
 		Property temFuncao = model.getProperty(bra+"temFuncao");
 		Property temSubfuncao = model.getProperty(bra+"temSubfuncao");
@@ -204,7 +204,7 @@ public class ConversorDespesa {
 		Property temElementoDeDespesa = model.getProperty(bra+"temElementoDeDespesa");
 		Property temSubelemento = model.getProperty(bra+"temSubelemento");
 
-		Property pertenceAPrograma = model.getProperty(bra+"pertenceAPrograma");
+		Property temPrograma = model.getProperty(bra+"temPrograma");
 
 		Property temGestor = model.getProperty(bra+"temGestor");
 		Property temSubgestor = model.getProperty(bra+"temSubgestor");
@@ -296,7 +296,7 @@ public class ConversorDespesa {
 					String dsPrograma = rs.getString("ds_programa");
 					Programa.addLiteral(titulo, dsPrograma);
 					
-					Despesa.addProperty(pertenceAPrograma, Programa);
+					Despesa.addProperty(temPrograma, Programa);
 				}
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -327,8 +327,14 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdIduso = rs.getString("cd_iduso");
+				String idIduso = rs.getString("id_iduso_"+ente);
 				if(!rs.wasNull()){
+					String cdIduso = rs.getString("cd_iduso");
+					if(rs.wasNull()){
+						cdIduso = idIduso;
+					}else if(Integer.parseInt(cdIduso)<0){
+						cdIduso = idIduso;
+					}
 					Iduso = triplas.createResource(bra+"Iduso/"+cdIduso);
 					Iduso.addProperty(tipo, bra+"Iduso");
 					Iduso.addLiteral(codigo, cdIduso);
@@ -344,8 +350,14 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdIdoc = rs.getString("cd_idoc");
+				String idIdoc = rs.getString("id_idoc_"+ente);
 				if(!rs.wasNull()){
+					String cdIdoc= rs.getString("cd_idoc");
+					if(rs.wasNull()){
+						cdIdoc = idIdoc;
+					}else if(Integer.parseInt(cdIdoc)<0){
+						cdIdoc = idIdoc;
+					}
 					Idoc = triplas.createResource(bra+"Idoc/"+cdIdoc);
 					Idoc.addProperty(tipo, bra+"Idoc");
 					Idoc.addLiteral(codigo, cdIdoc);
@@ -362,8 +374,14 @@ public class ConversorDespesa {
 
 			try {
 				if(ente.equals("d_df")){
-					String cdOrgaoSuperior = rs.getString("cd_orgao_superior");
+					String idOrgaoSuperior = rs.getString("id_orgao_superior_"+ente);
 					if(!rs.wasNull()){
+						String cdOrgaoSuperior = rs.getString("cd_orgao_superior");
+						if(rs.wasNull()){
+							cdOrgaoSuperior = idOrgaoSuperior;
+						}else if(Integer.parseInt(cdOrgaoSuperior)<0){
+							cdOrgaoSuperior = idOrgaoSuperior;
+						}
 						OrgaoSuperior = triplas.createResource(bra+"OrgaoSuperior/"+cdOrgaoSuperior);
 						OrgaoSuperior.addLiteral(codigo, cdOrgaoSuperior);
 						OrgaoSuperior.addProperty(tipo, bra+"OrgaoSuperior");
@@ -373,8 +391,14 @@ public class ConversorDespesa {
 
 						Despesa.addProperty(temGestor, OrgaoSuperior);
 						
-						String cdOrgao = rs.getString("cd_orgao");
+						String idOrgao = rs.getString("id_orgao_"+ente);
 						if(!rs.wasNull()){
+							String cdOrgao= rs.getString("cd_orgao");
+							if(rs.wasNull()){
+								cdOrgao = idOrgao;
+							}else if(Integer.parseInt(cdOrgao)<0){
+								cdOrgao = idOrgao;
+							}
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
 							Orgao.addProperty(tipo, bra+"Orgao");
@@ -383,8 +407,14 @@ public class ConversorDespesa {
 							Orgao.addLiteral(titulo, dsOrgao);
 							
 							OrgaoSuperior.addProperty(temSubgestor, Orgao);
-							String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+							String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
 							if(!rs.wasNull()){
+								String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+								if(rs.wasNull()){
+									cdUnidadeGestora = idUnidadeGestora;
+								}else if(Integer.parseInt(cdUnidadeGestora)<0){
+									cdUnidadeGestora = idUnidadeGestora;
+								}
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
 								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
@@ -398,8 +428,14 @@ public class ConversorDespesa {
 					}
 					
 					else if(ente.equals("d_de") || ente.equals("d_dmsp")){
-						String cdOrgao= rs.getString("cd_orgao");
+						String idOrgao= rs.getString("id_orgao_"+ente);
 						if(!rs.wasNull()){
+							String cdOrgao= rs.getString("cd_orgao");
+							if(rs.wasNull()){
+								cdOrgao = idOrgao;
+							}else if(Integer.parseInt(cdOrgao)<0){
+								cdOrgao = idOrgao;
+							}
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
 							Orgao.addProperty(tipo, bra+"Orgao");
@@ -409,8 +445,14 @@ public class ConversorDespesa {
 							
 							Despesa.addProperty(temGestor, Orgao);
 							
-							String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+							String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
 							if(!rs.wasNull()){
+								String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+								if(rs.wasNull()){
+									cdUnidadeGestora = idUnidadeGestora;
+								}else if(Integer.parseInt(cdUnidadeGestora)<0){
+									cdUnidadeGestora = idUnidadeGestora;
+								}
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
 								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
@@ -424,8 +466,14 @@ public class ConversorDespesa {
 					}
 					
 					else if(ente.equals("d_dm")){
-						String cdMunicipio= rs.getString("cd_municipio");
+						String idMunicipio = rs.getString("id_municipio_"+ente);
 						if(!rs.wasNull()){
+							String cdMunicipio = rs.getString("cd_municipio");
+							if(rs.wasNull()){
+								cdMunicipio = idMunicipio;
+							}else if(Integer.parseInt(cdMunicipio)<0){
+								cdMunicipio = idMunicipio;
+							}
 							Municipio = triplas.createResource(bra+"Municipio/"+cdMunicipio);
 							Municipio.addLiteral(codigo, cdMunicipio);
 							Municipio.addProperty(tipo, bra+"Municipio");
@@ -435,8 +483,14 @@ public class ConversorDespesa {
 							
 							Despesa.addProperty(temGestor, Municipio);
 							
-							String cdOrgao= rs.getString("cd_orgao");
+							String idOrgao= rs.getString("id_orgao_"+ente);
 							if(!rs.wasNull()){
+								String cdOrgao= rs.getString("cd_orgao");
+								if(rs.wasNull()){
+									cdOrgao = idOrgao;
+								}else if(Integer.parseInt(cdOrgao)<0){
+									cdOrgao = idOrgao;
+								}
 								Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 								Orgao.addLiteral(codigo, cdOrgao);
 								Orgao.addProperty(tipo, bra+"Orgao");
@@ -456,8 +510,14 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdEsfera = rs.getString("cd_esfera");
+				String idEsfera = rs.getString("id_esfera_"+ente);
 				if(!rs.wasNull()){
+					String cdEsfera = rs.getString("cd_esfera");
+					if(rs.wasNull()){
+						cdEsfera = idEsfera;
+					}else if(Integer.parseInt(cdEsfera)<0){
+						cdEsfera = idEsfera;
+					}
 					Esfera = triplas.createResource(bra+"Esfera/"+cdEsfera);
 					Esfera.addProperty(tipo, bra+"Esfera");
 					Esfera.addLiteral(codigo, cdEsfera);
@@ -465,7 +525,7 @@ public class ConversorDespesa {
 					String dsEsfera = rs.getString("ds_esfera");
 					Esfera.addLiteral(titulo, dsEsfera);
 					
-					Despesa.addProperty(pertenceAEsfera, Esfera);
+					Despesa.addProperty(temEsfera, Esfera);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -473,8 +533,14 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdFuncao = rs.getString("cd_funcao");
+				String idFuncao = rs.getString("id_funcao_"+ente);
 				if(!rs.wasNull()){
+					String cdFuncao = rs.getString("cd_funcao");
+					if(rs.wasNull()){
+						cdFuncao = idFuncao;
+					}else if(Integer.parseInt(cdFuncao)<0){
+						cdFuncao = idFuncao;
+					}
 					Funcao = triplas.createResource(bra+"Funcao/"+cdFuncao);
 					Funcao.addProperty(tipo, bra+"Funcao");
 					Funcao.addLiteral(codigo, cdFuncao);
@@ -483,8 +549,14 @@ public class ConversorDespesa {
 					Funcao.addLiteral(titulo, dsFuncao);
 
 					Despesa.addProperty(temFuncao, Funcao);
-					String cdSubfuncao = rs.getString("cd_subfuncao");
+					String idSubfuncao = rs.getString("id_subfuncao_"+ente);
 					if(!rs.wasNull()){
+						String cdSubfuncao = rs.getString("cd_subfuncao");
+						if(rs.wasNull()){
+							cdSubfuncao = idSubfuncao;
+						}else if(Integer.parseInt(cdSubfuncao)<0){
+							cdSubfuncao = idSubfuncao;
+						}
 						Subfuncao = triplas.createResource(bra+"Subfuncao/"+cdSubfuncao);
 						Subfuncao.addProperty(tipo, bra+"Subfuncao");
 						Subfuncao.addLiteral(codigo, cdSubfuncao);
@@ -504,8 +576,14 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdEspecificacao = rs.getString("cd_fonte_recurso");
+				String idEspecificacao = rs.getString("id_fonte_recurso_"+ente);
 				if(!rs.wasNull()){
+					String cdEspecificacao = rs.getString("cd_fonte_recurso");
+					if(rs.wasNull()){
+						cdEspecificacao = idEspecificacao;
+					}else if(Integer.parseInt(cdEspecificacao)<0){
+						cdEspecificacao = idEspecificacao;
+					}
 					EspecificacaoDaFonteDestinacao = triplas.createResource(bra+"EspecificacaoDaFonteDestinacao/"+cdEspecificacao);
 					EspecificacaoDaFonteDestinacao.addProperty(tipo, bra+"EspecificacaoDaFonteDestinacao");
 					EspecificacaoDaFonteDestinacao.addLiteral(codigo, cdEspecificacao);
@@ -514,8 +592,14 @@ public class ConversorDespesa {
 					EspecificacaoDaFonteDestinacao.addLiteral(titulo, dsEspecificacao);
 
 					Despesa.addProperty(temFonte, EspecificacaoDaFonteDestinacao);
-					String cdGrupo = rs.getString("cd_grupo_despesa");
+					String idGrupo = rs.getString("id_grupo_despesa_"+ente);
 					if(!rs.wasNull()){
+						String cdGrupo = rs.getString("cd_grupo_despesa");
+						if(rs.wasNull()){
+							cdGrupo = idGrupo;
+						}else if(Integer.parseInt(cdGrupo)<0){
+							cdGrupo = idGrupo;
+						}
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
 						GrupoDaFonteDestinacao.addProperty(tipo, bra+"GrupoDaFonteDestinacao");
 						GrupoDaFonteDestinacao.addLiteral(codigo, cdGrupo);
@@ -533,8 +617,14 @@ public class ConversorDespesa {
 			}
 
 			try {
-				String cdCategoria = rs.getString("cd_categoria_despesa");
+				String idCategoria = rs.getString("id_categoria_despesa_"+ente);
 				if(!rs.wasNull()){
+					String cdCategoria = rs.getString("cd_categoria_despesa");
+					if(rs.wasNull()){
+						cdCategoria = idCategoria;
+					}else if(Integer.parseInt(cdCategoria)<0){
+						cdCategoria = idCategoria;
+					}
 					CategoriaEconomicaDaDespesa = triplas.createResource(bra+"CategoriaEconomicaDaDespesa/"+cdCategoria);
 					CategoriaEconomicaDaDespesa.addProperty(tipo, bra+"CategoriaEconomicaDaDespesa");
 					CategoriaEconomicaDaDespesa.addLiteral(codigo, cdCategoria);
@@ -543,8 +633,14 @@ public class ConversorDespesa {
 					CategoriaEconomicaDaDespesa.addLiteral(titulo, dsCategoria);
 
 					Despesa.addProperty(temCategoriaEconomicaDaDespesa, CategoriaEconomicaDaDespesa);
-					String cdGND = rs.getString("cd_grupo_despesa");
+					String idGND = rs.getString("id_grupo_despesa_"+ente);
 					if(!rs.wasNull()){
+						String cdGND = rs.getString("cd_grupo_despesa");
+						if(rs.wasNull()){
+							cdGND = idGND;
+						}else if(Integer.parseInt(cdGND)<0){
+							cdGND = idGND;
+						}
 						GND = triplas.createResource(bra+"GND/"+rs.getInt("cd_grupo_despesa"));
 						GND.addProperty(tipo, bra+"GND");
 						GND.addLiteral(codigo, cdGND);
@@ -555,8 +651,14 @@ public class ConversorDespesa {
 						CategoriaEconomicaDaDespesa.addProperty(temGND, GND);
 
 						Despesa.addProperty(temGND, GND);
-						String cdModalidade = rs.getString("cd_modalidade_despesa");
-						if(!rs.wasNull()){					
+						String idModalidade = rs.getString("id_modalidade_despesa_"+ente);
+						if(!rs.wasNull()){	
+							String cdModalidade = rs.getString("cd_modalidade_despesa");
+							if(rs.wasNull()){
+								cdModalidade = idModalidade;
+							}else if(Integer.parseInt(cdModalidade)<0){
+								cdModalidade = idModalidade;
+							}
 							ModalidadeDeAplicacao = triplas.createResource(bra+"ModalidadeDeAplicacao/"+cdModalidade);
 							ModalidadeDeAplicacao.addProperty(tipo, bra+"ModalidadeDeAplicacao");
 							ModalidadeDeAplicacao.addLiteral(codigo, cdModalidade);
@@ -567,8 +669,14 @@ public class ConversorDespesa {
 							GND.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
 
 							Despesa.addProperty(temModalidadeDeAplicacao, ModalidadeDeAplicacao);
-							String cdElemento = rs.getString("cd_elemento_despesa");
+							String idElemento = rs.getString("id_elemento_despesa_"+ente);
 							if(!rs.wasNull()){
+								String cdElemento = rs.getString("cd_elemento_despesa");
+								if(rs.wasNull()){
+									cdElemento = idElemento;
+								}else if(Integer.parseInt(cdElemento)<0){
+									cdElemento = idElemento;
+								}
 								ElementoDeDespesa = triplas.createResource(bra+"ElementoDeDespesa/"+cdElemento);
 								ElementoDeDespesa.addProperty(tipo, bra+"ElementoDeDespesa");
 								ElementoDeDespesa.addLiteral(codigo, cdElemento);
@@ -579,8 +687,14 @@ public class ConversorDespesa {
 								ModalidadeDeAplicacao.addProperty(temElementoDeDespesa, ElementoDeDespesa);
 
 								Despesa.addProperty(temElementoDeDespesa, ElementoDeDespesa);
-								String cdSubelemento = rs.getString("cd_subelemento_despesa");
+								String idSubelemento = rs.getString("id_subelemento_despesa_"+ente);
 								if(!rs.wasNull()){
+									String cdSubelemento = rs.getString("cd_subelemento_despesa");
+									if(rs.wasNull()){
+										cdSubelemento= idSubelemento;
+									}else if(Integer.parseInt(cdSubelemento)<0){
+										cdSubelemento = idSubelemento;
+									}
 									Subelemento = triplas.createResource(bra+"Subelemento/"+cdSubelemento);
 									Subelemento.addProperty(tipo, bra+"Subelemento");	
 									Subelemento.addLiteral(codigo, cdSubelemento);
@@ -604,8 +718,14 @@ public class ConversorDespesa {
 			}
 			
 			try {
-				String cdCredor = rs.getString("cd_credor");
+				String idCredor = rs.getString("id_credor_"+ente);
 				if(!rs.wasNull()){
+					String cdCredor = rs.getString("cd_credor");
+					if(rs.wasNull()){
+						cdCredor= idCredor;
+					}else if(Integer.parseInt(cdCredor)<0){
+						cdCredor = idCredor;
+					}
 					Credor = triplas.createResource(bra+"Credor/"+cdCredor);
 					Credor.addProperty(tipo, bra+"Credor");
 					Credor.addLiteral(codigo, cdCredor);

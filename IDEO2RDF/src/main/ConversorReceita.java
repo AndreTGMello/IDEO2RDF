@@ -63,9 +63,11 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_re_rubrica ON fato_receita_estado.id_rubrica_d_re = d_re_rubrica.id_rubrica_d_re "
 						+ " LEFT JOIN d_re_alinea ON fato_receita_estado.id_alinea_d_re = d_re_alinea.id_alinea_d_re "
 						+ " LEFT JOIN d_re_subalinea ON fato_receita_estado.id_subalinea_d_re = d_re_subalinea.id_subalinea_d_re "
-						+ " LEFT JOIN d_re_fonte_recurso ON fato_receita_estado.id_fonte_recurso_d_re = d_re_fonte_recurso.id_fonte_recurso_d_re "
-						+ " LEFT JOIN d_re_orgao_superior ON fato_receita_estado.id_orgao_superior_d_re = d_re_orgao_superior.id_orgao_superior_d_re "
-						+ " LEFT JOIN d_re_gestao ON fato_receita_estado.id_orgao_gestao_d_re = d_re_gestao.id_gestao_d_re "
+// Nao existe na tablea + " LEFT JOIN d_re_fonte_recurso ON fato_receita_estado.id_fonte_recurso_d_re = d_re_fonte_recurso.id_fonte_recurso_d_re "
+// Nao existe na tabela + " LEFT JOIN d_re_orgao_superior ON fato_receita_estado.id_orgao_superior_d_re = d_re_orgao_superior.id_orgao_superior_d_re "
+						+ " LEFT JOIN d_re_orgao ON fato_receita_estado.id_orgao_d_re = d_re_orgao.id_orgao_d_re "
+						+ " LEFT JOIN d_re_fonte_recursos ON fato_receita_estado.id_fonte_recursos_d_re = d_re_fonte_recursos.id_fonte_recursos_d_re "
+						+ " LEFT JOIN d_re_gestao ON fato_receita_estado.id_gestao_d_re = d_re_gestao.id_gestao_d_re "
 						+ " LEFT JOIN d_re_unidade_gestora ON fato_receita_estado.id_unidade_gestora_d_re = d_re_unidade_gestora.id_unidade_gestora_d_re "
 						+ " LEFT JOIN d_re_ano ON fato_receita_estado.id_ano_d_re = d_re_ano.id_ano_d_re "
 						+ " LEFT JOIN d_re_categoria ON fato_receita_estado.id_categoria_d_re = d_re_categoria.id_categoria_d_re "
@@ -95,18 +97,21 @@ public class ConversorReceita {
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_municipios"
 						+ " LEFT JOIN d_rm_origem ON fato_receita_municipios.id_origem_d_rm = d_rm_origem.id_origem_d_rm "
-						+ " LEFT JOIN d_rm_especie ON fato_receita_municipios.id_especie_d_rm = d_rm_especie.id_especie_d_rm "
+// nao existe na tabela + " LEFT JOIN d_rm_especie ON fato_receita_municipios.id_especie_d_rm = d_rm_especie.id_especie_d_rm "
+						+ " LEFT JOIN d_ri_especie ON fato_receita_municipios.id_especie_d_rm = d_ri_especie.id_especie_d_ri "
 						+ " LEFT JOIN d_rm_rubrica ON fato_receita_municipios.id_rubrica_d_rm = d_rm_rubrica.id_rubrica_d_rm "
 						+ " LEFT JOIN d_rm_alinea ON fato_receita_municipios.id_alinea_d_rm = d_rm_alinea.id_alinea_d_rm "
 						+ " LEFT JOIN d_rm_subalinea ON fato_receita_municipios.id_subalinea_d_rm = d_rm_subalinea.id_subalinea_d_rm "
 						+ " LEFT JOIN d_rm_fonte_recurso ON fato_receita_municipios.id_fonte_recurso_d_rm = d_rm_fonte_recurso.id_fonte_recurso_d_rm "
-						+ " LEFT JOIN d_rm_orgao_superior ON fato_receita_municipios.id_orgao_superior_d_rm = d_rm_orgao_superior.id_orgao_superior_d_rm "
+// Nao existe na tabela + " LEFT JOIN d_rm_orgao_superior ON fato_receita_municipios.id_orgao_superior_d_rm = d_rm_orgao_superior.id_orgao_superior_d_rm "
+						+ " LEFT JOIN d_rm_orgao ON fato_receita_municipios.id_orgao_d_rm = d_rm_orgao.id_orgao_d_rm "
 						+ " LEFT JOIN d_rm_municipio ON fato_receita_municipios.id_municipio_d_rm = d_rm_municipio.id_municipio_d_rm "
 						+ " LEFT JOIN d_rm_poder ON fato_receita_municipios.id_poder_d_rm = d_rm_poder.id_poder_d_rm "
 						+ " LEFT JOIN d_rm_data ON fato_receita_municipios.id_data_d_rm = d_rm_data.id_data_d_rm "
 						+ " LEFT JOIN d_rm_mes ON fato_receita_municipios.id_mes_d_rm = d_rm_mes.id_mes_d_rm "
 						+ " LEFT JOIN d_rm_ano ON fato_receita_municipios.id_ano_d_rm = d_rm_ano.id_ano_d_rm "
 						+ " LEFT JOIN d_rm_categoria ON fato_receita_municipios.id_categoria_d_rm = d_rm_categoria.id_categoria_d_rm "
+						+ " WHERE ds_poder = 'EXECUTIVO'"
 						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
@@ -157,6 +162,10 @@ public class ConversorReceita {
 		Property titulo = model.getProperty("http://purl.org/dc/elements/1.1/title");
 
 		Property codigo = model.getProperty(bra+"codigo");
+		
+		Property exercicio = model.getProperty(bra+"exercicio");
+		
+		Property data = model.getProperty("http://purl.org/dc/elements/1.1/title/date");
 
 		// Executa o SELECT
 		ResultSet rs = stmt.executeQuery();
@@ -184,7 +193,18 @@ public class ConversorReceita {
 			Resource GrupoDaReceita = null;
 
 			try {
-				String idReceita = rs.getString("id_fato_Receita_federal");
+				System.out.println("Criou Recurso Receita");
+				String idReceita = null;
+				if(ente.equals("d_rf")){
+					idReceita = rs.getString("id_fato_receita_federal");
+				}
+				else if(ente.equals("d_re")){
+					idReceita = rs.getString("id_fato_receita_estado");
+				}
+				else if(ente.equals("d_rm")){
+					idReceita = rs.getString("id_fato_receita_municipios");
+				}
+				
 				if(!rs.wasNull()){
 					Receita = triplas.createResource(bra+"Receita/"+idReceita);			
 					Receita.addProperty(tipo, bra+"Receita");
@@ -197,10 +217,14 @@ public class ConversorReceita {
 			// Popula os recursos, caso existam no banco de dados
 
 			try {
-				String cdIdentificadorResultadoPrimarioReceita = rs.getString("cd_identificador_resultado");
+				String idIdentificadorResultadoPrimarioReceita = rs.getString("id_identificador_resultado_"+ente);
 				if(!rs.wasNull()){
-					if(cdIdentificadorResultadoPrimarioReceita.equals("-1")){
-						cdIdentificadorResultadoPrimarioReceita = rs.getString("id_identificador_resultado_"+ente);
+					System.out.println("Tem idIdentificadorResultadoPrimarioReceita");
+					String cdIdentificadorResultadoPrimarioReceita = rs.getString("cd_identificador_resultado");
+					if(rs.wasNull()){
+						cdIdentificadorResultadoPrimarioReceita = idIdentificadorResultadoPrimarioReceita;
+					}else if(Integer.parseInt(cdIdentificadorResultadoPrimarioReceita)<0){
+						cdIdentificadorResultadoPrimarioReceita = idIdentificadorResultadoPrimarioReceita;
 					}
 					IdentificadorResultadoPrimarioReceita = triplas.createResource(bra+"IdentificadorResultadoPrimarioReceita/"+cdIdentificadorResultadoPrimarioReceita);
 					IdentificadorResultadoPrimarioReceita.addProperty(tipo, bra+"IdentificadorResultadoPrimarioReceita");
@@ -217,25 +241,32 @@ public class ConversorReceita {
 			}
 
 			try {
-				System.out.println("Entrou");
-				String cdCategoriaEconomicaDaReceita = rs.getString("cd_categoria_economica");
+				String idCategoriaEconomicaDaReceita = rs.getString("id_categoria_"+ente);
 				if(!rs.wasNull()){
-					if(cdCategoriaEconomicaDaReceita.equals("-1")){
-						cdCategoriaEconomicaDaReceita = rs.getString("id_categoria_economica_"+ente);
+					System.out.println("Tem idCategoriaEconomicaDaReceita");
+					String cdCategoriaEconomicaDaReceita = rs.getString("cd_categoria");
+					if(rs.wasNull()){
+						cdCategoriaEconomicaDaReceita = idCategoriaEconomicaDaReceita;
+					}else if(Integer.parseInt(cdCategoriaEconomicaDaReceita)<0){
+						cdCategoriaEconomicaDaReceita = idCategoriaEconomicaDaReceita;
 					}
 					CategoriaEconomicaDaReceita = triplas.createResource(bra+"CategoriaEconomicaDaReceita/"+cdCategoriaEconomicaDaReceita);
 					CategoriaEconomicaDaReceita.addProperty(tipo, bra+"CategoriaEconomicaDaReceita");
 					CategoriaEconomicaDaReceita.addLiteral(codigo, cdCategoriaEconomicaDaReceita);
 
-					String dsCategoriaEconomicaDaReceita = rs.getString("ds_categoria_economica");
+					String dsCategoriaEconomicaDaReceita = rs.getString("ds_categoria");
 					CategoriaEconomicaDaReceita.addLiteral(titulo, dsCategoriaEconomicaDaReceita);
 
 					Receita.addProperty(temCategoriaEconomicaDaReceita, CategoriaEconomicaDaReceita);
 					
-					String cdOrigem = rs.getString("cd_origem");
+					String idOrigem = rs.getString("id_origem_"+ente);
 					if(!rs.wasNull()){
-						if(cdOrigem.equals("-1")){
-							cdOrigem = rs.getString("id_origem_"+ente);
+						System.out.println("Tem idOrigem");
+						String cdOrigem = rs.getString("cd_origem");
+						if(rs.wasNull()){
+							cdOrigem = idOrigem;
+						}else if(Integer.parseInt(cdOrigem)<0){
+							cdOrigem = idOrigem;
 						}
 						Origem = triplas.createResource(bra+"Origem/"+rs.getInt("cd_origem"));
 						Origem.addProperty(tipo, bra+"Origem");
@@ -248,10 +279,14 @@ public class ConversorReceita {
 						
 						Receita.addProperty(temOrigem, Origem);
 						
-						String cdEspecie = rs.getString("cd_especie");
-						if(!rs.wasNull()){					
-							if(cdEspecie.equals("-1")){
-								cdEspecie = rs.getString("id_especie_"+ente);
+						String idEspecie = rs.getString("id_especie_"+ente);
+						if(!rs.wasNull()){		
+							System.out.println("Tem idEspecie");
+							String cdEspecie = rs.getString("cd_especie");
+							if(rs.wasNull()){
+								cdEspecie= idEspecie;
+							}else if(Integer.parseInt(cdEspecie)<0){
+								cdEspecie= idEspecie;
 							}
 							Especie = triplas.createResource(bra+"Especie/"+cdEspecie);
 							Especie.addProperty(tipo, bra+"Especie");
@@ -264,10 +299,14 @@ public class ConversorReceita {
 
 							Receita.addProperty(temEspecie, Especie);
 							
-							String cdRubrica = rs.getString("cd_rubrica");
+							String idRubrica = rs.getString("id_rubrica_"+ente);
 							if(!rs.wasNull()){
-								if(cdRubrica.equals("-1")){
-									cdRubrica = rs.getString("-1");
+								System.out.println("Tem idRubrica");
+								String cdRubrica = rs.getString("cd_rubrica");
+								if(rs.wasNull()){
+									cdRubrica = idRubrica;
+								}else if(Integer.parseInt(cdRubrica)<0){
+									cdRubrica = idRubrica;
 								}
 								Rubrica = triplas.createResource(bra+"Rubrica/"+cdRubrica);
 								Rubrica.addProperty(tipo, bra+"Rubrica");
@@ -280,10 +319,14 @@ public class ConversorReceita {
 								
 								Receita.addProperty(temRubrica, Rubrica);
 
-								String cdAlinea = rs.getString("cd_alinea");
+								String idAlinea = rs.getString("id_alinea_"+ente);
 								if(!rs.wasNull()){
-									if(cdAlinea.equals("-1")){
-										cdAlinea = rs.getString("id_alinea_"+ente);
+									System.out.println("Tem idAlinea");
+									String cdAlinea = rs.getString("cd_alinea");
+									if(rs.wasNull()){
+										cdAlinea = idAlinea;
+									}else if(Integer.parseInt(cdAlinea)<0){
+										cdAlinea = idAlinea;
 									}
 									Alinea = triplas.createResource(bra+"Alinea/"+cdAlinea);
 									Alinea.addProperty(tipo, bra+"Alinea");	
@@ -296,10 +339,14 @@ public class ConversorReceita {
 									
 									Receita.addProperty(temAlinea, Alinea);
 
-									String cdSubalinea = rs.getString("cd_subalinea");
+									String idSubalinea = rs.getString("id_subalinea_"+ente);
 									if(!rs.wasNull()){
-										if(cdSubalinea.equals("-1")){
-											cdSubalinea = rs.getString("id_subalinea_"+ente);
+										System.out.println("Tem idSubalinea");
+										String cdSubalinea = rs.getString("cd_subalinea");
+										if(rs.wasNull()){
+											cdSubalinea = idSubalinea;
+										}else if(Integer.parseInt(cdSubalinea)<0){
+											cdSubalinea = idSubalinea;
 										}
 										Subalinea = triplas.createResource(bra+"Subalinea/"+cdSubalinea);
 										Subalinea.addProperty(tipo, bra+"Subalinea");	
@@ -325,10 +372,14 @@ public class ConversorReceita {
 			}
 			
 			try {
-				String cdEspecificacaoDaFonteDestinacao = rs.getString("cd_destino"); // ---> Nao existe cd_fonte_recurso?
+				String idEspecificacaoDaFonteDestinacao = rs.getString("id_destino_"+ente); // ---> Nao existe cd_fonte_recurso?
 				if(!rs.wasNull()){
-					if(cdEspecificacaoDaFonteDestinacao.equals("-1")){
-						cdEspecificacaoDaFonteDestinacao = rs.getString("id_destino_"+ente);
+					System.out.println("Tem idEspecificadaDaFonteDestinacao");
+					String cdEspecificacaoDaFonteDestinacao = rs.getString("cd_destino");
+					if(rs.wasNull()){
+						cdEspecificacaoDaFonteDestinacao = idEspecificacaoDaFonteDestinacao;
+					}else if(Integer.parseInt(cdEspecificacaoDaFonteDestinacao)<0){
+						cdEspecificacaoDaFonteDestinacao = idEspecificacaoDaFonteDestinacao;
 					}
 					EspecificacaoDaFonteDestinacao = triplas.createResource(bra+"EspecificacaoDaFonteDestinacao/"+cdEspecificacaoDaFonteDestinacao);
 					EspecificacaoDaFonteDestinacao.addProperty(tipo, bra+"EspecificacaoDaFonteDestinacao");
@@ -339,10 +390,14 @@ public class ConversorReceita {
 					
 					Receita.addProperty(temDestino, EspecificacaoDaFonteDestinacao);
 
-					String cdGrupo = rs.getString("cd_grupo_fonte"); 
+					String idGrupo = rs.getString("id_grupo_destino_"+ente); 
 					if(!rs.wasNull()){
-						if(cdGrupo.equals("-1")){
-							cdGrupo = rs.getString("id_grupo_fonte_"+ente);
+						System.out.println("Tem idGrupo");
+						String cdGrupo = rs.getString("cd_grupo_destino");
+						if(rs.wasNull()){
+							cdGrupo = idGrupo;
+						}else if(Integer.parseInt(cdGrupo)<0){
+							cdGrupo = idGrupo;
 						}
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
 						GrupoDaFonteDestinacao.addProperty(tipo, bra+"GrupoDaFonteDestinacao");
@@ -412,12 +467,34 @@ public class ConversorReceita {
 			try {
 				int valorArrecadadoDado = rs.getInt("valor_arrecadado");
 				if(!rs.wasNull()){
+					System.out.println("Tem valorArrecadado");
 					Receita.addLiteral(valorArrecadado, valorArrecadadoDado);
 				}
 				
-				int valorPrevistoDado = rs.getInt("valor_repvisto");
+				int valorPrevistoDado = rs.getInt("valor_previsto");
 				if(!rs.wasNull()){
+					System.out.println("Tem valorPrevisto");
 					Receita.addLiteral(valorPrevisto, valorPrevistoDado);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				int exercicioDado = rs.getInt("ano_exercicio");
+				if(!rs.wasNull()){
+					Receita.addLiteral(exercicio, exercicioDado);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				int dataDado = rs.getInt("data");
+				if(!rs.wasNull()){
+					Receita.addLiteral(data, dataDado);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

@@ -19,8 +19,8 @@ public class Main {
 		String db = args[0];
 		String username = args[1]; 
 		String password = args[2];
-		String ontologia = args[3];
-		String fileName = args[4];
+		String ontologia = args[3]+"orcamento_rdf_no_individuals_4_5c.owl";
+		String fileName = args[3]+"despesaMunicipioSP.rdf";
 		FileWriter out = new FileWriter(fileName);
 		
 		Connection conn = new ConnectionFactory().getConnection(db, username, password);
@@ -55,11 +55,16 @@ public class Main {
 		 
 		
 		//System.out.println("Criando recursos Despesa Federal");
-		//ConversorDespesa.criaRecursosDespesa(dFederal, ConversorDespesa.queryDespesaFederal(conn, 100, 0), model, triplas);
+//		ConversorDespesa.criaRecursosDespesa(dFederal, ConversorDespesa.queryDespesaFederal(conn, 100, 300), model, triplas);
+//		ConversorDespesa.criaRecursosDespesa(dEstadoSP, ConversorDespesa.queryDespesaEstadual(conn, 100, 300), model, triplas);
+//		ConversorDespesa.criaRecursosDespesa(dMunicipiosSP, ConversorDespesa.queryDespesaMunicipal(conn, 100, 300), model, triplas);
+		ConversorDespesa.criaRecursosDespesa(dCapitalSP, ConversorDespesa.queryDespesaMunicipioSP(conn, 100, 300), model, triplas);
 		
-		System.out.println("Criando recursos Receita Federal");
-		ConversorReceita.criaRecursosReceita(rFederal, ConversorReceita.queryReceitaFederal(conn, 100, 0), model, triplas);
-		
+//		System.out.println("Criando recursos Receita Federal");
+//		ConversorReceita.criaRecursosReceita(rFederal, ConversorReceita.queryReceitaFederal(conn, 100, 300), model, triplas);
+//		ConversorReceita.criaRecursosReceita(rEstadoSP, ConversorReceita.queryReceitaEstadual(conn, 100, 300), model, triplas);
+//		ConversorReceita.criaRecursosReceita(rMunicipiosSP, ConversorReceita.queryReceitaMunicipal(conn, 100, 300), model, triplas);
+
 		System.out.println("\n\nFim");
 //		model.write(System.out);
 		triplas.write(out);

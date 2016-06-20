@@ -13,6 +13,114 @@ public class ConversorDespesa {
 	// Prefixos
 	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
+	public static PreparedStatement queryDespesaMunicipioSP(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM fato_despesa_municipioSP"
+						+ " LEFT JOIN d_dmsp_programa ON fato_despesa_municipioSP.id_programa_d_dmsp = d_dmsp_programa.id_programa_d_dmsp"
+						+ " LEFT JOIN d_dmsp_orgao ON fato_despesa_municipioSP.id_orgao_d_dmsp = d_dmsp_orgao.id_orgao_d_dmsp"
+						+ " LEFT JOIN d_dmsp_modalidade_despesa ON fato_despesa_municipioSP.id_modalidade_despesa_d_dmsp = d_dmsp_modalidade_despesa.id_modalidade_despesa_d_dmsp"
+						+ " LEFT JOIN d_dmsp_grupo_despesa ON fato_despesa_municipioSP.id_grupo_despesa_d_dmsp = d_dmsp_grupo_despesa.id_grupo_despesa_d_dmsp"
+						+ " LEFT JOIN d_dmsp_funcao ON fato_despesa_municipioSP.id_funcao_d_dmsp = d_dmsp_funcao.id_funcao_d_dmsp"
+						+ " LEFT JOIN d_dmsp_subfuncao ON fato_despesa_municipioSP.id_subfuncao_d_dmsp = d_dmsp_subfuncao.id_subfuncao_d_dmsp"
+						+ " LEFT JOIN d_dmsp_categoria_despesa ON fato_despesa_municipioSP.id_categoria_despesa_d_dmsp = d_dmsp_categoria_despesa.id_categoria_despesa_d_dmsp"
+						+ " LEFT JOIN d_dmsp_ano ON fato_despesa_municipioSP.id_ano_d_dmsp = d_dmsp_ano.id_ano_d_dmsp"
+						+ " LEFT JOIN d_dmsp_fonte_recurso ON fato_despesa_municipioSP.id_fonte_recurso_d_dmsp = d_dmsp_fonte_recurso.id_fonte_recurso_d_dmsp"
+						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+		/*
+		//Testa o retorno do resultSet.
+		ResultSet rs = stmt.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		System.out.println("Vai comecar:");
+		while (rs.next()) {
+			System.out.println("HasNext");
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+		 */
+
+		return stmt;
+	}
+	
+	public static PreparedStatement queryDespesaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM fato_despesa_municipios"
+						+ " LEFT JOIN d_dm_programa ON fato_despesa_municipios.id_programa_d_dm = d_dm_programa.id_programa_d_dm"
+						+ " LEFT JOIN d_dm_orgao ON fato_despesa_municipios.id_orgao_d_dm = d_dm_orgao.id_orgao_d_dm"
+						+ " LEFT JOIN d_dm_modalidade_despesa ON fato_despesa_municipios.id_modalidade_despesa_d_dm = d_dm_modalidade_despesa.id_modalidade_despesa_d_dm"
+						+ " LEFT JOIN d_dm_grupo_despesa ON fato_despesa_municipios.id_grupo_despesa_d_dm = d_dm_grupo_despesa.id_grupo_despesa_d_dm"
+						+ " LEFT JOIN d_dm_funcao ON fato_despesa_municipios.id_funcao_d_dm = d_dm_funcao.id_funcao_d_dm"
+						+ " LEFT JOIN d_dm_subfuncao ON fato_despesa_municipios.id_subfuncao_d_dm = d_dm_subfuncao.id_subfuncao_d_dm"
+						+ " LEFT JOIN d_dm_elemento_despesa ON fato_despesa_municipios.id_elemento_despesa_d_dm = d_dm_elemento_despesa.id_elemento_despesa_d_dm"
+						//+ " LEFT JOIN d_dm_credor ON fato_despesa_municipios.id_credor_d_dm = d_dm_credor.id_credor_d_dm"
+						+ " LEFT JOIN d_dm_categoria_despesa ON fato_despesa_municipios.id_categoria_despesa_d_dm = d_dm_categoria_despesa.id_categoria_despesa_d_dm"
+						+ " LEFT JOIN d_dm_ano ON fato_despesa_municipios.id_ano_d_dm = d_dm_ano.id_ano_d_dm"
+						+ " LEFT JOIN d_dm_acao ON fato_despesa_municipios.id_acao_d_dm = d_dm_acao.id_acao_d_dm"
+						+ " LEFT JOIN d_dm_fonte_recurso ON fato_despesa_municipios.id_fonte_recurso_d_dm = d_dm_fonte_recurso.id_fonte_recurso_d_dm"
+						//+ " LEFT JOIN d_dm_data ON fato_despesa_municipios.id_data_d_dm = d_dm_data.id_data_d_dm"
+						+ " LEFT JOIN d_dm_municipio ON fato_despesa_municipios.id_municipio_d_dm = d_dm_municipio.id_municipio_d_dm"
+						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+		/*
+		//Testa o retorno do resultSet.
+		ResultSet rs = stmt.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		System.out.println("Vai comecar:");
+		while (rs.next()) {
+			System.out.println("HasNext");
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+		 */
+
+		return stmt;
+	}
+	
+	public static PreparedStatement queryDespesaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM fato_despesa_estado"
+						+ " LEFT JOIN d_de_programa ON fato_despesa_estado.id_programa_d_de = d_de_programa.id_programa_d_de"
+						+ " LEFT JOIN d_de_orgao ON fato_despesa_estado.id_orgao_d_de = d_de_orgao.id_orgao_d_de"
+						+ " LEFT JOIN d_de_modalidade_despesa ON fato_despesa_estado.id_modalidade_despesa_d_de = d_de_modalidade_despesa.id_modalidade_despesa_d_de"
+						+ " LEFT JOIN d_de_grupo_despesa ON fato_despesa_estado.id_grupo_despesa_d_de = d_de_grupo_despesa.id_grupo_despesa_d_de"
+						+ " LEFT JOIN d_de_funcao ON fato_despesa_estado.id_funcao_d_de = d_de_funcao.id_funcao_d_de"
+						+ " LEFT JOIN d_de_subfuncao ON fato_despesa_estado.id_subfuncao_d_de = d_de_subfuncao.id_subfuncao_d_de"
+						+ " LEFT JOIN d_de_elemento_despesa ON fato_despesa_estado.id_elemento_despesa_d_de = d_de_elemento_despesa.id_elemento_despesa_d_de"
+						+ " LEFT JOIN d_de_credor ON fato_despesa_estado.id_credor_d_de = d_de_credor.id_credor_d_de"
+						+ " LEFT JOIN d_de_categoria_despesa ON fato_despesa_estado.id_categoria_despesa_d_de = d_de_categoria_despesa.id_categoria_despesa_d_de"
+						+ " LEFT JOIN d_de_ano ON fato_despesa_estado.id_ano_d_de = d_de_ano.id_ano_d_de"
+						+ " LEFT JOIN d_de_acao ON fato_despesa_estado.id_acao_d_de = d_de_acao.id_acao_d_de"
+						+ " LEFT JOIN d_de_unidade_gestora ON fato_despesa_estado.id_unidade_gestora_d_de = d_de_unidade_gestora.id_unidade_gestora_d_de"
+						+ " LEFT JOIN d_de_fonte_recurso ON fato_despesa_estado.id_fonte_recurso_d_de = d_de_fonte_recurso.id_fonte_recurso_d_de"
+						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+		/*
+		//Testa o retorno do resultSet.
+		ResultSet rs = stmt.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		System.out.println("Vai comecar:");
+		while (rs.next()) {
+			System.out.println("HasNext");
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+		 */
+
+		return stmt;
+	}
+	
 	public static PreparedStatement queryDespesaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_federal"
@@ -85,8 +193,7 @@ public class ConversorDespesa {
 		Property pertenceAEsfera = model.getProperty(bra+"pertenceAEsfera");
 
 		Property temFuncao = model.getProperty(bra+"temFuncao");
-		Property temSubFuncao = model.getProperty(bra+"temSubFuncao");
-
+		Property temSubfuncao = model.getProperty(bra+"temSubfuncao");
 
 		Property temFonte = model.getProperty(bra+"temFonte");
 		Property detalhaGrupoDaFonteDestinacao = model.getProperty(bra+"detalhaGrupoDaFonteDestinacao");
@@ -107,10 +214,18 @@ public class ConversorDespesa {
 		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
 		Property valor = model.getProperty(bra+"valor");
+		
+		Property valorEmpenhado = model.getProperty(bra+"valorEmpenhado");
+		
+		Property valorLiquidado = model.getProperty(bra+"valorLiquidado");
 
 		Property titulo = model.getProperty("http://purl.org/dc/elements/1.1/title");
 
 		Property codigo = model.getProperty(bra+"codigo");
+		
+		Property exercicio = model.getProperty(bra+"exercicio");
+		
+		Property data = model.getProperty("http://purl.org/dc/elements/1.1/title/date");
 
 		while (rs.next()) {
 			// Cria iterativamente recursos e suas propriedades a partir do resultSet
@@ -139,11 +254,26 @@ public class ConversorDespesa {
 			Resource Credor = null;
 
 			try {
-				String idDespesa = rs.getString("id_fato_despesa_federal");
+								
+				String idDespesa = null;
+				if(ente.equals("d_df")){
+					idDespesa = rs.getString("id_fato_despesa_federal");
+				}
+				else if(ente.equals("d_de")){
+					idDespesa = rs.getString("id_fato_despesa_estado");
+				}
+				else if(ente.equals("d_dm")){
+					idDespesa = rs.getString("id_fato_despesa_municipios");
+				}
+				else if(ente.equals("d_dmsp")){
+					idDespesa = rs.getString("id_fato_despesa_municipioSP");
+				}
+				
 				if(!rs.wasNull()){
 					Despesa = triplas.createResource(bra+"Despesa/"+idDespesa);			
 					Despesa.addProperty(tipo, bra+"Despesa");
 				}
+				
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -151,8 +281,14 @@ public class ConversorDespesa {
 			
 			// Popula os recursos, caso existam no banco de dados
 			try {
-				String cdPrograma = rs.getString("cd_programa");
+				String idPrograma = rs.getString("id_programa_"+ente);
 				if(!rs.wasNull()){
+					String cdPrograma = rs.getString("cd_programa");
+					if(rs.wasNull()){
+						cdPrograma = idPrograma;
+					}else if(Integer.parseInt(cdPrograma)<0){
+						cdPrograma = idPrograma;
+					}
 					Programa = triplas.createResource(bra+"Programa/"+cdPrograma);
 					Programa.addProperty(tipo, bra+"Programa");
 					Programa.addLiteral(codigo, cdPrograma);
@@ -168,9 +304,15 @@ public class ConversorDespesa {
 			}
 
 			try{
-				String cdIdentificador = rs.getString("cd_identificador_primario");
+				String idIdentificador = rs.getString("id_identificador_primario_"+ente);
 
 				if(!rs.wasNull()){
+					String cdIdentificador = rs.getString("cd_identificador_primario");
+					if(rs.wasNull()){
+						cdIdentificador = idIdentificador;
+					}else if(Integer.parseInt(cdIdentificador)<0){
+						cdIdentificador = idIdentificador;
+					}
 					IdentificadorResultadoPrimarioDespesa = triplas.createResource(bra+"IdentificadorResultadoPrimarioDespesa/"+cdIdentificador);
 					IdentificadorResultadoPrimarioDespesa.addProperty(tipo, bra+"IdentificadorResultadoPrimarioDespesa");
 					IdentificadorResultadoPrimarioDespesa.addLiteral(codigo, cdIdentificador);
@@ -350,9 +492,9 @@ public class ConversorDespesa {
 						String dsSubfuncao = rs.getString("ds_subfuncao");
 						Subfuncao.addLiteral(titulo, dsSubfuncao);
 
-						Funcao.addProperty(temSubFuncao, Subfuncao);
+						Funcao.addProperty(temSubfuncao, Subfuncao);
 						
-						Despesa.addProperty(temSubFuncao, Subfuncao);
+						Despesa.addProperty(temSubfuncao, Subfuncao);
 					}
 
 				}
@@ -479,9 +621,49 @@ public class ConversorDespesa {
 			}
 
 			try {
-				int valorPago = rs.getInt("valor");
+				int valorDado = rs.getInt("valor");
 				if(!rs.wasNull()){
-					Despesa.addLiteral(valor, valorPago);
+					Despesa.addLiteral(valor, valorDado);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				int valorEmpenhadoDado = rs.getInt("valor_empenhado");
+				if(!rs.wasNull()){
+					Despesa.addLiteral(valorEmpenhado, valorEmpenhadoDado);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				int valorLiquidadoDado = rs.getInt("valor_liquidado");
+				if(!rs.wasNull()){
+					Despesa.addLiteral(valorLiquidado, valorLiquidadoDado);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				int exercicioDado = rs.getInt("ano_exercicio");
+				if(!rs.wasNull()){
+					Despesa.addLiteral(exercicio, exercicioDado);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				int dataDado = rs.getInt("data");
+				if(!rs.wasNull()){
+					Despesa.addLiteral(data, dataDado);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

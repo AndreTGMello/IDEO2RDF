@@ -19,8 +19,8 @@ public class Main {
 		String db = args[0];
 		String username = args[1]; 
 		String password = args[2];
-		String ontologia = args[3]+"orcamento_rdf_no_individuals_4_5c.owl";
-		String fileName = args[3]+"despesaMunicipioSP.rdf";
+		String ontologia = args[3]+"orcamento_rdf_no_individuals_4_6c.owl";
+		String fileName = args[3]+"receitaMunicipal.rdf";
 		FileWriter out = new FileWriter(fileName);
 		
 		Connection conn = new ConnectionFactory().getConnection(db, username, password);
@@ -53,17 +53,20 @@ public class Main {
 		 String dMunicipiosSP = "d_dm";
 		 String dCapitalSP = "d_dmsp"; 
 		 
+		 // Converores
+		 ConversorDespesa cd = new ConversorDespesa();
+		 ConversorReceita cr = new ConversorReceita();
 		
 		//System.out.println("Criando recursos Despesa Federal");
-//		ConversorDespesa.criaRecursosDespesa(dFederal, ConversorDespesa.queryDespesaFederal(conn, 100, 300), model, triplas);
-//		ConversorDespesa.criaRecursosDespesa(dEstadoSP, ConversorDespesa.queryDespesaEstadual(conn, 100, 300), model, triplas);
-//		ConversorDespesa.criaRecursosDespesa(dMunicipiosSP, ConversorDespesa.queryDespesaMunicipal(conn, 100, 300), model, triplas);
-		ConversorDespesa.criaRecursosDespesa(dCapitalSP, ConversorDespesa.queryDespesaMunicipioSP(conn, 100, 300), model, triplas);
+//		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 100, 300), model, triplas);
+		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 100, 300), model, triplas);
+//		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 300), model, triplas);
+//		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 300), model, triplas);
 		
 //		System.out.println("Criando recursos Receita Federal");
-//		ConversorReceita.criaRecursosReceita(rFederal, ConversorReceita.queryReceitaFederal(conn, 100, 300), model, triplas);
-//		ConversorReceita.criaRecursosReceita(rEstadoSP, ConversorReceita.queryReceitaEstadual(conn, 100, 300), model, triplas);
-//		ConversorReceita.criaRecursosReceita(rMunicipiosSP, ConversorReceita.queryReceitaMunicipal(conn, 100, 300), model, triplas);
+//		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 100, 300), model, triplas);
+//		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 100, 300), model, triplas);
+//		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 100, 300), model, triplas);
 
 		System.out.println("\n\nFim");
 //		model.write(System.out);

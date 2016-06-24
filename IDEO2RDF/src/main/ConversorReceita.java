@@ -16,9 +16,9 @@ import org.apache.jena.sparql.pfunction.PropertyFunctionRegistry;
 public class ConversorReceita {
 
 	// Prefixos
-	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
+	private static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
-	public static PreparedStatement queryReceitaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryReceitaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_federal"
 						+ " LEFT JOIN d_rf_origem ON fato_receita_federal.id_origem_d_rf = d_rf_origem.id_origem_d_rf "
@@ -55,7 +55,7 @@ public class ConversorReceita {
 		return stmt;
 	}
 	
-	public static PreparedStatement queryReceitaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryReceitaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_estado"
 						+ " LEFT JOIN d_re_origem ON fato_receita_estado.id_origem_d_re = d_re_origem.id_origem_d_re "
@@ -93,7 +93,7 @@ public class ConversorReceita {
 		return stmt;
 	}
 
-	public static PreparedStatement queryReceitaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryReceitaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_municipios"
 						+ " LEFT JOIN d_rm_origem ON fato_receita_municipios.id_origem_d_rm = d_rm_origem.id_origem_d_rm "
@@ -134,7 +134,7 @@ public class ConversorReceita {
 		return stmt;
 	}
 	
-	public static void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
+	public void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Propriedades

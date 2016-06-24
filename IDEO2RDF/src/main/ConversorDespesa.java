@@ -11,9 +11,9 @@ import org.postgresql.util.PSQLException;
 
 public class ConversorDespesa {
 	// Prefixos
-	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
+	private static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
-	public static PreparedStatement queryDespesaMunicipioSP(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryDespesaMunicipioSP(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_municipioSP"
 						+ " LEFT JOIN d_dmsp_programa ON fato_despesa_municipioSP.id_programa_d_dmsp = d_dmsp_programa.id_programa_d_dmsp"
@@ -46,7 +46,7 @@ public class ConversorDespesa {
 		return stmt;
 	}
 	
-	public static PreparedStatement queryDespesaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryDespesaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_municipios"
 						+ " LEFT JOIN d_dm_programa ON fato_despesa_municipios.id_programa_d_dm = d_dm_programa.id_programa_d_dm"
@@ -84,7 +84,7 @@ public class ConversorDespesa {
 		return stmt;
 	}
 	
-	public static PreparedStatement queryDespesaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryDespesaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_estado"
 						+ " LEFT JOIN d_de_programa ON fato_despesa_estado.id_programa_d_de = d_de_programa.id_programa_d_de"
@@ -121,7 +121,7 @@ public class ConversorDespesa {
 		return stmt;
 	}
 	
-	public static PreparedStatement queryDespesaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+	public PreparedStatement queryDespesaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_federal"
 						+ " LEFT JOIN d_df_repasse ON fato_despesa_federal.id_repasse_d_df = d_df_repasse.id_repasse_d_df"
@@ -176,7 +176,7 @@ public class ConversorDespesa {
 		return stmt;
 	}
 
-	public static void criaRecursosDespesa(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
+	public void criaRecursosDespesa(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Executa a query

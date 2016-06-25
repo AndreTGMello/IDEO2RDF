@@ -78,7 +78,6 @@ public class Main {
 		DespesasMun.setNsPrefix("bra", bra);
 		DespesaSP.setNsPrefix("bra", bra);  
 
-
 		//Receita:
 		String rFederal = "d_rf";
 		String rEstadoSP = "d_re";
@@ -100,7 +99,7 @@ public class Main {
 		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 300), model, DespesasMun);
 		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 300), model, DespesaSP);
 
-		System.out.println("Criando recursos Receita Federal");
+		//System.out.println("Criando recursos Receita Federal");
 		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 100, 300), model, ReceitasFed);
 		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 100, 300), model, ReceitasEst);
 		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 100, 300), model, ReceitasMun);

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 import org.postgresql.util.PSQLException;
 
 public class ConversorDespesa {
@@ -212,8 +213,6 @@ public class ConversorDespesa {
 
 		Property temCredor = model.getProperty(bra+"temCredor");
 
-		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
-
 		Property valor = model.getProperty(bra+"valor");
 
 		Property valorEmpenhado = model.getProperty(bra+"valorEmpenhado");
@@ -272,7 +271,7 @@ public class ConversorDespesa {
 
 				if(!rs.wasNull()){
 					Despesa = triplas.createResource(bra+"Despesa/"+idDespesa);			
-					Despesa.addProperty(tipo, bra+"Despesa");
+					Despesa.addProperty(RDF.type, bra+"Despesa");
 				}
 
 			} catch (Exception e) {
@@ -291,7 +290,7 @@ public class ConversorDespesa {
 						cdPrograma = idPrograma;
 					}
 					Programa = triplas.createResource(bra+"Programa/"+cdPrograma);
-					Programa.addProperty(tipo, bra+"Programa");
+					Programa.addProperty(RDF.type, bra+"Programa");
 					Programa.addLiteral(codigo, cdPrograma);
 
 					String dsPrograma = rs.getString("ds_programa");
@@ -315,7 +314,7 @@ public class ConversorDespesa {
 						cdIdentificador = idIdentificador;
 					}
 					IdentificadorResultadoPrimarioDespesa = triplas.createResource(bra+"IdentificadorResultadoPrimarioDespesa/"+cdIdentificador);
-					IdentificadorResultadoPrimarioDespesa.addProperty(tipo, bra+"IdentificadorResultadoPrimarioDespesa");
+					IdentificadorResultadoPrimarioDespesa.addProperty(RDF.type, bra+"IdentificadorResultadoPrimarioDespesa");
 					IdentificadorResultadoPrimarioDespesa.addLiteral(codigo, cdIdentificador);
 
 					String dsIdentificador = rs.getString("ds_identificador_primario");
@@ -337,7 +336,7 @@ public class ConversorDespesa {
 						cdIduso = idIduso;
 					}
 					Iduso = triplas.createResource(bra+"Iduso/"+cdIduso);
-					Iduso.addProperty(tipo, bra+"Iduso");
+					Iduso.addProperty(RDF.type, bra+"Iduso");
 					Iduso.addLiteral(codigo, cdIduso);
 
 					String dsIduso = rs.getString("ds_iduso");
@@ -360,7 +359,7 @@ public class ConversorDespesa {
 						cdIdoc = idIdoc;
 					}
 					Idoc = triplas.createResource(bra+"Idoc/"+cdIdoc);
-					Idoc.addProperty(tipo, bra+"Idoc");
+					Idoc.addProperty(RDF.type, bra+"Idoc");
 					Idoc.addLiteral(codigo, cdIdoc);
 
 					String dsIdoc = rs.getString("ds_idoc");
@@ -385,7 +384,7 @@ public class ConversorDespesa {
 						}
 						OrgaoSuperior = triplas.createResource(bra+"OrgaoSuperior/"+cdOrgaoSuperior);
 						OrgaoSuperior.addLiteral(codigo, cdOrgaoSuperior);
-						OrgaoSuperior.addProperty(tipo, bra+"OrgaoSuperior");
+						OrgaoSuperior.addProperty(RDF.type, bra+"OrgaoSuperior");
 
 						String dsOrgaoSuperior = rs.getString("ds_orgao_superior");
 						OrgaoSuperior.addLiteral(titulo, dsOrgaoSuperior);
@@ -402,7 +401,7 @@ public class ConversorDespesa {
 							}
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
-							Orgao.addProperty(tipo, bra+"Orgao");
+							Orgao.addProperty(RDF.type, bra+"Orgao");
 
 							String dsOrgao = rs.getString("ds_orgao");
 							Orgao.addLiteral(titulo, dsOrgao);
@@ -418,7 +417,7 @@ public class ConversorDespesa {
 								}
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
+								UnidadeGestora.addProperty(RDF.type, bra+"UnidadeGestora");
 
 								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
 								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
@@ -440,7 +439,7 @@ public class ConversorDespesa {
 						}
 						Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 						Orgao.addLiteral(codigo, cdOrgao);
-						Orgao.addProperty(tipo, bra+"Orgao");
+						Orgao.addProperty(RDF.type, bra+"Orgao");
 
 						String dsOrgao = rs.getString("ds_orgao");
 						Orgao.addLiteral(titulo, dsOrgao);
@@ -457,7 +456,7 @@ public class ConversorDespesa {
 							}
 							UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 							UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-							UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
+							UnidadeGestora.addProperty(RDF.type, bra+"UnidadeGestora");
 
 							String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
 							UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
@@ -478,7 +477,7 @@ public class ConversorDespesa {
 						}
 						Municipio = triplas.createResource(bra+"Municipio/"+cdMunicipio);
 						Municipio.addLiteral(codigo, cdMunicipio);
-						Municipio.addProperty(tipo, bra+"Municipio");
+						Municipio.addProperty(RDF.type, bra+"Municipio");
 
 						String dsMunicipio = rs.getString("ds_municipio");
 						Municipio.addLiteral(titulo, dsMunicipio);
@@ -495,7 +494,7 @@ public class ConversorDespesa {
 							}
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
-							Orgao.addProperty(tipo, bra+"Orgao");
+							Orgao.addProperty(RDF.type, bra+"Orgao");
 
 							String dsOrgao = rs.getString("ds_orgao");
 							Orgao.addLiteral(titulo, dsOrgao);
@@ -519,7 +518,7 @@ public class ConversorDespesa {
 						cdEsfera = idEsfera;
 					}
 					Esfera = triplas.createResource(bra+"Esfera/"+cdEsfera);
-					Esfera.addProperty(tipo, bra+"Esfera");
+					Esfera.addProperty(RDF.type, bra+"Esfera");
 					Esfera.addLiteral(codigo, cdEsfera);
 
 					String dsEsfera = rs.getString("ds_esfera");
@@ -542,7 +541,7 @@ public class ConversorDespesa {
 						cdFuncao = idFuncao;
 					}
 					Funcao = triplas.createResource(bra+"Funcao/"+cdFuncao);
-					Funcao.addProperty(tipo, bra+"Funcao");
+					Funcao.addProperty(RDF.type, bra+"Funcao");
 					Funcao.addLiteral(codigo, cdFuncao);
 
 					String dsFuncao = rs.getString("ds_funcao");
@@ -558,7 +557,7 @@ public class ConversorDespesa {
 							cdSubfuncao = idSubfuncao;
 						}
 						Subfuncao = triplas.createResource(bra+"Subfuncao/"+cdSubfuncao);
-						Subfuncao.addProperty(tipo, bra+"Subfuncao");
+						Subfuncao.addProperty(RDF.type, bra+"Subfuncao");
 						Subfuncao.addLiteral(codigo, cdSubfuncao);
 
 						String dsSubfuncao = rs.getString("ds_subfuncao");
@@ -585,7 +584,7 @@ public class ConversorDespesa {
 						cdEspecificacao = idEspecificacao;
 					}
 					EspecificacaoDaFonteDestinacao = triplas.createResource(bra+"EspecificacaoDaFonteDestinacao/"+cdEspecificacao);
-					EspecificacaoDaFonteDestinacao.addProperty(tipo, bra+"EspecificacaoDaFonteDestinacao");
+					EspecificacaoDaFonteDestinacao.addProperty(RDF.type, bra+"EspecificacaoDaFonteDestinacao");
 					EspecificacaoDaFonteDestinacao.addLiteral(codigo, cdEspecificacao);
 
 					String dsEspecificacao = rs.getString("ds_fonte_recurso");
@@ -601,7 +600,7 @@ public class ConversorDespesa {
 							cdGrupo = idGrupo;
 						}
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
-						GrupoDaFonteDestinacao.addProperty(tipo, bra+"GrupoDaFonteDestinacao");
+						GrupoDaFonteDestinacao.addProperty(RDF.type, bra+"GrupoDaFonteDestinacao");
 						GrupoDaFonteDestinacao.addLiteral(codigo, cdGrupo);
 
 						String dsGrupo = rs.getString("ds_grupo_despesa");
@@ -626,7 +625,7 @@ public class ConversorDespesa {
 						cdCategoria = idCategoria;
 					}
 					CategoriaEconomicaDaDespesa = triplas.createResource(bra+"CategoriaEconomicaDaDespesa/"+cdCategoria);
-					CategoriaEconomicaDaDespesa.addProperty(tipo, bra+"CategoriaEconomicaDaDespesa");
+					CategoriaEconomicaDaDespesa.addProperty(RDF.type, bra+"CategoriaEconomicaDaDespesa");
 					CategoriaEconomicaDaDespesa.addLiteral(codigo, cdCategoria);
 
 					String dsCategoria = rs.getString("ds_categoria_despesa");
@@ -642,7 +641,7 @@ public class ConversorDespesa {
 							cdGND = idGND;
 						}
 						GND = triplas.createResource(bra+"GND/"+rs.getInt("cd_grupo_despesa"));
-						GND.addProperty(tipo, bra+"GND");
+						GND.addProperty(RDF.type, bra+"GND");
 						GND.addLiteral(codigo, cdGND);
 
 						String dsGND = rs.getString("ds_grupo_despesa");
@@ -660,7 +659,7 @@ public class ConversorDespesa {
 								cdModalidade = idModalidade;
 							}
 							ModalidadeDeAplicacao = triplas.createResource(bra+"ModalidadeDeAplicacao/"+cdModalidade);
-							ModalidadeDeAplicacao.addProperty(tipo, bra+"ModalidadeDeAplicacao");
+							ModalidadeDeAplicacao.addProperty(RDF.type, bra+"ModalidadeDeAplicacao");
 							ModalidadeDeAplicacao.addLiteral(codigo, cdModalidade);
 
 							String dsModalidade = rs.getString("ds_modalidade_despesa");
@@ -678,7 +677,7 @@ public class ConversorDespesa {
 									cdElemento = idElemento;
 								}
 								ElementoDeDespesa = triplas.createResource(bra+"ElementoDeDespesa/"+cdElemento);
-								ElementoDeDespesa.addProperty(tipo, bra+"ElementoDeDespesa");
+								ElementoDeDespesa.addProperty(RDF.type, bra+"ElementoDeDespesa");
 								ElementoDeDespesa.addLiteral(codigo, cdElemento);
 
 								String dsElemento = rs.getString("ds_elemento_despesa");
@@ -696,7 +695,7 @@ public class ConversorDespesa {
 										cdSubelemento = idSubelemento;
 									}
 									Subelemento = triplas.createResource(bra+"Subelemento/"+cdSubelemento);
-									Subelemento.addProperty(tipo, bra+"Subelemento");	
+									Subelemento.addProperty(RDF.type, bra+"Subelemento");	
 									Subelemento.addLiteral(codigo, cdSubelemento);
 
 									String dsSubelemento = rs.getString("ds_subelemento_despesa");
@@ -727,7 +726,7 @@ public class ConversorDespesa {
 						cdCredor = idCredor;
 					}
 					Credor = triplas.createResource(bra+"Credor/"+cdCredor);
-					Credor.addProperty(tipo, bra+"Credor");
+					Credor.addProperty(RDF.type, bra+"Credor");
 					Credor.addLiteral(codigo, cdCredor);
 
 					String dsCredor = rs.getString("ds_credor");

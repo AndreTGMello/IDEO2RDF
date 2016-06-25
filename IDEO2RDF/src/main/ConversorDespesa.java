@@ -781,7 +781,7 @@ public class ConversorDespesa {
 			}
 
 			try {
-				int dataDado = rs.getInt("data");
+				String dataDado = rs.getString("data");
 				if(!rs.wasNull()){
 					Despesa.addLiteral(data, dataDado);
 				}
@@ -791,7 +791,7 @@ public class ConversorDespesa {
 			}
 			
 			try {
-				int dataDado = rs.getInt("dt_emissao_despesa");
+				String dataDado = rs.getString("dt_emissao_despesa");
 				if(!rs.wasNull()){
 					Despesa.addLiteral(data, dataDado);
 				}

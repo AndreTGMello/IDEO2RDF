@@ -667,7 +667,7 @@ public class ConversorReceita {
 			}
 			
 			try {
-				int dataDado = rs.getInt("data");
+				String dataDado = rs.getString("data");
 				if(!rs.wasNull()){
 					Receita.addLiteral(data, dataDado);
 				}

@@ -148,16 +148,20 @@ public class ConversorReceita {
 		Property temSubalinea = model.getProperty(bra+"temSubalinea");
 
 		Property temDestino = model.getProperty(bra+"temDestino");
-		Property detalhaGrupoDaFonteDestinacao = model.getProperty("detalhaGrupoDaFonteDestinacao");
+		Property detalhaGrupoDaFonteDestinacao = model.getProperty(bra+"detalhaGrupoDaFonteDestinacao");
 
-		Property temClassificacaoDoGrupoDaReceita = model.getProperty("temClassificacaoDoGrupoDaReceita");
-		Property detalhaSubgrupoDaReceita = model.getProperty("detalhaSubgrupoDaReceita");
-		Property detalhaGrupoDaReceita = model.getProperty("detalhaGrupoDaReceita");
+		Property temClassificacaoDoGrupoDaReceita = model.getProperty(bra+"temClassificacaoDoGrupoDaReceita");
+		Property detalhaSubgrupoDaReceita = model.getProperty(bra+"detalhaSubgrupoDaReceita");
+		Property detalhaGrupoDaReceita = model.getProperty(bra+"detalhaGrupoDaReceita");
 
+		Property temGestor = model.getProperty(bra+"temGestor");
+		Property temSubgestor = model.getProperty(bra+"temSubgestor");
+		
 		Property tipo = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 
 		Property valorArrecadado = model.getProperty(bra+"valorArrecadado");
-		Property valorPrevisto = model.getProperty("valorPrevisto");
+		Property valorPrevisto = model.getProperty(bra+"valorPrevisto");
+		Property valorLancado = model.getProperty(bra+"valorLancado");
 
 		Property titulo = model.getProperty("http://purl.org/dc/elements/1.1/title");
 
@@ -191,7 +195,15 @@ public class ConversorReceita {
 			Resource EspecificacaoDoGrupoDaReceita = null;
 			Resource SubgrupoDaReceita = null;
 			Resource GrupoDaReceita = null;
+			
+			Resource Orgao = null;
+			Resource OrgaoSuperior = null;
+			Resource EntidadeVinculada = null;
+			Resource UnidadeGestora = null;
+			Resource Municipio = null;
+			Resource Gestao = null;
 
+			
 			try {
 				System.out.println("Criou Recurso Receita");
 				String idReceita = null;
@@ -415,6 +427,158 @@ public class ConversorReceita {
 				e.printStackTrace();
 			}
 			
+			try {
+				if(ente.equals("d_rf")){
+					String idOrgaoSuperior = rs.getString("id_orgao_superior_"+ente);
+					if(!rs.wasNull()){
+						String cdOrgaoSuperior = rs.getString("cd_orgao_superior");
+						if(rs.wasNull()){
+							cdOrgaoSuperior = idOrgaoSuperior;
+						}else if(Integer.parseInt(cdOrgaoSuperior)<0){
+							cdOrgaoSuperior = idOrgaoSuperior;
+						}
+						OrgaoSuperior = triplas.createResource(bra+"OrgaoSuperior/"+cdOrgaoSuperior);
+						OrgaoSuperior.addLiteral(codigo, cdOrgaoSuperior);
+						OrgaoSuperior.addProperty(tipo, bra+"OrgaoSuperior");
+
+						String dsOrgaoSuperior = rs.getString("ds_orgao_superior");
+						OrgaoSuperior.addLiteral(titulo, dsOrgaoSuperior);
+
+						Receita.addProperty(temGestor, OrgaoSuperior);
+
+						String idEntidadeVinculada = rs.getString("id_orgao_subordinado_"+ente);
+						if(!rs.wasNull()){
+							String cdEntidadeVinculada = rs.getString("cd_orgao_subordinado");
+							if(rs.wasNull()){
+								cdEntidadeVinculada = idEntidadeVinculada;
+							}else if(Integer.parseInt(cdEntidadeVinculada)<0){
+								cdEntidadeVinculada = idEntidadeVinculada;
+							}
+							EntidadeVinculada = triplas.createResource(bra+"EntidadeVinculada/"+cdEntidadeVinculada);
+							EntidadeVinculada.addLiteral(codigo, cdEntidadeVinculada);
+							EntidadeVinculada.addProperty(tipo, bra+"EntidadeVinculada");
+
+							String dsEntidadeVinculada = rs.getString("ds_orgao_subordinado");
+							EntidadeVinculada.addLiteral(titulo, dsEntidadeVinculada);
+
+							OrgaoSuperior.addProperty(temSubgestor, EntidadeVinculada);
+							String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
+							if(!rs.wasNull()){
+								String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+								if(rs.wasNull()){
+									cdUnidadeGestora = idUnidadeGestora;
+								}else if(Integer.parseInt(cdUnidadeGestora)<0){
+									cdUnidadeGestora = idUnidadeGestora;
+								}
+								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
+								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
+								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
+
+								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
+								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
+
+								EntidadeVinculada.addProperty(temSubgestor, UnidadeGestora);
+							}		
+						}
+					}
+				}
+
+				else if(ente.equals("d_re")){
+					String idOrgao = rs.getString("id_orgao_superior_"+ente);
+					if(!rs.wasNull()){
+						String cdOrgao = rs.getString("cd_orgao_superior");
+						if(rs.wasNull()){
+							cdOrgao = idOrgao;
+						}else if(Integer.parseInt(cdOrgao)<0){
+							cdOrgao = idOrgao;
+						}
+						Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+						Orgao.addLiteral(codigo, cdOrgao);
+						Orgao.addProperty(tipo, bra+"Orgao");
+
+						String dsOrgao = rs.getString("ds_orgao_superior");
+						Orgao.addLiteral(titulo, dsOrgao);
+
+						Receita.addProperty(temGestor, Orgao);
+
+						String idGestao = rs.getString("id_gestao"+ente);
+						if(!rs.wasNull()){
+							String cdGestao = rs.getString("cd_gestao");
+							if(rs.wasNull()){
+								cdGestao = idGestao;
+							}else if(Integer.parseInt(cdGestao)<0){
+								cdGestao = idGestao;
+							}
+							Gestao = triplas.createResource(bra+"Gestao/"+cdGestao);
+							Gestao.addLiteral(codigo, cdGestao);
+							Gestao.addProperty(tipo, bra+"Gestao");
+
+							String dsGestao = rs.getString("ds_gestao");
+							Gestao.addLiteral(titulo, dsGestao);
+
+							Orgao.addProperty(temSubgestor, Gestao);
+							String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
+							if(!rs.wasNull()){
+								String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+								if(rs.wasNull()){
+									cdUnidadeGestora = idUnidadeGestora;
+								}else if(Integer.parseInt(cdUnidadeGestora)<0){
+									cdUnidadeGestora = idUnidadeGestora;
+								}
+								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
+								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
+								UnidadeGestora.addProperty(tipo, bra+"UnidadeGestora");
+
+								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
+								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
+
+								Gestao.addProperty(temSubgestor, UnidadeGestora);
+							}		
+						}
+					}
+				}
+
+				else if(ente.equals("d_rm")){
+					String idMunicipio = rs.getString("id_municipio_"+ente);
+					if(!rs.wasNull()){
+						String cdMunicipio = rs.getString("cd_municipio");
+						if(rs.wasNull()){
+							cdMunicipio = idMunicipio;
+						}else if(Integer.parseInt(cdMunicipio)<0){
+							cdMunicipio = idMunicipio;
+						}
+						Municipio = triplas.createResource(bra+"Municipio/"+cdMunicipio);
+						Municipio.addLiteral(codigo, cdMunicipio);
+						Municipio.addProperty(tipo, bra+"Municipio");
+
+						String dsMunicipio = rs.getString("ds_municipio");
+						Municipio.addLiteral(titulo, dsMunicipio);
+
+						Receita.addProperty(temGestor, Municipio);
+
+						String idOrgao= rs.getString("id_orgao_"+ente);
+						if(!rs.wasNull()){
+							String cdOrgao= rs.getString("cd_orgao");
+							if(rs.wasNull()){
+								cdOrgao = idOrgao;
+							}else if(Integer.parseInt(cdOrgao)<0){
+								cdOrgao = idOrgao;
+							}
+							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+							Orgao.addLiteral(codigo, cdOrgao);
+							Orgao.addProperty(tipo, bra+"Orgao");
+
+							String dsOrgao = rs.getString("ds_orgao");
+							Orgao.addLiteral(titulo, dsOrgao);
+
+							Municipio.addProperty(temSubgestor, Orgao);
+						}
+					}
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
 			/*
 			try {
 				String cdEspecificacaoDoGrupoDaReceita = rs.getString("cd_grupo_receita");
@@ -465,20 +629,31 @@ public class ConversorReceita {
 			*/
 
 			try {
-				int valorArrecadadoDado = rs.getInt("valor_arrecadado");
+				int valorArrecadadoDado = rs.getInt("valor");
 				if(!rs.wasNull()){
-					System.out.println("Tem valorArrecadado");
 					Receita.addLiteral(valorArrecadado, valorArrecadadoDado);
-				}
-				
-				int valorPrevistoDado = rs.getInt("valor_previsto");
-				if(!rs.wasNull()){
-					System.out.println("Tem valorPrevisto");
-					Receita.addLiteral(valorPrevisto, valorPrevistoDado);
-				}
+				}				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			try {
+				int valorPrevistoDado = rs.getInt("valor_previsto");
+				if(!rs.wasNull()){
+					Receita.addLiteral(valorPrevisto, valorPrevistoDado);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			try {
+				int valorLancadoDado = rs.getInt("valor_lancado");
+				if(!rs.wasNull()){
+					Receita.addLiteral(valorLancado, valorLancadoDado);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			
 			try {

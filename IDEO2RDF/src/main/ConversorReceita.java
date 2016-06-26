@@ -150,11 +150,11 @@ public class ConversorReceita {
 		Property temSubalinea = model.getProperty(bra+"temSubalinea");
 
 		Property temDestino = model.getProperty(bra+"temDestino");
-		Property detalhaGrupoDaFonteDestinacao = model.getProperty(bra+"detalhaGrupoDaFonteDestinacao");
+		Property temDetalhamentoDoGrupoDaFonteDestinacao = model.getProperty(bra+"temDetalhamentoDoGrupoDaFonteDestinacao");
 
 		Property temClassificacaoDoGrupoDaReceita = model.getProperty(bra+"temClassificacaoDoGrupoDaReceita");
-		Property detalhaSubgrupoDaReceita = model.getProperty(bra+"detalhaSubgrupoDaReceita");
-		Property detalhaGrupoDaReceita = model.getProperty(bra+"detalhaGrupoDaReceita");
+		Property temDetalhamentoDoSubgrupoDaReceita = model.getProperty(bra+"temDetalhamentoDoSubgrupoDaReceita");
+		Property temDetalhamentoDoGrupoDaReceita = model.getProperty(bra+"temDetalhamentoDoGrupoDaReceita");
 
 		Property temGestor = model.getProperty(bra+"temGestor");
 		Property temSubgestor = model.getProperty(bra+"temSubgestor");
@@ -233,7 +233,7 @@ public class ConversorReceita {
 
 
 			try {
-				System.out.println("Criou Recurso Receita");
+				//System.out.println("Criou Recurso Receita");
 				String idReceita = null;
 				if(ente.equals("d_rf")){
 					idReceita = rs.getString("id_fato_receita_federal");
@@ -251,7 +251,7 @@ public class ConversorReceita {
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			// Popula os recursos, caso existam no banco de dados
@@ -259,7 +259,7 @@ public class ConversorReceita {
 			try {
 				String idIdentificadorResultadoPrimarioReceita = rs.getString("id_identificador_resultado_"+ente);
 				if(!rs.wasNull()){
-					System.out.println("Tem idIdentificadorResultadoPrimarioReceita");
+					//System.out.println("Tem idIdentificadorResultadoPrimarioReceita");
 					String cdIdentificadorResultadoPrimarioReceita = rs.getString("cd_identificador_resultado");
 					if(rs.wasNull()){
 						cdIdentificadorResultadoPrimarioReceita = idIdentificadorResultadoPrimarioReceita;
@@ -277,13 +277,13 @@ public class ConversorReceita {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch blockPrograma
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
 				String idCategoriaEconomicaDaReceita = rs.getString("id_categoria_"+ente);
 				if(!rs.wasNull()){
-					System.out.println("Tem idCategoriaEconomicaDaReceita");
+					//System.out.println("Tem idCategoriaEconomicaDaReceita");
 					String cdCategoriaEconomicaDaReceita = rs.getString("cd_categoria");
 					if(rs.wasNull()){
 						cdCategoriaEconomicaDaReceita = idCategoriaEconomicaDaReceita;
@@ -301,7 +301,7 @@ public class ConversorReceita {
 
 					String idOrigem = rs.getString("id_origem_"+ente);
 					if(!rs.wasNull()){
-						System.out.println("Tem idOrigem");
+						//System.out.println("Tem idOrigem");
 						String cdOrigem = rs.getString("cd_origem");
 						if(rs.wasNull()){
 							cdOrigem = idOrigem;
@@ -321,7 +321,7 @@ public class ConversorReceita {
 
 						String idEspecie = rs.getString("id_especie_"+ente);
 						if(!rs.wasNull()){		
-							System.out.println("Tem idEspecie");
+							//System.out.println("Tem idEspecie");
 							String cdEspecie = rs.getString("cd_especie");
 							if(rs.wasNull()){
 								cdEspecie= idEspecie;
@@ -341,7 +341,7 @@ public class ConversorReceita {
 
 							String idRubrica = rs.getString("id_rubrica_"+ente);
 							if(!rs.wasNull()){
-								System.out.println("Tem idRubrica");
+								//System.out.println("Tem idRubrica");
 								String cdRubrica = rs.getString("cd_rubrica");
 								if(rs.wasNull()){
 									cdRubrica = idRubrica;
@@ -361,7 +361,7 @@ public class ConversorReceita {
 
 								String idAlinea = rs.getString("id_alinea_"+ente);
 								if(!rs.wasNull()){
-									System.out.println("Tem idAlinea");
+									//System.out.println("Tem idAlinea");
 									String cdAlinea = rs.getString("cd_alinea");
 									if(rs.wasNull()){
 										cdAlinea = idAlinea;
@@ -381,7 +381,7 @@ public class ConversorReceita {
 
 									String idSubalinea = rs.getString("id_subalinea_"+ente);
 									if(!rs.wasNull()){
-										System.out.println("Tem idSubalinea");
+										//System.out.println("Tem idSubalinea");
 										String cdSubalinea = rs.getString("cd_subalinea");
 										if(rs.wasNull()){
 											cdSubalinea = idSubalinea;
@@ -407,14 +407,13 @@ public class ConversorReceita {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("Parou");
+				//e.printStackTrace();
 			}
 
 			try {
 				String idEspecificacaoDaFonteDestinacao = rs.getString("id_destino_"+ente); // ---> Nao existe cd_fonte_recurso?
 				if(!rs.wasNull()){
-					System.out.println("Tem idEspecificadaDaFonteDestinacao");
+					//System.out.println("Tem idEspecificadaDaFonteDestinacao");
 					String cdEspecificacaoDaFonteDestinacao = rs.getString("cd_destino");
 					if(rs.wasNull()){
 						cdEspecificacaoDaFonteDestinacao = idEspecificacaoDaFonteDestinacao;
@@ -432,7 +431,7 @@ public class ConversorReceita {
 
 					String idGrupo = rs.getString("id_grupo_destino_"+ente); 
 					if(!rs.wasNull()){
-						System.out.println("Tem idGrupo");
+						//System.out.println("Tem idGrupo");
 						String cdGrupo = rs.getString("cd_grupo_destino");
 						if(rs.wasNull()){
 							cdGrupo = idGrupo;
@@ -446,18 +445,19 @@ public class ConversorReceita {
 						String dsGrupo = rs.getString("ds_grupo_fonte");
 						GrupoDaFonteDestinacao.addLiteral(titulo, dsGrupo);
 
-						EspecificacaoDaFonteDestinacao.addProperty(detalhaGrupoDaFonteDestinacao, GrupoDaFonteDestinacao);
+						EspecificacaoDaFonteDestinacao.addProperty(temDetalhamentoDoGrupoDaFonteDestinacao, GrupoDaFonteDestinacao);
 					}
 
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
 				if(ente.equals("d_rf")){
 					String idOrgaoSuperior = rs.getString("id_orgao_superior_"+ente);
+					//System.out.println(ente+" tem OrgaoSuperior "+idOrgaoSuperior);
 					if(!rs.wasNull()){
 						String cdOrgaoSuperior = rs.getString("cd_orgao_superior");
 						if(rs.wasNull()){
@@ -474,9 +474,10 @@ public class ConversorReceita {
 
 						Receita.addProperty(temGestor, OrgaoSuperior);
 
-						String idEntidadeVinculada = rs.getString("id_orgao_subordinado_"+ente);
+						String idEntidadeVinculada = rs.getString("id_orgao_"+ente);
 						if(!rs.wasNull()){
-							String cdEntidadeVinculada = rs.getString("cd_orgao_subordinado");
+							//System.out.println(ente+" tem EntidadeVinculada "+idEntidadeVinculada);
+							String cdEntidadeVinculada = rs.getString("cd_orgao");
 							if(rs.wasNull()){
 								cdEntidadeVinculada = idEntidadeVinculada;
 							}else if(Integer.parseInt(cdEntidadeVinculada)<0){
@@ -486,12 +487,13 @@ public class ConversorReceita {
 							EntidadeVinculada.addLiteral(codigo, cdEntidadeVinculada);
 							EntidadeVinculada.addProperty(RDF.type, bra+"EntidadeVinculada");
 
-							String dsEntidadeVinculada = rs.getString("ds_orgao_subordinado");
+							String dsEntidadeVinculada = rs.getString("ds_orgao");
 							EntidadeVinculada.addLiteral(titulo, dsEntidadeVinculada);
 
 							OrgaoSuperior.addProperty(temSubgestor, EntidadeVinculada);
 							String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
 							if(!rs.wasNull()){
+								//System.out.println(ente+" tem EntidadeVinculada "+idUnidadeGestora);
 								String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
 								if(rs.wasNull()){
 									cdUnidadeGestora = idUnidadeGestora;
@@ -512,9 +514,9 @@ public class ConversorReceita {
 				}
 
 				else if(ente.equals("d_re")){
-					String idOrgao = rs.getString("id_orgao_superior_"+ente);
+					String idOrgao = rs.getString("id_orgao_"+ente);
 					if(!rs.wasNull()){
-						String cdOrgao = rs.getString("cd_orgao_superior");
+						String cdOrgao = rs.getString("cd_orgao");
 						if(rs.wasNull()){
 							cdOrgao = idOrgao;
 						}else if(Integer.parseInt(cdOrgao)<0){
@@ -524,12 +526,12 @@ public class ConversorReceita {
 						Orgao.addLiteral(codigo, cdOrgao);
 						Orgao.addProperty(RDF.type, bra+"Orgao");
 
-						String dsOrgao = rs.getString("ds_orgao_superior");
+						String dsOrgao = rs.getString("ds_orgao");
 						Orgao.addLiteral(titulo, dsOrgao);
 
 						Receita.addProperty(temGestor, Orgao);
 
-						String idGestao = rs.getString("id_gestao"+ente);
+						String idGestao = rs.getString("id_gestao_"+ente);
 						if(!rs.wasNull()){
 							String cdGestao = rs.getString("cd_gestao");
 							if(rs.wasNull()){
@@ -586,12 +588,17 @@ public class ConversorReceita {
 
 						String idOrgao= rs.getString("id_orgao_"+ente);
 						if(!rs.wasNull()){
+							String cdOrgao= idOrgao;
+							
+							/*
 							String cdOrgao= rs.getString("cd_orgao");
 							if(rs.wasNull()){
 								cdOrgao = idOrgao;
 							}else if(Integer.parseInt(cdOrgao)<0){
 								cdOrgao = idOrgao;
 							}
+							*/
+							
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
 							Orgao.addProperty(RDF.type, bra+"Orgao");
@@ -604,6 +611,7 @@ public class ConversorReceita {
 					}
 				}
 			} catch (Exception e) {
+				//e.printStackTrace();
 				// TODO: handle exception
 			}
 
@@ -632,7 +640,7 @@ public class ConversorReceita {
 						String dsSubgrupoDaReceita = rs.getString("ds_unidade_orcamentaria");
 						SubgrupoDaReceita.addLiteral(titulo, dsSubgrupoDaReceita);
 
-						EspecificacaoDoGrupoDaReceita.addProperty(detalhaSubgrupoDaReceita, SubgrupoDaReceita);
+						EspecificacaoDoGrupoDaReceita.addProperty(temDetalhamentoDoSubgrupoDaReceita, SubgrupoDaReceita);
 
 						String cdGrupoDaReceita = rs.getString("cd_unidade_orcamentaria");
 						if(!rs.wasNull()){
@@ -645,14 +653,14 @@ public class ConversorReceita {
 							String dsGrupoDaReceita = rs.getString("ds_unidade_orcamentaria");
 							GrupoDaReceita.addLiteral(titulo, dsGrupoDaReceita);
 
-							SubgrupoDaReceita.addProperty(detalhaGrupoDaReceita, GrupoDaReceita);
+							SubgrupoDaReceita.addProperty(temDetalhamentoDoGrupoDaReceita, GrupoDaReceita);
 						}
 					}
 
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			 */
 
@@ -663,7 +671,7 @@ public class ConversorReceita {
 				}				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -691,7 +699,7 @@ public class ConversorReceita {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -701,7 +709,7 @@ public class ConversorReceita {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 

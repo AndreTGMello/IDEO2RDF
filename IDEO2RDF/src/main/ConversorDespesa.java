@@ -26,6 +26,7 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_dmsp_categoria_despesa ON fato_despesa_municipioSP.id_categoria_despesa_d_dmsp = d_dmsp_categoria_despesa.id_categoria_despesa_d_dmsp"
 						+ " LEFT JOIN d_dmsp_ano ON fato_despesa_municipioSP.id_ano_d_dmsp = d_dmsp_ano.id_ano_d_dmsp"
 						+ " LEFT JOIN d_dmsp_fonte_recurso ON fato_despesa_municipioSP.id_fonte_recurso_d_dmsp = d_dmsp_fonte_recurso.id_fonte_recurso_d_dmsp"
+						+ " LEFT JOIN d_dmsp_unidade ON fato_despesa_municipioSP.id_unidade_d_dmsp = d_dmsp_unidade.id_unidade_d_dmsp"
 						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
@@ -90,6 +91,8 @@ public class ConversorDespesa {
 				"SELECT * FROM fato_despesa_estado"
 						+ " LEFT JOIN d_de_programa ON fato_despesa_estado.id_programa_d_de = d_de_programa.id_programa_d_de"
 						+ " LEFT JOIN d_de_orgao ON fato_despesa_estado.id_orgao_d_de = d_de_orgao.id_orgao_d_de"
+						+ " LEFT JOIN d_de_unidade_gestora ON fato_despesa_estado.id_unidade_gestora_d_de = d_de_unidade_gestora.id_unidade_gestora_d_de"
+						+ " LEFT JOIN d_de_unidade_orcamentaria ON fato_despesa_estado.id_unidade_orcamentaria_d_de = d_de_unidade_orcamentaria.id_unidade_orcamentaria_d_de"
 						+ " LEFT JOIN d_de_modalidade_despesa ON fato_despesa_estado.id_modalidade_despesa_d_de = d_de_modalidade_despesa.id_modalidade_despesa_d_de"
 						+ " LEFT JOIN d_de_grupo_despesa ON fato_despesa_estado.id_grupo_despesa_d_de = d_de_grupo_despesa.id_grupo_despesa_d_de"
 						+ " LEFT JOIN d_de_funcao ON fato_despesa_estado.id_funcao_d_de = d_de_funcao.id_funcao_d_de"
@@ -99,7 +102,6 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_de_categoria_despesa ON fato_despesa_estado.id_categoria_despesa_d_de = d_de_categoria_despesa.id_categoria_despesa_d_de"
 						+ " LEFT JOIN d_de_ano ON fato_despesa_estado.id_ano_d_de = d_de_ano.id_ano_d_de"
 						+ " LEFT JOIN d_de_acao ON fato_despesa_estado.id_acao_d_de = d_de_acao.id_acao_d_de"
-						+ " LEFT JOIN d_de_unidade_gestora ON fato_despesa_estado.id_unidade_gestora_d_de = d_de_unidade_gestora.id_unidade_gestora_d_de"
 						+ " LEFT JOIN d_de_fonte_recurso ON fato_despesa_estado.id_fonte_recurso_d_de = d_de_fonte_recurso.id_fonte_recurso_d_de"
 						//+ " LEFT JOIN d_de_data ON fato_despesa_estado.id_data_d_de = d_de_data.id_data_d_de"
 						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
@@ -198,7 +200,7 @@ public class ConversorDespesa {
 		Property temSubfuncao = model.getProperty(bra+"temSubfuncao");
 
 		Property temFonte = model.getProperty(bra+"temFonte");
-		Property detalhaGrupoDaFonteDestinacao = model.getProperty(bra+"detalhaGrupoDaFonteDestinacao");
+		Property temDetalhamentoDoGrupoDaFonteDestinacao = model.getProperty(bra+"temDetalhamentoDoGrupoDaFonteDestinacao");
 
 		Property temCategoriaEconomicaDaDespesa = model.getProperty(bra+"temCategoriaEconomicaDaDespesa");
 		Property temGND = model.getProperty(bra+"temGND");
@@ -225,7 +227,7 @@ public class ConversorDespesa {
 
 		Property exercicio = model.getProperty(bra+"exercicio");
 
-		Property data = model.getProperty("http://purl.org/dc/elements/1.1/title/date");
+		Property data = model.getProperty("http://purl.org/dc/elements/1.1/date");
 
 		while (rs.next()) {
 			// Cria iterativamente recursos e suas propriedades a partir do resultSet
@@ -276,7 +278,7 @@ public class ConversorDespesa {
 
 			} catch (Exception e) {
 				// TODO: handle exception
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			// Popula os recursos, caso existam no banco de dados
@@ -323,7 +325,7 @@ public class ConversorDespesa {
 					Despesa.addProperty(temIDResultadoPrimarioDaDespesa, IdentificadorResultadoPrimarioDespesa);
 				}
 			}catch(PSQLException e){
-				System.out.println("Erro: "+e);
+				//e.printStackTrace();
 			}
 
 			try {
@@ -346,7 +348,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -369,7 +371,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -428,7 +430,7 @@ public class ConversorDespesa {
 					}
 				}
 
-				else if(ente.equals("d_de") || ente.equals("d_dmsp")){
+				else if(ente.equals("d_de")){
 					String idOrgao= rs.getString("id_orgao_"+ente);
 					if(!rs.wasNull()){
 						String cdOrgao= rs.getString("cd_orgao");
@@ -446,20 +448,76 @@ public class ConversorDespesa {
 
 						Despesa.addProperty(temGestor, Orgao);
 
-						String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
+						String idUnidadeOrcamentaria = rs.getString("id_unidade_orcamentaria_"+ente);
 						if(!rs.wasNull()){
-							String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+							String cdUnidadeOrcamentaria = rs.getString("cd_unidade_orcamentaria");
 							if(rs.wasNull()){
-								cdUnidadeGestora = idUnidadeGestora;
-							}else if(Integer.parseInt(cdUnidadeGestora)<0){
-								cdUnidadeGestora = idUnidadeGestora;
+								cdUnidadeOrcamentaria = idUnidadeOrcamentaria;
+							}else if(Integer.parseInt(cdUnidadeOrcamentaria)<0){
+								cdUnidadeOrcamentaria = idUnidadeOrcamentaria;
 							}
-							UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
-							UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-							UnidadeGestora.addProperty(RDF.type, bra+"UnidadeGestora");
+							UnidadeOrcamentaria = triplas.createResource(bra+"UnidadeOrcamentaria/"+cdUnidadeOrcamentaria);
+							UnidadeOrcamentaria.addLiteral(codigo, cdUnidadeOrcamentaria);
+							UnidadeOrcamentaria.addProperty(RDF.type, bra+"UnidadeOrcamentaria");
 
-							String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
-							UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
+							String dsUnidadeOrcamentaria = rs.getString("ds_unidade_orcamentaria");
+							UnidadeOrcamentaria.addLiteral(titulo, dsUnidadeOrcamentaria);
+
+							Orgao.addProperty(temSubgestor, UnidadeOrcamentaria);
+							
+							String idUnidadeGestora = rs.getString("id_unidade_gestora_"+ente);
+							if(!rs.wasNull()){
+								String cdUnidadeGestora = rs.getString("cd_unidade_gestora");
+								if(rs.wasNull()){
+									cdUnidadeGestora = idUnidadeGestora;
+								}else if(Integer.parseInt(cdUnidadeGestora)<0){
+									cdUnidadeGestora = idUnidadeGestora;
+								}
+								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
+								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
+								UnidadeGestora.addProperty(RDF.type, bra+"UnidadeGestora");
+
+								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
+								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
+
+								UnidadeOrcamentaria.addProperty(temSubgestor, UnidadeGestora);
+							}
+						}
+					}
+				}
+				
+				else if(ente.equals("d_dmsp")){
+					String idOrgao= rs.getString("id_orgao_"+ente);
+					if(!rs.wasNull()){
+						String cdOrgao= rs.getString("cd_orgao");
+						if(rs.wasNull()){
+							cdOrgao = idOrgao;
+						}else if(Integer.parseInt(cdOrgao)<0){
+							cdOrgao = idOrgao;
+						}
+						Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
+						Orgao.addLiteral(codigo, cdOrgao);
+						Orgao.addProperty(RDF.type, bra+"Orgao");
+
+						String dsOrgao = rs.getString("ds_orgao");
+						Orgao.addLiteral(titulo, dsOrgao);
+
+						Despesa.addProperty(temGestor, Orgao);
+
+						String idUnidadeOrcamentaria = rs.getString("id_unidade_"+ente);
+						if(!rs.wasNull()){
+							String cdUnidadeOrcamentaria = rs.getString("cd_unidade");
+							if(rs.wasNull()){
+								cdUnidadeOrcamentaria = idUnidadeOrcamentaria;
+							}else if(Integer.parseInt(cdUnidadeOrcamentaria)<0){
+								cdUnidadeOrcamentaria = idUnidadeOrcamentaria;
+							}
+							UnidadeOrcamentaria = triplas.createResource(bra+"UnidadeOrcamentaria/"+cdUnidadeOrcamentaria);
+							UnidadeOrcamentaria.addLiteral(codigo, cdUnidadeOrcamentaria);
+							UnidadeOrcamentaria.addProperty(RDF.type, bra+"UnidadeOrcamentaria");
+
+							String dsUnidadeOrcamentaria = rs.getString("ds_unidade");
+							UnidadeOrcamentaria.addLiteral(titulo, dsUnidadeOrcamentaria);
 
 							Orgao.addProperty(temSubgestor, UnidadeOrcamentaria);
 						}
@@ -469,12 +527,16 @@ public class ConversorDespesa {
 				else if(ente.equals("d_dm")){
 					String idMunicipio = rs.getString("id_municipio_"+ente);
 					if(!rs.wasNull()){
+						String cdMunicipio = idMunicipio;
+						
+						/*
 						String cdMunicipio = rs.getString("cd_municipio");
 						if(rs.wasNull()){
 							cdMunicipio = idMunicipio;
 						}else if(Integer.parseInt(cdMunicipio)<0){
 							cdMunicipio = idMunicipio;
 						}
+						*/
 						Municipio = triplas.createResource(bra+"Municipio/"+cdMunicipio);
 						Municipio.addLiteral(codigo, cdMunicipio);
 						Municipio.addProperty(RDF.type, bra+"Municipio");
@@ -486,12 +548,18 @@ public class ConversorDespesa {
 
 						String idOrgao= rs.getString("id_orgao_"+ente);
 						if(!rs.wasNull()){
-							String cdOrgao= rs.getString("cd_orgao");
+							String cdOrgao = idOrgao;
+						
+							/*
+							String cdOrgao = rs.getString("cd_orgao");
+							System.out.println("cd_orgao "+cdOrgao);
 							if(rs.wasNull()){
 								cdOrgao = idOrgao;
 							}else if(Integer.parseInt(cdOrgao)<0){
 								cdOrgao = idOrgao;
 							}
+							*/
+							
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
 							Orgao.addProperty(RDF.type, bra+"Orgao");
@@ -505,7 +573,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -528,7 +596,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -571,7 +639,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -606,13 +674,13 @@ public class ConversorDespesa {
 						String dsGrupo = rs.getString("ds_grupo_despesa");
 						GrupoDaFonteDestinacao.addLiteral(titulo, dsGrupo);
 
-						EspecificacaoDaFonteDestinacao.addProperty(detalhaGrupoDaFonteDestinacao, GrupoDaFonteDestinacao);
+						EspecificacaoDaFonteDestinacao.addProperty(temDetalhamentoDoGrupoDaFonteDestinacao, GrupoDaFonteDestinacao);
 					}
 
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -713,18 +781,23 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
 				String idCredor = rs.getString("id_credor_"+ente);
 				if(!rs.wasNull()){
-					String cdCredor = rs.getString("cd_credor");
-					if(rs.wasNull()){
-						cdCredor= idCredor;
-					}else if(Integer.parseInt(cdCredor)<0){
-						cdCredor = idCredor;
+					String cdCredor = idCredor;
+					try {
+						cdCredor = rs.getString("cd_credor");
+						if(rs.wasNull()){
+							cdCredor= idCredor;
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
 					}
+					
 					Credor = triplas.createResource(bra+"Credor/"+cdCredor);
 					Credor.addProperty(RDF.type, bra+"Credor");
 					Credor.addLiteral(codigo, cdCredor);
@@ -736,7 +809,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -746,7 +819,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -756,7 +829,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -766,7 +839,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -776,7 +849,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			try {
@@ -786,7 +859,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			try {
@@ -796,7 +869,7 @@ public class ConversorDespesa {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 		}

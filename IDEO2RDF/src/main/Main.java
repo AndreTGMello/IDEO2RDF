@@ -29,7 +29,7 @@ public class Main {
 		String fileDespesaFed = args[3]+"despesaFederal.rdf";
 		String fileDespesaEst = args[3]+"despesaEstadual.rdf";
 		String fileDespesaMun = args[3]+"despesaMunicipal.rdf";
-		String fileDespesaSP  = args[3]+"despesaMunicipioSP.rdf";
+		String fileDespesaSP  = args[3]+"despesaCapitalSP.rdf";
 
 		FileWriter out = new FileWriter(fileName);
 
@@ -94,7 +94,7 @@ public class Main {
 		ConversorReceita cr = new ConversorReceita();
 
 		//System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 100, 300), model, DespesasFed);
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 100, 3000), model, DespesasFed);
 		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 100, 300), model, DespesasEst);
 		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 300), model, DespesasMun);
 		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 300), model, DespesaSP);
@@ -111,7 +111,7 @@ public class Main {
 		ReceitasFed.write(outReceitaFed);
 		ReceitasEst.write(outReceitaEst);
 		ReceitasMun.write(outReceitaMun);
-
+        
 		DespesasFed.write(outDespesaFed);
 		DespesasEst.write(outDespesaEst);
 		DespesasMun.write(outDespesaMun);

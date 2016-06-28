@@ -19,8 +19,7 @@ public class Main {
 		String db = args[0];
 		String username = args[1]; 
 		String password = args[2];
-		String ontologia = args[3]+"orcamento_rdf_no_individuals_4_6c.owl";
-		String fileName = args[3]+"OrcamentoBrasileiro.rdf";
+		String ontologia = "./OrcamentoBrasileiro.owl";
 
 		String fileReceiraFed = args[3]+"receitaFederal.rdf";
 		String fileReceitaEst = args[3]+"receitaEstadual.rdf";
@@ -30,8 +29,6 @@ public class Main {
 		String fileDespesaEst = args[3]+"despesaEstadual.rdf";
 		String fileDespesaMun = args[3]+"despesaMunicipal.rdf";
 		String fileDespesaSP  = args[3]+"despesaCapitalSP.rdf";
-
-		FileWriter out = new FileWriter(fileName);
 
 		FileWriter outReceitaFed = new FileWriter(fileReceiraFed);
 		FileWriter outReceitaEst = new FileWriter(fileReceitaEst);
@@ -47,7 +44,9 @@ public class Main {
 		// Cria modelo de ontologia
 		Model model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 		// Le arquivo da ontologia
-		InputStream in = FileManager.get().open(ontologia);
+		// InputStream in = FileManager.get().open(ontologia);
+		InputStream in = Main.class.getClassLoader()
+				.getResourceAsStream(ontologia);
 		// Carrega modelo lido
 		model.read(in, null);
 		// Fecha leitor

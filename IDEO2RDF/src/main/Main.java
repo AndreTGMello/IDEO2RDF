@@ -119,8 +119,7 @@ public class Main {
 		DespesaSP.write(outDespesaSP);  
 
 		String serviceURI = "http://localhost:8009/fuseki/OrcamentoGovernoFederal/data";
-		DatasetAccessorFactory factory = new DatasetAccessorFactory();
-		DatasetAccessor accessor = factory.createHTTP(serviceURI);
+		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceURI);
 		accessor.putModel(DespesasFed);
 		
 		conn.close();

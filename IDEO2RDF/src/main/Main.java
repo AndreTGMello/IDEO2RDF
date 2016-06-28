@@ -22,7 +22,8 @@ public class Main {
 		String username = args[1]; 
 		String password = args[2];
 		String ontologia = "./OrcamentoBrasileiro.owl";
-
+		
+		/*
 		String fileReceiraFed = args[3]+"receitaFederal.rdf";
 		String fileReceitaEst = args[3]+"receitaEstadual.rdf";
 		String fileReceitaMun = args[3]+"receitaMunicipal.rdf";
@@ -30,8 +31,9 @@ public class Main {
 		String fileDespesaFed = args[3]+"despesaFederal.rdf";
 		String fileDespesaEst = args[3]+"despesaEstadual.rdf";
 		String fileDespesaMun = args[3]+"despesaMunicipal.rdf";
-		String fileDespesaSP  = args[3]+"despesaCapitalSP.rdf";
+		String fileDespesaCapSP  = args[3]+"despesaCapitalSP.rdf";
 
+		
 		FileWriter outReceitaFed = new FileWriter(fileReceiraFed);
 		FileWriter outReceitaEst = new FileWriter(fileReceitaEst);
 		FileWriter outReceitaMun = new FileWriter(fileReceitaMun);
@@ -39,8 +41,9 @@ public class Main {
 		FileWriter outDespesaFed = new FileWriter(fileDespesaFed);
 		FileWriter outDespesaEst = new FileWriter(fileDespesaEst);
 		FileWriter outDespesaMun = new FileWriter(fileDespesaMun);
-		FileWriter outDespesaSP = new FileWriter(fileDespesaSP);
-
+		FileWriter outDespesaCapSP = new FileWriter(fileDespesaCapSP);
+		*/
+		
 		Connection conn = new ConnectionFactory().getConnection(db, username, password);
 
 		// Cria modelo de ontologia
@@ -63,8 +66,8 @@ public class Main {
 
 		Model DespesasFed = ModelFactory.createDefaultModel();
 		Model DespesasEst = ModelFactory.createDefaultModel();
-		Model DespesasMun = ModelFactory.createDefaultModel();
-		Model DespesaSP  = ModelFactory.createDefaultModel();
+		Model DespesasMunSP = ModelFactory.createDefaultModel();
+		Model DespesaCapSP  = ModelFactory.createDefaultModel();
 
 		// Cria prefixo bra
 		model.setNsPrefix("bra", bra);
@@ -76,8 +79,8 @@ public class Main {
 		
 		DespesasFed.setNsPrefix("bra", bra);
 		DespesasEst.setNsPrefix("bra", bra);
-		DespesasMun.setNsPrefix("bra", bra);
-		DespesaSP.setNsPrefix("bra", bra);  
+		DespesasMunSP.setNsPrefix("bra", bra);
+		DespesaCapSP.setNsPrefix("bra", bra);  
 
 		//Receita:
 		String rFederal = "d_rf";
@@ -97,8 +100,8 @@ public class Main {
 		//System.out.println("Criando recursos Despesa Federal");
 		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 200, 5000), model, DespesasFed);
 		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 100, 300), model, DespesasEst);
-		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 300), model, DespesasMun);
-		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 300), model, DespesaSP);
+		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 300), model, DespesasMunSP);
+		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 300), model, DespesaCapSP);
 
 		//System.out.println("Criando recursos Receita Federal");
 		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 100, 300), model, ReceitasFed);
@@ -106,23 +109,38 @@ public class Main {
 		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 100, 300), model, ReceitasMun);
 
 		System.out.println("\n\nFim");
-		//		model.write(System.out);
-		//		triplas.write(out);
-
+		conn.close();
+		/*
 		ReceitasFed.write(outReceitaFed);
 		ReceitasEst.write(outReceitaEst);
 		ReceitasMun.write(outReceitaMun);
         
 		DespesasFed.write(outDespesaFed);
 		DespesasEst.write(outDespesaEst);
-		DespesasMun.write(outDespesaMun);
-		DespesaSP.write(outDespesaSP);  
-
-		String serviceURI = "http://localhost:8009/fuseki/OrcamentoGovernoFederal/data";
-		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceURI);
-		accessor.putModel(DespesasFed);
+		DespesasMunSP.write(outDespesaMun);
+		DespesaCapSP.write(outDespesaCapSP);  
+		*/
 		
-		conn.close();
+		String baseURI = "http://localhost:8009/fuseki/";
+		String OrcamentoGovernoFederal = "OrcamentoGovernoFederal/data";
+		String OrcamentoGovernoEstadoSP = "OrcamentoGovernoEstadoSP/data";
+		String OrcamentoGovernoMunicipiosSP = "OrcamentoGovernoMunicipiosSP/data";
+		String OrcamentoGovernoCapitalSP = "OrcamentoGovernoCapitalSP/data";
+		DatasetAccessor accessFed = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoFederal);
+		accessFed.add(DespesasFed);
+		accessFed.add(ReceitasFed);
+		
+		DatasetAccessor accessEstSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoEstadoSP);
+		accessEstSP.add(DespesasEst);
+		accessEstSP.add(ReceitasEst);
+		
+		DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
+		accessMunSP.add(DespesasMunSP);
+		accessMunSP.add(ReceitasMun);
+		
+		DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
+		accessCapSP.add(DespesaCapSP);
+		
 	}
 
 }

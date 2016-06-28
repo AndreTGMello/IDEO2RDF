@@ -94,6 +94,11 @@ public class Main {
 		DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
 		DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
 		
+		// TODO: Apagar: Reseta os datasets antes de popular
+		accessFed.putModel(ontologia);
+		accessEstSP.putModel(ontologia);
+		accessMunSP.putModel(ontologia);
+		accessCapSP.putModel(ontologia);
 		
 		//Receita:
 		String rFederal = "d_rf";

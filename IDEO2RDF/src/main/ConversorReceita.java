@@ -202,6 +202,32 @@ public class ConversorReceita {
 			Resource UnidadeGestora = null;
 			Resource Municipio = null;
 			Resource Gestao = null;
+			
+			// Cria classes
+			Resource ReceitaClass = model.getResource(bra+"Receita");
+
+			Resource IdentificadorResultadoPrimarioReceitaClass = model.getResource(bra+"Receita");
+
+			Resource CategoriaEconomicaDaReceitaClass = model.getResource(bra+"CategoriaEconomicaDaReceita");
+			Resource OrigemClass = model.getResource(bra+"Origem");
+			Resource EspecieClass = model.getResource(bra+"Especie");
+			Resource RubricaClass = model.getResource(bra+"Rubrica");
+			Resource AlineaClass = model.getResource(bra+"Alinea");
+			Resource SubalineaClass = model.getResource(bra+"Subalinea");
+
+			Resource EspecificacaoDaFonteDestinacaoClass = model.getResource(bra+"EspecificacaoDaFonteDestinacao");
+			Resource GrupoDaFonteDestinacaoClass = model.getResource(bra+"GrupoDaFonteDestinacao");
+
+			Resource EspecificacaoDoGrupoDaReceitaClass = model.getResource(bra+"EspecificacaoDoGrupoDaReceita");
+			Resource SubgrupoDaReceitaClass = model.getResource(bra+"SubgrupoDaReceita");
+			Resource GrupoDaReceitaClass = model.getResource(bra+"GrupoDaReceita");
+
+			Resource OrgaoClass = model.getResource(bra+"Orgao");
+			Resource OrgaoSuperiorClass = model.getResource(bra+"OrgaoSuperior");
+			Resource EntidadeVinculadaClass = model.getResource(bra+"EntidadeVinculada");
+			Resource UnidadeGestoraClass = model.getResource(bra+"UnidadeGestora");
+			Resource MunicipioClass = model.getResource(bra+"Municipio");
+			Resource GestaoClass = model.getResource(bra+"Gestao");
 
 			/*
 			// Cria classes
@@ -247,7 +273,7 @@ public class ConversorReceita {
 
 				if(!rs.wasNull()){
 					Receita = triplas.createResource(bra+"Receita/"+idReceita);			
-					Receita.addProperty(RDF.type, bra+"Receita");
+					Receita.addProperty(RDF.type, ReceitaClass);
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -267,7 +293,7 @@ public class ConversorReceita {
 						cdIdentificadorResultadoPrimarioReceita = idIdentificadorResultadoPrimarioReceita;
 					}
 					IdentificadorResultadoPrimarioReceita = triplas.createResource(bra+"IdentificadorResultadoPrimarioReceita/"+cdIdentificadorResultadoPrimarioReceita);
-					IdentificadorResultadoPrimarioReceita.addProperty(RDF.type, bra+"IdentificadorResultadoPrimarioReceita");
+					IdentificadorResultadoPrimarioReceita.addProperty(RDF.type, IdentificadorResultadoPrimarioReceitaClass);
 					IdentificadorResultadoPrimarioReceita.addLiteral(codigo, cdIdentificadorResultadoPrimarioReceita);
 
 					String dsIdentificadorResultadoPrimarioReceita = rs.getString("ds_identificador_resultado");
@@ -291,7 +317,7 @@ public class ConversorReceita {
 						cdCategoriaEconomicaDaReceita = idCategoriaEconomicaDaReceita;
 					}
 					CategoriaEconomicaDaReceita = triplas.createResource(bra+"CategoriaEconomicaDaReceita/"+cdCategoriaEconomicaDaReceita);
-					CategoriaEconomicaDaReceita.addProperty(RDF.type, bra+"CategoriaEconomicaDaReceita");
+					CategoriaEconomicaDaReceita.addProperty(RDF.type, CategoriaEconomicaDaReceitaClass);
 					CategoriaEconomicaDaReceita.addLiteral(codigo, cdCategoriaEconomicaDaReceita);
 
 					String dsCategoriaEconomicaDaReceita = rs.getString("ds_categoria");
@@ -309,7 +335,7 @@ public class ConversorReceita {
 							cdOrigem = idOrigem;
 						}
 						Origem = triplas.createResource(bra+"Origem/"+rs.getInt("cd_origem"));
-						Origem.addProperty(RDF.type, bra+"Origem");
+						Origem.addProperty(RDF.type, OrigemClass);
 						Origem.addLiteral(codigo, cdOrigem);
 
 						String dsOrigem = rs.getString("ds_origem");
@@ -329,7 +355,7 @@ public class ConversorReceita {
 								cdEspecie= idEspecie;
 							}
 							Especie = triplas.createResource(bra+"Especie/"+cdEspecie);
-							Especie.addProperty(RDF.type, bra+"Especie");
+							Especie.addProperty(RDF.type, EspecieClass);
 							Especie.addLiteral(codigo, cdEspecie);
 
 							String dsEspecie = rs.getString("ds_especie");
@@ -349,7 +375,7 @@ public class ConversorReceita {
 									cdRubrica = idRubrica;
 								}
 								Rubrica = triplas.createResource(bra+"Rubrica/"+cdRubrica);
-								Rubrica.addProperty(RDF.type, bra+"Rubrica");
+								Rubrica.addProperty(RDF.type, RubricaClass);
 								Rubrica.addLiteral(codigo, cdRubrica);
 
 								String dsRubrica = rs.getString("ds_rubrica");
@@ -369,7 +395,7 @@ public class ConversorReceita {
 										cdAlinea = idAlinea;
 									}
 									Alinea = triplas.createResource(bra+"Alinea/"+cdAlinea);
-									Alinea.addProperty(RDF.type, bra+"Alinea");	
+									Alinea.addProperty(RDF.type, AlineaClass);	
 									Alinea.addLiteral(codigo, cdAlinea);
 
 									String dsAlinea = rs.getString("ds_alinea");
@@ -389,7 +415,7 @@ public class ConversorReceita {
 											cdSubalinea = idSubalinea;
 										}
 										Subalinea = triplas.createResource(bra+"Subalinea/"+cdSubalinea);
-										Subalinea.addProperty(RDF.type, bra+"Subalinea");	
+										Subalinea.addProperty(RDF.type, RubricaClass);	
 										Subalinea.addLiteral(codigo, cdSubalinea);
 
 										String dsSubalinea = rs.getString("ds_subalinea");
@@ -421,7 +447,7 @@ public class ConversorReceita {
 						cdEspecificacaoDaFonteDestinacao = idEspecificacaoDaFonteDestinacao;
 					}
 					EspecificacaoDaFonteDestinacao = triplas.createResource(bra+"EspecificacaoDaFonteDestinacao/"+cdEspecificacaoDaFonteDestinacao);
-					EspecificacaoDaFonteDestinacao.addProperty(RDF.type, bra+"EspecificacaoDaFonteDestinacao");
+					EspecificacaoDaFonteDestinacao.addProperty(RDF.type, EspecificacaoDaFonteDestinacaoClass);
 					EspecificacaoDaFonteDestinacao.addLiteral(codigo, cdEspecificacaoDaFonteDestinacao);
 
 					String dsEspecificacaoDaFonteDestinacao = rs.getString("ds_destino");
@@ -439,7 +465,7 @@ public class ConversorReceita {
 							cdGrupo = idGrupo;
 						}
 						GrupoDaFonteDestinacao = triplas.createResource(bra+"GrupoDaFonteDestinacao/"+cdGrupo);
-						GrupoDaFonteDestinacao.addProperty(RDF.type, bra+"GrupoDaFonteDestinacao");
+						GrupoDaFonteDestinacao.addProperty(RDF.type, GrupoDaFonteDestinacaoClass);
 						GrupoDaFonteDestinacao.addLiteral(codigo, cdGrupo);
 
 						String dsGrupo = rs.getString("ds_grupo_fonte");
@@ -467,7 +493,7 @@ public class ConversorReceita {
 						}
 						OrgaoSuperior = triplas.createResource(bra+"OrgaoSuperior/"+cdOrgaoSuperior);
 						OrgaoSuperior.addLiteral(codigo, cdOrgaoSuperior);
-						OrgaoSuperior.addProperty(RDF.type, bra+"OrgaoSuperior");
+						OrgaoSuperior.addProperty(RDF.type, OrgaoSuperiorClass);
 
 						String dsOrgaoSuperior = rs.getString("ds_orgao_superior");
 						OrgaoSuperior.addLiteral(titulo, dsOrgaoSuperior);
@@ -485,7 +511,7 @@ public class ConversorReceita {
 							}
 							EntidadeVinculada = triplas.createResource(bra+"EntidadeVinculada/"+cdEntidadeVinculada);
 							EntidadeVinculada.addLiteral(codigo, cdEntidadeVinculada);
-							EntidadeVinculada.addProperty(RDF.type, bra+"EntidadeVinculada");
+							EntidadeVinculada.addProperty(RDF.type, EntidadeVinculadaClass);
 
 							String dsEntidadeVinculada = rs.getString("ds_orgao");
 							EntidadeVinculada.addLiteral(titulo, dsEntidadeVinculada);
@@ -502,7 +528,7 @@ public class ConversorReceita {
 								}
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-								UnidadeGestora.addProperty(RDF.type, bra+"UnidadeGestora");
+								UnidadeGestora.addProperty(RDF.type, UnidadeGestoraClass);
 
 								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
 								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
@@ -524,7 +550,7 @@ public class ConversorReceita {
 						}
 						Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 						Orgao.addLiteral(codigo, cdOrgao);
-						Orgao.addProperty(RDF.type, bra+"Orgao");
+						Orgao.addProperty(RDF.type, OrgaoClass);
 
 						String dsOrgao = rs.getString("ds_orgao");
 						Orgao.addLiteral(titulo, dsOrgao);
@@ -541,7 +567,7 @@ public class ConversorReceita {
 							}
 							Gestao = triplas.createResource(bra+"Gestao/"+cdGestao);
 							Gestao.addLiteral(codigo, cdGestao);
-							Gestao.addProperty(RDF.type, bra+"Gestao");
+							Gestao.addProperty(RDF.type, GestaoClass);
 
 							String dsGestao = rs.getString("ds_gestao");
 							Gestao.addLiteral(titulo, dsGestao);
@@ -557,7 +583,7 @@ public class ConversorReceita {
 								}
 								UnidadeGestora = triplas.createResource(bra+"UnidadeGestora/"+cdUnidadeGestora);
 								UnidadeGestora.addLiteral(codigo, cdUnidadeGestora);
-								UnidadeGestora.addProperty(RDF.type, bra+"UnidadeGestora");
+								UnidadeGestora.addProperty(RDF.type, UnidadeGestoraClass);
 
 								String dsUnidadeGestora = rs.getString("ds_unidade_gestora");
 								UnidadeGestora.addLiteral(titulo, dsUnidadeGestora);
@@ -579,7 +605,7 @@ public class ConversorReceita {
 						}
 						Municipio = triplas.createResource(bra+"Municipio/"+cdMunicipio);
 						Municipio.addLiteral(codigo, cdMunicipio);
-						Municipio.addProperty(RDF.type, bra+"Municipio");
+						Municipio.addProperty(RDF.type, MunicipioClass);
 
 						String dsMunicipio = rs.getString("ds_municipio");
 						Municipio.addLiteral(titulo, dsMunicipio);
@@ -601,7 +627,7 @@ public class ConversorReceita {
 							
 							Orgao = triplas.createResource(bra+"Orgao/"+cdOrgao);
 							Orgao.addLiteral(codigo, cdOrgao);
-							Orgao.addProperty(RDF.type, bra+"Orgao");
+							Orgao.addProperty(RDF.type, OrgaoClass);
 
 							String dsOrgao = rs.getString("ds_orgao");
 							Orgao.addLiteral(titulo, dsOrgao);
@@ -624,7 +650,7 @@ public class ConversorReceita {
 					}
 					EspecificacaoDoGrupoDaReceita = triplas.createResource(bra+"EspecificacaoDoGrupoDaReceitan/"+cdEspecificacaoDoGrupoDaReceita);
 					EspecificacaoDoGrupoDaReceita.addLiteral(codigo, cdEspecificacaoDoGrupoDaReceita);
-					EspecificacaoDoGrupoDaReceita.addProperty(RDF.type, bra+"EspecificacaoDoGrupoDaReceita");
+					EspecificacaoDoGrupoDaReceita.addProperty(RDF.type, EspecificacaoDoGrupoDaReceitaClass);
 
 					String dsEspecificacaoDoGrupoDaReceita = rs.getString("ds_grupo_receita");
 					EspecificacaoDoGrupoDaReceita.addLiteral(titulo, dsEspecificacaoDoGrupoDaReceita);

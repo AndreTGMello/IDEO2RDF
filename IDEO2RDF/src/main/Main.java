@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.query.DatasetAccessor;
+import org.apache.jena.query.DatasetAccessorFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.util.FileManager;
@@ -93,7 +95,7 @@ public class Main {
 		ConversorReceita cr = new ConversorReceita();
 
 		//System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 100, 3000), model, DespesasFed);
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 200, 5000), model, DespesasFed);
 		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 100, 300), model, DespesasEst);
 		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 300), model, DespesasMun);
 		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 300), model, DespesaSP);
@@ -116,6 +118,11 @@ public class Main {
 		DespesasMun.write(outDespesaMun);
 		DespesaSP.write(outDespesaSP);  
 
+		String serviceURI = "http://localhost:8009/fuseki/OrcamentoGovernoFederal/data";
+		DatasetAccessorFactory factory = new DatasetAccessorFactory();
+		DatasetAccessor accessor = factory.createHTTP(serviceURI);
+		accessor.putModel(DespesasFed);
+		
 		conn.close();
 	}
 

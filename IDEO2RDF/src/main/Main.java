@@ -87,7 +87,7 @@ public class Main {
 		DespesasEst.setNsPrefix("bra", bra);
 		DespesasMunSP.setNsPrefix("bra", bra);
 		DespesaCapSP.setNsPrefix("bra", bra);  
-/*
+
 		System.out.println("Criando DatabaseAccessors.");
 		String baseURI = "http://localhost:8009/fuseki/";
 		String OrcamentoGovernoFederal = "OrcamentoGovernoFederal/data";
@@ -95,17 +95,17 @@ public class Main {
 		String OrcamentoGovernoMunicipiosSP = "OrcamentoGovernoMunicipiosSP/data";
 		String OrcamentoGovernoCapitalSP = "OrcamentoGovernoCapitalSP/data";
 		DatasetAccessor accessFed = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoFederal);
-		DatasetAccessor accessEstSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoEstadoSP);
-		DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
-		DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
+		//DatasetAccessor accessEstSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoEstadoSP);
+		//DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
+		//DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
 		
 		System.out.println("Inserindo ontologia nos endpoints.");
 		// TODO: Apagar: Reseta os datasets antes de popular
 		accessFed.putModel(ontologia);
-		accessEstSP.putModel(ontologia);
-		accessMunSP.putModel(ontologia);
-		accessCapSP.putModel(ontologia);
-*/		
+		//accessEstSP.putModel(ontologia);
+		//accessMunSP.putModel(ontologia);
+		//accessCapSP.putModel(ontologia);
+	
 		//Receita:
 		String rFederal = "d_rf";
 		String rEstadoSP = "d_re";
@@ -122,8 +122,8 @@ public class Main {
 		ConversorReceita cr = new ConversorReceita();
 
 		System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 1000, 300), ontologia, DespesasFed);
-		//accessFed.add(DespesasFed);
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 1000, 300000), ontologia, DespesasFed);
+		accessFed.add(DespesasFed);
 		DespesasFed.write(outDespesaFed);
 		DespesasFed.close();
 		

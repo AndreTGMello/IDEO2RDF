@@ -127,26 +127,26 @@ public class Main {
 		ConversorDespesa cd = new ConversorDespesa();
 		ConversorReceita cr = new ConversorReceita();
 
-		System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 0, 0), ontologia, DespesasFed, accessFed);
+		//System.out.println("Criando recursos Despesa Federal");
+		//cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 0, 0), ontologia, DespesasFed, accessFed);
 		//accessFed.add(DespesasFed);
 		//DespesasFed.write(outDespesaFed);
 		//DespesasFed.close();
 		
-		System.out.println("Criando recursos Despesa EstadoSP");
-		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 0, 0), ontologia, DespesasEst, accessEstSP);
+		//System.out.println("Criando recursos Despesa EstadoSP");
+		//cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 0, 0), ontologia, DespesasEst, accessEstSP);
 		//accessEstSP.add(DespesasEst);
 		//DespesasEst.write(outDespesaEst);
 		//DespesasEst.close();
 		
-		System.out.println("Criando recursos Despesa MunicipiosSP");
-		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 0, 0), ontologia, DespesasMunSP, accessMunSP);
+		//System.out.println("Criando recursos Despesa MunicipiosSP");
+		//cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 0, 0), ontologia, DespesasMunSP, accessMunSP);
 		//accessMunSP.add(DespesasMunSP);
 		//DespesasMunSP.write(outDespesaMun);
 		//DespesasMunSP.close();
 		
-		System.out.println("Criando recursos Despesa CapitalSP");
-		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 0, 0), ontologia, DespesaCapSP, accessCapSP);
+		//System.out.println("Criando recursos Despesa CapitalSP");
+		//cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 0, 0), ontologia, DespesaCapSP, accessCapSP);
 		//accessCapSP.add(DespesaCapSP);
 		//DespesaCapSP.write(outDespesaCapSP);
 		//DespesaCapSP.close();

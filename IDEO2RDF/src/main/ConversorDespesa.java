@@ -216,6 +216,8 @@ public class ConversorDespesa {
 		Property temCredor = model.getProperty(bra+"temCredor");
 
 		Property valor = model.getProperty(bra+"valor");
+		
+		Property valorPago = model.getProperty(bra+"valorPago");
 
 		Property valorEmpenhado = model.getProperty(bra+"valorEmpenhado");
 
@@ -818,7 +820,7 @@ public class ConversorDespesa {
 						}
 					} catch (Exception e) {
 						// TODO: handle exception
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 
 					Credor = triplas.createResource(bra+"Credor/"+cdCredor);
@@ -838,7 +840,11 @@ public class ConversorDespesa {
 			try {
 				int valorDado = rs.getInt("valor");
 				if(!rs.wasNull()){
-					Despesa.addLiteral(valor, valorDado);
+					if(ente.equals("d_df")){
+						Despesa.addLiteral(valor, valorDado);
+					}else{
+						Despesa.addLiteral(valorPago, valorDado);
+					}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

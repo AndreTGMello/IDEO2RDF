@@ -115,33 +115,33 @@ public class Main {
 		ConversorDespesa cd = new ConversorDespesa();
 		ConversorReceita cr = new ConversorReceita();
 
-		//System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 10000, 0), ontologia, DespesasFed);
+		System.out.println("Criando recursos Despesa Federal");
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 1000, 0), ontologia, DespesasFed);
 		accessFed.add(DespesasFed);
 		DespesasFed.close();
 		
-		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 10000, 0), ontologia, DespesasEst);
+		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 1000, 0), ontologia, DespesasEst);
 		accessEstSP.add(DespesasEst);
 		DespesasEst.close();
 		
-		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 10000, 0), ontologia, DespesasMunSP);
+		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 1000, 0), ontologia, DespesasMunSP);
 		accessMunSP.add(DespesasMunSP);
 		DespesasMunSP.close();
 		
-		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 10000, 0), ontologia, DespesaCapSP);
+		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 1000, 0), ontologia, DespesaCapSP);
 		accessCapSP.add(DespesaCapSP);
 		DespesaCapSP.close();
 		
 		//System.out.println("Criando recursos Receita Federal");
-		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 10000, 0), ontologia, ReceitasFed);
+		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 1000, 0), ontologia, ReceitasFed);
 		accessFed.add(ReceitasFed);
 		ReceitasFed.close();
 		
-		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 10000, 0), ontologia, ReceitasEst);
+		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 1000, 0), ontologia, ReceitasEst);
 		accessEstSP.add(ReceitasEst);
 		ReceitasEst.close();
 		
-		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 10000, 0), ontologia, ReceitasMun);
+		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 1000, 0), ontologia, ReceitasMun);
 		accessMunSP.add(ReceitasMun);
 		ReceitasMun.close();
 		

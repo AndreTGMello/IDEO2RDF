@@ -91,7 +91,7 @@ public class Main {
 		DespesaCapSP.setNsPrefix("bra", bra);  
 
 		System.out.println("Criando DatabaseAccessors.");
-		String baseURI = "http://localhost:8009/fuseki/";
+		String baseURI = "http://localhost:8109/fuseki/";
 		String OrcamentoGovernoFederal = "OrcamentoGovernoFederal/data";
 		String OrcamentoGovernoEstadoSP = "OrcamentoGovernoEstadoSP/data";
 		String OrcamentoGovernoMunicipiosSP = "OrcamentoGovernoMunicipiosSP/data";
@@ -101,7 +101,7 @@ public class Main {
 		DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
 		DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
 
-		/*
+		
 		System.out.println("Inserindo ontologia nos endpoints.");
 		// TODO: Apagar: Reseta os datasets antes de popular
 		accessFed.add(ontologia);
@@ -112,7 +112,7 @@ public class Main {
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoMunicipiosSP);
 		accessCapSP.add(ontologia);
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoCapitalSP);
-		 */
+		
 		
 		//Receita:
 		String rFederal = "d_rf";
@@ -129,7 +129,7 @@ public class Main {
 		ConversorDespesa cd = new ConversorDespesa();
 		ConversorReceita cr = new ConversorReceita();
 		
-/*
+
 		//ESTADO
 		System.out.println("Criando recursos Receita EstadoSP");
 		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 0, 0), ontologia, ReceitasEst, accessEstSP);
@@ -150,7 +150,7 @@ public class Main {
 		//accessCapSP.add(DespesaCapSP);
 		//DespesaCapSP.write(outDespesaCapSP);
 		//DespesaCapSP.close();
-*/
+
 		
 		//FEDERAL
 		System.out.println("Criando recursos Receita Federal");

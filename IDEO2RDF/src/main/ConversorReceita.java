@@ -229,35 +229,6 @@ public class ConversorReceita {
 			Resource MunicipioClass = model.getResource(bra+"Municipio");
 			Resource GestaoClass = model.getResource(bra+"Gestao");
 
-			/*
-			// Cria classes
-			Resource ReceitaClasse = model.createResource(bra+"Receita");
-
-			Resource IdentificadorResultadoPrimarioReceitaClasse = null;
-
-			Resource CategoriaEconomicaDaReceitaClasse = null;
-			Resource OrigemClasse = null;
-			Resource EspecieClasse = null;
-			Resource RubricaClasse = null;
-			Resource AlineaClasse = null;
-			Resource SubalineaClasse = null;
-
-			Resource EspecificacaoDaFonteDestinacaoClasse = null;
-			Resource GrupoDaFonteDestinacaoClasse = null;
-
-			Resource EspecificacaoDoGrupoDaReceitaClasse = null;
-			Resource SubgrupoDaReceitaClasse = null;
-			Resource GrupoDaReceitaClasse = null;
-
-			Resource OrgaoClasse = null;
-			Resource OrgaoSuperiorClasse = null;
-			Resource EntidadeVinculadaClasse = null;
-			Resource UnidadeGestoraClasse = null;
-			Resource MunicipioClasse = null;
-			Resource GestaoClasse = null;			
-			*/
-
-
 			try {
 				//System.out.println("Criou Recurso Receita");
 				String idReceita = null;

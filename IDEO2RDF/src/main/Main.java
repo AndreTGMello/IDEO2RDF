@@ -101,6 +101,7 @@ public class Main {
 		DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
 		DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
 
+		/*
 		System.out.println("Inserindo ontologia nos endpoints.");
 		// TODO: Apagar: Reseta os datasets antes de popular
 		accessFed.add(ontologia);
@@ -111,7 +112,8 @@ public class Main {
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoMunicipiosSP);
 		accessCapSP.add(ontologia);
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoCapitalSP);
-
+		 */
+		
 		//Receita:
 		String rFederal = "d_rf";
 		String rEstadoSP = "d_re";
@@ -148,7 +150,7 @@ public class Main {
 		//accessCapSP.add(DespesaCapSP);
 		//DespesaCapSP.write(outDespesaCapSP);
 		//DespesaCapSP.close();
-
+*/
 		
 		//FEDERAL
 		System.out.println("Criando recursos Receita Federal");
@@ -162,7 +164,7 @@ public class Main {
 		//accessFed.add(DespesasFed);
 		//DespesasFed.write(outDespesaFed);
 		//DespesasFed.close();
-*/
+
 
 		//MUNICIPIOS
 		System.out.println("Criando recursos Receita MunicipiosSP");

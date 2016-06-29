@@ -31,7 +31,8 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_dmsp_ano ON fato_despesa_municipioSP.id_ano_d_dmsp = d_dmsp_ano.id_ano_d_dmsp"
 						+ " LEFT JOIN d_dmsp_fonte_recurso ON fato_despesa_municipioSP.id_fonte_recurso_d_dmsp = d_dmsp_fonte_recurso.id_fonte_recurso_d_dmsp"
 						+ " LEFT JOIN d_dmsp_unidade ON fato_despesa_municipioSP.id_unidade_d_dmsp = d_dmsp_unidade.id_unidade_d_dmsp"
-						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+						+ " WHERE ano_exercicio = '2011'");
+						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
 		ResultSet rs = stmt.executeQuery();
@@ -48,7 +49,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -70,7 +71,8 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_dm_fonte_recurso ON fato_despesa_municipios.id_fonte_recurso_d_dm = d_dm_fonte_recurso.id_fonte_recurso_d_dm"
 						+ " LEFT JOIN d_dm_data_emissao ON fato_despesa_municipios.id_data_emissao_d_dm = d_dm_data_emissao.id_data_emissao_d_dm"
 						+ " LEFT JOIN d_dm_municipio ON fato_despesa_municipios.id_municipio_d_dm = d_dm_municipio.id_municipio_d_dm"
-						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+						+ " WHERE ano_exercicio = '2011'");
+						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
 		ResultSet rs = stmt.executeQuery();
@@ -87,7 +89,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -109,8 +111,9 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_de_ano ON fato_despesa_estado.id_ano_d_de = d_de_ano.id_ano_d_de"
 						+ " LEFT JOIN d_de_acao ON fato_despesa_estado.id_acao_d_de = d_de_acao.id_acao_d_de"
 						+ " LEFT JOIN d_de_fonte_recurso ON fato_despesa_estado.id_fonte_recurso_d_de = d_de_fonte_recurso.id_fonte_recurso_d_de"
+						+ " WHERE ano_exercicio = '2011'");
 						//+ " LEFT JOIN d_de_data ON fato_despesa_estado.id_data_d_de = d_de_data.id_data_d_de"
-						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
 		ResultSet rs = stmt.executeQuery();
@@ -127,7 +130,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -166,7 +169,8 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_df_subtipo_despesa ON fato_despesa_federal.id_subtipo_despesa_d_df = d_df_subtipo_despesa.id_subtipo_despesa_d_df"
 						+ " LEFT JOIN d_df_subfuncao ON fato_despesa_federal.id_subfuncao_d_df = d_df_subfuncao.id_subfuncao_d_df"
 						+ " LEFT JOIN d_df_situacao_parcela ON fato_despesa_federal.id_situacao_parcela_d_df = d_df_situacao_parcela.id_situacao_parcela_d_df"
-						+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
+						+ " WHERE ano_exercicio = '2011'");
+						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
 		ResultSet rs = stmt.executeQuery();
@@ -183,7 +187,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -914,7 +918,8 @@ public class ConversorDespesa {
 			}
 			
 			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
-			if(count==500){
+			if(count==1000){
+				System.out.println("Inserindo dados no endpoint.");
 				accessor.add(triplas);
 				count = 0;
 				triplas.removeAll();
@@ -923,7 +928,11 @@ public class ConversorDespesa {
 				triplas.setNsPrefix("bra", bra);
 			}
 		}
-
+		System.out.println("Inserindo dados no endpoint.");
+		accessor.add(triplas);
+		triplas.removeAll();
+		triplas.close();
+		
 		rs.close();
 		stmt.close();
 	}

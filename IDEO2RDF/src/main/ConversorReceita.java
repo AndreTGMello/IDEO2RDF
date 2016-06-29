@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.print.attribute.standard.Destination;
@@ -38,7 +39,8 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_rf_mes ON fato_receita_federal.id_mes_d_rf = d_rf_mes.id_mes_d_rf "
 						+ " LEFT JOIN d_rf_ano ON fato_receita_federal.id_ano_d_rf = d_rf_ano.id_ano_d_rf "
 						+ " LEFT JOIN d_rf_categoria ON fato_receita_federal.id_categoria_d_rf = d_rf_categoria.id_categoria_d_rf"
-						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
+						+ " WHERE ano_exercicio = '2011'");
+						//+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
 		//Testa o retorno do resultSet.
@@ -56,7 +58,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -77,7 +79,8 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_re_unidade_gestora ON fato_receita_estado.id_unidade_gestora_d_re = d_re_unidade_gestora.id_unidade_gestora_d_re "
 						+ " LEFT JOIN d_re_ano ON fato_receita_estado.id_ano_d_re = d_re_ano.id_ano_d_re "
 						+ " LEFT JOIN d_re_categoria ON fato_receita_estado.id_categoria_d_re = d_re_categoria.id_categoria_d_re "
-						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
+						+ " WHERE ano_exercicio = '2011'");
+						//+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
 		//Testa o retorno do resultSet.
@@ -95,7 +98,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -119,7 +122,8 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_rm_ano ON fato_receita_municipios.id_ano_d_rm = d_rm_ano.id_ano_d_rm "
 						+ " LEFT JOIN d_rm_categoria ON fato_receita_municipios.id_categoria_d_rm = d_rm_categoria.id_categoria_d_rm "
 						+ " WHERE ds_poder = 'EXECUTIVO'"
-						+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
+						+ " AND ano_exercicio = '2011'");
+						//+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
 		//Testa o retorno do resultSet.
@@ -137,7 +141,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-
+		stmt.setFetchSize(10000);
 		return stmt;
 	}
 
@@ -721,7 +725,8 @@ public class ConversorReceita {
 			}
 			
 			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
-			if(count==500){
+			if(count==1000){
+				System.out.println("Inserindo dados no endpoint.");
 				accessor.add(triplas);
 				count = 0;
 				triplas.removeAll();
@@ -730,7 +735,10 @@ public class ConversorReceita {
 				triplas.setNsPrefix("bra", bra);
 			}
 		}
-
+		accessor.add(triplas);
+		triplas.removeAll();
+		triplas.close();
+		
 		rs.close();
 		stmt.close();
 	}

@@ -122,37 +122,37 @@ public class Main {
 		ConversorReceita cr = new ConversorReceita();
 
 		System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 100, 0), ontologia, DespesasFed);
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 1000, 300), ontologia, DespesasFed);
 		//accessFed.add(DespesasFed);
 		DespesasFed.write(outDespesaFed);
 		DespesasFed.close();
 		
 		System.out.println("Criando recursos Despesa EstadoSP");
-		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 100, 0), ontologia, DespesasEst);
+		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 1000, 300), ontologia, DespesasEst);
 		//accessEstSP.add(DespesasEst);
 		DespesasEst.write(outDespesaEst);
 		DespesasEst.close();
 		
 		System.out.println("Criando recursos Despesa MunicipiosSP");
-		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 0), ontologia, DespesasMunSP);
+		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 1000, 300), ontologia, DespesasMunSP);
 		//accessMunSP.add(DespesasMunSP);
 		DespesasMunSP.write(outDespesaMun);
 		DespesasMunSP.close();
 		
 		System.out.println("Criando recursos Despesa CapitalSP");
-		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 0), ontologia, DespesaCapSP);
+		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 1000, 300), ontologia, DespesaCapSP);
 		//accessCapSP.add(DespesaCapSP);
 		DespesaCapSP.write(outDespesaCapSP);
 		DespesaCapSP.close();
 		
 		System.out.println("Criando recursos Receita Federal");
-		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 100, 0), ontologia, ReceitasFed);
+		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 1000, 300), ontologia, ReceitasFed);
 		//accessFed.add(ReceitasFed);
 		ReceitasFed.write(outReceitaFed);
 		ReceitasFed.close();
 		
 		System.out.println("Criando recursos Receita EstadoSP");
-		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 100, 0), ontologia, ReceitasEst);
+		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 1000, 300), ontologia, ReceitasEst);
 		//accessEstSP.add(ReceitasEst);
 		ReceitasEst.write(outReceitaEst);
 		ReceitasEst.close();

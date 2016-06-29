@@ -58,7 +58,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(10000);
+		stmt.setFetchSize(1000);
 		return stmt;
 	}
 
@@ -98,7 +98,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(10000);
+		stmt.setFetchSize(1000);
 		return stmt;
 	}
 
@@ -141,7 +141,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(10000);
+		stmt.setFetchSize(1000);
 		return stmt;
 	}
 
@@ -725,7 +725,7 @@ public class ConversorReceita {
 			}
 			
 			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
-			if(count==1000){
+			if(count==100000){
 				System.out.println("Inserindo dados no endpoint.");
 				accessor.add(triplas);
 				count = 0;

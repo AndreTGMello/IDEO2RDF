@@ -91,7 +91,7 @@ public class Main {
 		DespesaCapSP.setNsPrefix("bra", bra);  
 
 		System.out.println("Criando DatabaseAccessors.");
-		String baseURI = "http://localhost:8109/";
+		String baseURI = "http://localhost:8209/";
 		String OrcamentoGovernoFederal = "OrcamentoGovernoFederal/data";
 		String OrcamentoGovernoEstadoSP = "OrcamentoGovernoEstadoSP/data";
 		String OrcamentoGovernoMunicipiosSP = "OrcamentoGovernoMunicipiosSP/data";

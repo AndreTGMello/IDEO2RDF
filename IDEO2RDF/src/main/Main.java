@@ -17,6 +17,7 @@ public class Main {
 	public static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
 	public static void main(String args[]) throws SQLException, IOException{
+		System.out.println("Inicio.");
 		// Argumentos
 		String db = args[0];
 		String username = args[1]; 
@@ -43,24 +44,28 @@ public class Main {
 		FileWriter outDespesaMun = new FileWriter(fileDespesaMun);
 		FileWriter outDespesaCapSP = new FileWriter(fileDespesaCapSP);
 		
-		
+		System.out.println("Conexao com banco de dados.");
 		Connection conn = new ConnectionFactory().getConnection(db, username, password);
 
+		System.out.println("Criando modelo para ontologia.");
 		// Cria modelo de ontologia
 		Model ontologia = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 		
+		System.out.println("Lendo ontologia em: "+ontologiaPath);
 		// Le arquivo da ontologia
 		// InputStream in = FileManager.get().open(ontologiaPath);
 		
 		InputStream in = Main.class.getClassLoader()
 				.getResourceAsStream(ontologiaPath);
 		
+		System.out.println("Carregando ontologia.");
 		// Carrega modelo lido
 		ontologia.read(in, null);
 		
 		// Fecha leitor
 		in.close();
 
+		System.out.println("Criando modelos para armazenamento das triplas.");
 		// Onde serao escritas as triplas geradas pelo conversor
 		Model ReceitasFed = ModelFactory.createDefaultModel();
 		Model ReceitasEst = ModelFactory.createDefaultModel();
@@ -83,7 +88,7 @@ public class Main {
 		DespesasMunSP.setNsPrefix("bra", bra);
 		DespesaCapSP.setNsPrefix("bra", bra);  
 
-		
+		System.out.println("Criando DatabaseAccessors.");
 		String baseURI = "http://localhost:8009/fuseki/";
 		String OrcamentoGovernoFederal = "OrcamentoGovernoFederal/data";
 		String OrcamentoGovernoEstadoSP = "OrcamentoGovernoEstadoSP/data";
@@ -94,6 +99,7 @@ public class Main {
 		DatasetAccessor accessMunSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoMunicipiosSP);
 		DatasetAccessor accessCapSP = DatasetAccessorFactory.createHTTP(baseURI+OrcamentoGovernoCapitalSP);
 		
+		System.out.println("Inserindo ontologia nos endpoints.");
 		// TODO: Apagar: Reseta os datasets antes de popular
 		accessFed.putModel(ontologia);
 		accessEstSP.putModel(ontologia);
@@ -116,43 +122,43 @@ public class Main {
 		ConversorReceita cr = new ConversorReceita();
 
 		System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 500, 0), ontologia, DespesasFed);
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 100, 0), ontologia, DespesasFed);
 		accessFed.add(DespesasFed);
 		DespesasFed.write(outDespesaFed);
 		DespesasFed.close();
 		
 		System.out.println("Criando recursos Despesa EstadoSP");
-		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 500, 0), ontologia, DespesasEst);
+		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 100, 0), ontologia, DespesasEst);
 		accessEstSP.add(DespesasEst);
 		DespesasEst.write(outDespesaEst);
 		DespesasEst.close();
 		
 		System.out.println("Criando recursos Despesa MunicipiosSP");
-		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 500, 0), ontologia, DespesasMunSP);
+		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 100, 0), ontologia, DespesasMunSP);
 		accessMunSP.add(DespesasMunSP);
 		DespesasMunSP.write(outDespesaMun);
 		DespesasMunSP.close();
 		
 		System.out.println("Criando recursos Despesa CapitalSP");
-		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 500, 0), ontologia, DespesaCapSP);
+		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 100, 0), ontologia, DespesaCapSP);
 		accessCapSP.add(DespesaCapSP);
 		DespesaCapSP.write(outDespesaCapSP);
 		DespesaCapSP.close();
 		
 		System.out.println("Criando recursos Receita Federal");
-		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 500, 0), ontologia, ReceitasFed);
+		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 100, 0), ontologia, ReceitasFed);
 		accessFed.add(ReceitasFed);
 		ReceitasFed.write(outReceitaFed);
 		ReceitasFed.close();
 		
 		System.out.println("Criando recursos Receita EstadoSP");
-		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 500, 0), ontologia, ReceitasEst);
+		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 100, 0), ontologia, ReceitasEst);
 		accessEstSP.add(ReceitasEst);
 		ReceitasEst.write(outReceitaEst);
 		ReceitasEst.close();
 		
 		System.out.println("Criando recursos Receita MunicipiosSP");
-		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 500, 0), ontologia, ReceitasMun);
+		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 100, 0), ontologia, ReceitasMun);
 		accessMunSP.add(ReceitasMun);
 		ReceitasMun.write(outReceitaMun);
 		ReceitasMun.close();

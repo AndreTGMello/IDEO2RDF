@@ -24,7 +24,7 @@ public class Main {
 		String password = args[2];
 		String ontologiaPath = "./OrcamentoBrasileiro.owl";
 
-		/*
+		
 		String fileReceiraFed = args[3]+"receitaFederal.rdf";
 		String fileReceitaEst = args[3]+"receitaEstadual.rdf";
 		String fileReceitaMun = args[3]+"receitaMunicipal.rdf";
@@ -34,7 +34,7 @@ public class Main {
 		String fileDespesaMun = args[3]+"despesaMunicipal.rdf";
 		String fileDespesaCapSP  = args[3]+"despesaCapitalSP.rdf";
 
-
+/*
 		FileWriter outReceitaFed = new FileWriter(fileReceiraFed);
 		FileWriter outReceitaEst = new FileWriter(fileReceitaEst);
 		FileWriter outReceitaMun = new FileWriter(fileReceitaMun);
@@ -43,7 +43,7 @@ public class Main {
 		FileWriter outDespesaEst = new FileWriter(fileDespesaEst);
 		FileWriter outDespesaMun = new FileWriter(fileDespesaMun);
 		FileWriter outDespesaCapSP = new FileWriter(fileDespesaCapSP);
-		 */
+*/		
 
 		System.out.println("Conexao com banco de dados.");
 		Connection conn = new ConnectionFactory().getConnection(db, username, password);
@@ -129,16 +129,16 @@ public class Main {
 		ConversorDespesa cd = new ConversorDespesa();
 		ConversorReceita cr = new ConversorReceita();
 		
-/*
+
 		//ESTADO
 		System.out.println("Criando recursos Receita EstadoSP");
-		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 0, 0), ontologia, ReceitasEst, accessEstSP);
+		cr.criaRecursosReceita(rEstadoSP, cr.queryReceitaEstadual(conn, 0, 0), ontologia, ReceitasEst, accessEstSP, fileReceitaEst);
 		//accessEstSP.add(ReceitasEst);
 		//ReceitasEst.write(outReceitaEst);
 		//ReceitasEst.close();
 
 		System.out.println("Criando recursos Despesa EstadoSP");
-		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 0, 0), ontologia, DespesasEst, accessEstSP);
+		cd.criaRecursosDespesa(dEstadoSP, cd.queryDespesaEstadual(conn, 0, 0), ontologia, DespesasEst, accessEstSP, fileDespesaEst);
 		//accessEstSP.add(DespesasEst);
 		//DespesasEst.write(outDespesaEst);
 		//DespesasEst.close();
@@ -146,7 +146,7 @@ public class Main {
 		
 		//CAPITAL
 		System.out.println("Criando recursos Despesa CapitalSP");
-		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 0, 0), ontologia, DespesaCapSP, accessCapSP);
+		cd.criaRecursosDespesa(dCapitalSP, cd.queryDespesaMunicipioSP(conn, 0, 0), ontologia, DespesaCapSP, accessCapSP, fileDespesaCapSP);
 		//accessCapSP.add(DespesaCapSP);
 		//DespesaCapSP.write(outDespesaCapSP);
 		//DespesaCapSP.close();
@@ -154,27 +154,27 @@ public class Main {
 		
 		//FEDERAL
 		System.out.println("Criando recursos Receita Federal");
-		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 0, 0), ontologia, ReceitasFed, accessFed);
+		cr.criaRecursosReceita(rFederal, cr.queryReceitaFederal(conn, 0, 0), ontologia, ReceitasFed, accessFed, fileReceiraFed);
 		//accessFed.add(ReceitasFed);
 		//ReceitasFed.write(outReceitaFed);
 		//ReceitasFed.close();
 
 		System.out.println("Criando recursos Despesa Federal");
-		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 0, 0), ontologia, DespesasFed, accessFed);
+		cd.criaRecursosDespesa(dFederal, cd.queryDespesaFederal(conn, 0, 0), ontologia, DespesasFed, accessFed, fileDespesaFed);
 		//accessFed.add(DespesasFed);
 		//DespesasFed.write(outDespesaFed);
 		//DespesasFed.close();
-*/
+
 
 		//MUNICIPIOS
 		System.out.println("Criando recursos Receita MunicipiosSP");
-		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 0, 0), ontologia, ReceitasMun, accessMunSP);
+		cr.criaRecursosReceita(rMunicipiosSP, cr.queryReceitaMunicipal(conn, 0, 0), ontologia, ReceitasMun, accessMunSP, fileReceitaMun);
 		//accessMunSP.add(ReceitasMun);
 		//ReceitasMun.write(outReceitaMun);
 		//ReceitasMun.close();
 
 		System.out.println("Criando recursos Despesa MunicipiosSP");
-		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 0, 0), ontologia, DespesasMunSP, accessMunSP);
+		cd.criaRecursosDespesa(dMunicipiosSP, cd.queryDespesaMunicipal(conn, 0, 0), ontologia, DespesasMunSP, accessMunSP, fileDespesaMun);
 		//accessMunSP.add(DespesasMunSP);
 		//DespesasMunSP.write(outDespesaMun);
 		//DespesasMunSP.close();

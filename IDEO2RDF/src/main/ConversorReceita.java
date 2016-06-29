@@ -1,5 +1,8 @@
 package main;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -145,9 +148,10 @@ public class ConversorReceita {
 		return stmt;
 	}
 
-	public void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas, DatasetAccessor accessor) throws SQLException {
+	public void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas, DatasetAccessor accessor, String out) throws SQLException {
 		// Contador para acumular triplas antes de enviar para fuseki
 		int count = 0;
+		int fileCount = 0;
 		
 		System.out.println("Criando recursos da receita "+ente+".");
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
@@ -726,8 +730,17 @@ public class ConversorReceita {
 			
 			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
 			if(count==100000){
+				fileCount++;
 				System.out.println("Inserindo dados no endpoint.");
-				accessor.add(triplas);
+				//accessor.add(triplas);
+				FileWriter fileOut;
+				try {
+					fileOut = new FileWriter(out+""+fileCount);
+					triplas.write(fileOut);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				count = 0;
 				triplas.removeAll();
 				triplas.close();

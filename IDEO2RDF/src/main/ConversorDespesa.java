@@ -31,7 +31,7 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_dmsp_ano ON fato_despesa_municipioSP.id_ano_d_dmsp = d_dmsp_ano.id_ano_d_dmsp"
 						+ " LEFT JOIN d_dmsp_fonte_recurso ON fato_despesa_municipioSP.id_fonte_recurso_d_dmsp = d_dmsp_fonte_recurso.id_fonte_recurso_d_dmsp"
 						+ " LEFT JOIN d_dmsp_unidade ON fato_despesa_municipioSP.id_unidade_d_dmsp = d_dmsp_unidade.id_unidade_d_dmsp"
-						+ " WHERE ano_exercicio = '2011'");
+						+ " WHERE id_ano_d_dmsp = '161'");//2014
 						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
@@ -71,7 +71,7 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_dm_fonte_recurso ON fato_despesa_municipios.id_fonte_recurso_d_dm = d_dm_fonte_recurso.id_fonte_recurso_d_dm"
 						+ " LEFT JOIN d_dm_data_emissao ON fato_despesa_municipios.id_data_emissao_d_dm = d_dm_data_emissao.id_data_emissao_d_dm"
 						+ " LEFT JOIN d_dm_municipio ON fato_despesa_municipios.id_municipio_d_dm = d_dm_municipio.id_municipio_d_dm"
-						+ " WHERE ano_exercicio = '2011'");
+						+ " WHERE id_ano_d_dm = '4'");//2010
 						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.
@@ -111,7 +111,7 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_de_ano ON fato_despesa_estado.id_ano_d_de = d_de_ano.id_ano_d_de"
 						+ " LEFT JOIN d_de_acao ON fato_despesa_estado.id_acao_d_de = d_de_acao.id_acao_d_de"
 						+ " LEFT JOIN d_de_fonte_recurso ON fato_despesa_estado.id_fonte_recurso_d_de = d_de_fonte_recurso.id_fonte_recurso_d_de"
-						+ " WHERE ano_exercicio = '2011'");
+						+ " WHERE id_ano_d_de = '13'"); //2015
 						//+ " LEFT JOIN d_de_data ON fato_despesa_estado.id_data_d_de = d_de_data.id_data_d_de"
 						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
@@ -169,7 +169,7 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_df_subtipo_despesa ON fato_despesa_federal.id_subtipo_despesa_d_df = d_df_subtipo_despesa.id_subtipo_despesa_d_df"
 						+ " LEFT JOIN d_df_subfuncao ON fato_despesa_federal.id_subfuncao_d_df = d_df_subfuncao.id_subfuncao_d_df"
 						+ " LEFT JOIN d_df_situacao_parcela ON fato_despesa_federal.id_situacao_parcela_d_df = d_df_situacao_parcela.id_situacao_parcela_d_df"
-						+ " WHERE ano_exercicio = '2011'");
+						+ " WHERE id_ano_df = '11'"); //2010
 						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.

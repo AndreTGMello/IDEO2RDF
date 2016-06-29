@@ -39,7 +39,7 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_rf_mes ON fato_receita_federal.id_mes_d_rf = d_rf_mes.id_mes_d_rf "
 						+ " LEFT JOIN d_rf_ano ON fato_receita_federal.id_ano_d_rf = d_rf_ano.id_ano_d_rf "
 						+ " LEFT JOIN d_rf_categoria ON fato_receita_federal.id_categoria_d_rf = d_rf_categoria.id_categoria_d_rf"
-						+ " WHERE ano_exercicio = '2011'");
+						+ " WHERE id_ano_d_rf = '5'");//2010
 						//+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
@@ -79,7 +79,7 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_re_unidade_gestora ON fato_receita_estado.id_unidade_gestora_d_re = d_re_unidade_gestora.id_unidade_gestora_d_re "
 						+ " LEFT JOIN d_re_ano ON fato_receita_estado.id_ano_d_re = d_re_ano.id_ano_d_re "
 						+ " LEFT JOIN d_re_categoria ON fato_receita_estado.id_categoria_d_re = d_re_categoria.id_categoria_d_re "
-						+ " WHERE ano_exercicio = '2011'");
+						+ " WHERE id_ano_d_re = '6'");//2015
 						//+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*
@@ -122,7 +122,7 @@ public class ConversorReceita {
 						+ " LEFT JOIN d_rm_ano ON fato_receita_municipios.id_ano_d_rm = d_rm_ano.id_ano_d_rm "
 						+ " LEFT JOIN d_rm_categoria ON fato_receita_municipios.id_categoria_d_rm = d_rm_categoria.id_categoria_d_rm "
 						+ " WHERE ds_poder = 'EXECUTIVO'"
-						+ " AND ano_exercicio = '2011'");
+						+ " AND id_ano_d_rm = '3'");//2010
 						//+ " LIMIT " + LIMIT + " OFFSET " + OFFSET);
 
 		/*

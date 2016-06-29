@@ -103,13 +103,13 @@ public class Main {
 
 		System.out.println("Inserindo ontologia nos endpoints.");
 		// TODO: Apagar: Reseta os datasets antes de popular
-		accessFed.add(ontologia);
+		accessFed.putModel(ontologia);
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoFederal);
-		accessEstSP.add(ontologia);
+		accessEstSP.putModel(ontologia);
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoEstadoSP);
-		accessMunSP.add(ontologia);
+		accessMunSP.putModel(ontologia);
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoMunicipiosSP);
-		accessCapSP.add(ontologia);
+		accessCapSP.putModel(ontologia);
 		System.out.println("Ontologia inserida em "+OrcamentoGovernoCapitalSP);
 
 		//Receita:

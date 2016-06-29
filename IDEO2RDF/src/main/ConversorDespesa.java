@@ -169,7 +169,7 @@ public class ConversorDespesa {
 						+ " LEFT JOIN d_df_subtipo_despesa ON fato_despesa_federal.id_subtipo_despesa_d_df = d_df_subtipo_despesa.id_subtipo_despesa_d_df"
 						+ " LEFT JOIN d_df_subfuncao ON fato_despesa_federal.id_subfuncao_d_df = d_df_subfuncao.id_subfuncao_d_df"
 						+ " LEFT JOIN d_df_situacao_parcela ON fato_despesa_federal.id_situacao_parcela_d_df = d_df_situacao_parcela.id_situacao_parcela_d_df"
-						+ " WHERE fato_despesa_federal.id_ano_df = '11'"); //2010
+						+ " WHERE fato_despesa_federal.id_ano_d_df = '11'"); //2010
 						//+ " LIMIT " + LIMIT + "OFFSET " + OFFSET);
 		/*
 		//Testa o retorno do resultSet.

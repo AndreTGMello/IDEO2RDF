@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 import javax.print.attribute.standard.Destination;
 
+import org.apache.jena.query.DatasetAccessor;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.pfunction.PropertyFunctionRegistry;
@@ -21,6 +23,7 @@ public class ConversorReceita {
 	private static String dc = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
 	public PreparedStatement queryReceitaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryReceitaFederal.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_federal"
 						+ " LEFT JOIN d_rf_origem ON fato_receita_federal.id_origem_d_rf = d_rf_origem.id_origem_d_rf "
@@ -58,6 +61,7 @@ public class ConversorReceita {
 	}
 
 	public PreparedStatement queryReceitaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryReceitaEstadual.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_estado"
 						+ " LEFT JOIN d_re_origem ON fato_receita_estado.id_origem_d_re = d_re_origem.id_origem_d_re "
@@ -96,6 +100,7 @@ public class ConversorReceita {
 	}
 
 	public PreparedStatement queryReceitaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryReceitaMunicipal.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_receita_municipios"
 						+ " LEFT JOIN d_rm_origem ON fato_receita_municipios.id_origem_d_rm = d_rm_origem.id_origem_d_rm "
@@ -136,7 +141,11 @@ public class ConversorReceita {
 		return stmt;
 	}
 
-	public void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
+	public void criaRecursosReceita(String ente, PreparedStatement stmt, Model model, Model triplas, DatasetAccessor accessor) throws SQLException {
+		// Contador para acumular triplas antes de enviar para fuseki
+		int count = 0;
+		
+		System.out.println("Criando recursos da receita "+ente+".");
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Propriedades
@@ -175,6 +184,7 @@ public class ConversorReceita {
 		ResultSet rs = stmt.executeQuery();
 
 		while (rs.next()) {
+			count++;
 			// Cria iterativamente recursos e suas propriedades a partir do resultSet
 
 			// Cria recursos
@@ -246,6 +256,7 @@ public class ConversorReceita {
 					Receita = triplas.createResource(bra+"Receita/"+idReceita);			
 					Receita.addProperty(RDF.type, ReceitaClass);
 				}
+				System.out.println("Criando receita "+ente+" id "+idReceita);
 			} catch (Exception e) {
 				// TODO: handle exception
 				//e.printStackTrace();
@@ -707,6 +718,16 @@ public class ConversorReceita {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
+			}
+			
+			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
+			if(count==500){
+				accessor.add(triplas);
+				count = 0;
+				triplas.removeAll();
+				triplas.close();
+				triplas = ModelFactory.createDefaultModel();
+				triplas.setNsPrefix("bra", bra);
 			}
 		}
 

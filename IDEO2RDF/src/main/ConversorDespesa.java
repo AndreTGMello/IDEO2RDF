@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.jena.query.DatasetAccessor;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
@@ -15,6 +18,7 @@ public class ConversorDespesa {
 	private static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
 	public PreparedStatement queryDespesaMunicipioSP(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryDespesaMunicipioSP.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_municipioSP"
 						+ " LEFT JOIN d_dmsp_programa ON fato_despesa_municipioSP.id_programa_d_dmsp = d_dmsp_programa.id_programa_d_dmsp"
@@ -49,6 +53,7 @@ public class ConversorDespesa {
 	}
 
 	public PreparedStatement queryDespesaMunicipal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryDespesaMunicipal.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_municipios"
 						+ " LEFT JOIN d_dm_programa ON fato_despesa_municipios.id_programa_d_dm = d_dm_programa.id_programa_d_dm"
@@ -87,6 +92,7 @@ public class ConversorDespesa {
 	}
 
 	public PreparedStatement queryDespesaEstadual(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryDespesaEstadual.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_estado"
 						+ " LEFT JOIN d_de_programa ON fato_despesa_estado.id_programa_d_de = d_de_programa.id_programa_d_de"
@@ -126,6 +132,7 @@ public class ConversorDespesa {
 	}
 
 	public PreparedStatement queryDespesaFederal(Connection conn, int LIMIT, int OFFSET) throws SQLException{
+		System.out.println("Rodando select da queryDespesaFederal.");
 		PreparedStatement stmt = conn.prepareStatement(
 				"SELECT * FROM fato_despesa_federal"
 						+ " LEFT JOIN d_df_repasse ON fato_despesa_federal.id_repasse_d_df = d_df_repasse.id_repasse_d_df"
@@ -180,7 +187,11 @@ public class ConversorDespesa {
 		return stmt;
 	}
 
-	public void criaRecursosDespesa(String ente, PreparedStatement stmt, Model model, Model triplas) throws SQLException {
+	public void criaRecursosDespesa(String ente, PreparedStatement stmt, Model model, Model triplas, DatasetAccessor accessor) throws SQLException {
+		// Contador para acumular triplas antes de enviar para fuseki
+		int count = 0;
+		
+		System.out.println("Criando recursos da despesa "+ente+".");
 		// Funcao que cria recursos RDF a partir da querie executadas no banco de dados e armazenada em Array
 
 		// Executa a query
@@ -232,6 +243,7 @@ public class ConversorDespesa {
 		Property data = model.getProperty("http://purl.org/dc/elements/1.1/date");
 
 		while (rs.next()) {
+			count++;
 			// Cria iterativamente recursos e suas propriedades a partir do resultSet
 
 			// Cria recursos
@@ -300,7 +312,7 @@ public class ConversorDespesa {
 					Despesa = triplas.createResource(bra+"Despesa/"+idDespesa);			
 					Despesa.addProperty(RDF.type, DespesaClass);
 				}
-
+				System.out.println("Criando despesa "+ente+" id "+idDespesa);
 			} catch (Exception e) {
 				// TODO: handle exception
 				//e.printStackTrace();
@@ -900,7 +912,16 @@ public class ConversorDespesa {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 			}
-
+			
+			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
+			if(count==500){
+				accessor.add(triplas);
+				count = 0;
+				triplas.removeAll();
+				triplas.close();
+				triplas = ModelFactory.createDefaultModel();
+				triplas.setNsPrefix("bra", bra);
+			}
 		}
 
 		rs.close();

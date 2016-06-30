@@ -729,7 +729,7 @@ public class ConversorReceita {
 			}
 			
 			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
-			if(count==10000){
+			if(count==5000){
 				fileCount++;
 				System.out.println("Inserindo dados no endpoint.");
 				//accessor.add(triplas);
@@ -740,6 +740,7 @@ public class ConversorReceita {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.out.println(e.getCause().toString());
 				}
 				count = 0;
 				triplas.removeAll();

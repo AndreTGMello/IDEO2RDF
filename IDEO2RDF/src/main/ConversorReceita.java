@@ -729,13 +729,13 @@ public class ConversorReceita {
 			}
 			
 			// Envia triplas criadas para o Fuseki e libera espaco em memoria para continuar
-			if(count==100000){
+			if(count==2000){
 				fileCount++;
 				System.out.println("Inserindo dados no endpoint.");
 				//accessor.add(triplas);
 				FileWriter fileOut;
 				try {
-					fileOut = new FileWriter(out+""+fileCount);
+					fileOut = new FileWriter(out+""+fileCount+".rdf");
 					triplas.write(fileOut);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -748,7 +748,17 @@ public class ConversorReceita {
 				triplas.setNsPrefix("bra", bra);
 			}
 		}
-		accessor.add(triplas);
+		// Insere ultimas triplas apos o fim do resultSet
+		System.out.println("Inserindo dados no endpoint.");
+		//accessor.add(triplas);
+		try {
+			FileWriter fileOut;
+			fileOut = new FileWriter(out+""+fileCount+".rdf");
+			triplas.write(fileOut);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		triplas.removeAll();
 		triplas.close();
 		

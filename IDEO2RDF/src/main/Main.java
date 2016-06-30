@@ -25,14 +25,14 @@ public class Main {
 		String ontologiaPath = "./OrcamentoBrasileiro.owl";
 
 		
-		String fileReceiraFed = args[3]+"receitaFederal.rdf";
-		String fileReceitaEst = args[3]+"receitaEstadual.rdf";
-		String fileReceitaMun = args[3]+"receitaMunicipal.rdf";
+		String fileReceiraFed = args[3]+"receitaFederal";
+		String fileReceitaEst = args[3]+"receitaEstadual";
+		String fileReceitaMun = args[3]+"receitaMunicipal";
 
-		String fileDespesaFed = args[3]+"despesaFederal.rdf";
-		String fileDespesaEst = args[3]+"despesaEstadual.rdf";
-		String fileDespesaMun = args[3]+"despesaMunicipal.rdf";
-		String fileDespesaCapSP  = args[3]+"despesaCapitalSP.rdf";
+		String fileDespesaFed = args[3]+"despesaFederal";
+		String fileDespesaEst = args[3]+"despesaEstadual";
+		String fileDespesaMun = args[3]+"despesaMunicipal";
+		String fileDespesaCapSP  = args[3]+"despesaCapitalSP";
 
 /*
 		FileWriter outReceitaFed = new FileWriter(fileReceiraFed);

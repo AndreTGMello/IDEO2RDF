@@ -343,8 +343,15 @@
 
     <ObjectProperty rdf:about="&bra;temDetalhamentoDoGrupoDaFonteDestinacao">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&bra;EspecificacaoDaFonteDestinacao"/>
         <rdfs:range rdf:resource="&bra;GrupoDaFonteDestinacao"/>
+        <rdfs:domain>
+            <Class>
+                <unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&bra;Despesa"/>
+                    <rdf:Description rdf:about="&bra;EspecificacaoDaFonteDestinacao"/>
+                </unionOf>
+            </Class>
+        </rdfs:domain>
     </ObjectProperty>
     
 
@@ -634,7 +641,14 @@
 
     <ObjectProperty rdf:about="&bra;temSubgestor">
         <rdfs:range rdf:resource="&bra;Gestor"/>
-        <rdfs:domain rdf:resource="&bra;Gestor"/>
+        <rdfs:domain>
+            <Class>
+                <unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&bra;Despesa"/>
+                    <rdf:Description rdf:about="&bra;Gestor"/>
+                </unionOf>
+            </Class>
+        </rdfs:domain>
     </ObjectProperty>
     
 
@@ -1882,22 +1896,16 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&swrl;Imp"/>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="&swrl;AtomList"/>
-                <rdf:rest rdf:resource="&rdf;nil"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="&swrl;ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="&bra;Receita/Receita2010"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#r"/>
-                    </rdf:Description>
-                </rdf:first>
-            </rdf:Description>
-        </swrl:head>
         <swrl:body>
             <rdf:Description>
                 <rdf:type rdf:resource="&swrl;AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="&swrl;ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="&bra;Orcamento"/>
+                        <swrl:argument1 rdf:resource="&bra;Orcamento/LOA2010"/>
+                    </rdf:Description>
+                </rdf:first>
                 <rdf:rest>
                     <rdf:Description>
                         <rdf:type rdf:resource="&swrl;AtomList"/>
@@ -1924,15 +1932,21 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
                         </rdf:rest>
                     </rdf:Description>
                 </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="&swrl;AtomList"/>
+                <rdf:rest rdf:resource="&rdf;nil"/>
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="&swrl;ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="&bra;Orcamento"/>
-                        <swrl:argument1 rdf:resource="&bra;Orcamento/LOA2010"/>
+                        <swrl:classPredicate rdf:resource="&bra;Receita/Receita2010"/>
+                        <swrl:argument1 rdf:resource="urn:swrl#r"/>
                     </rdf:Description>
                 </rdf:first>
             </rdf:Description>
-        </swrl:body>
+        </swrl:head>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&swrl;Imp"/>
@@ -1962,6 +1976,13 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
                 <rdf:rest>
                     <rdf:Description>
                         <rdf:type rdf:resource="&swrl;AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&swrl;ClassAtom"/>
+                                <swrl:classPredicate rdf:resource="&bra;Orcamento"/>
+                                <swrl:argument1 rdf:resource="&bra;Orcamento/LOA2011"/>
+                            </rdf:Description>
+                        </rdf:first>
                         <rdf:rest>
                             <rdf:Description>
                                 <rdf:type rdf:resource="&swrl;AtomList"/>
@@ -1976,13 +1997,6 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
                                 </rdf:first>
                             </rdf:Description>
                         </rdf:rest>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="&swrl;ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="&bra;Orcamento"/>
-                                <swrl:argument1 rdf:resource="&bra;Orcamento/LOA2011"/>
-                            </rdf:Description>
-                        </rdf:first>
                     </rdf:Description>
                 </rdf:rest>
             </rdf:Description>
@@ -2016,13 +2030,6 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
                 <rdf:rest>
                     <rdf:Description>
                         <rdf:type rdf:resource="&swrl;AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="&swrl;ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="&bra;Receita"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#r"/>
-                            </rdf:Description>
-                        </rdf:first>
                         <rdf:rest>
                             <rdf:Description>
                                 <rdf:type rdf:resource="&swrl;AtomList"/>
@@ -2037,6 +2044,13 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
                                 </rdf:first>
                             </rdf:Description>
                         </rdf:rest>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&swrl;ClassAtom"/>
+                                <swrl:classPredicate rdf:resource="&bra;Receita"/>
+                                <swrl:argument1 rdf:resource="urn:swrl#r"/>
+                            </rdf:Description>
+                        </rdf:first>
                     </rdf:Description>
                 </rdf:rest>
             </rdf:Description>
@@ -2044,22 +2058,16 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&swrl;Imp"/>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="&swrl;AtomList"/>
-                <rdf:rest rdf:resource="&rdf;nil"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="&swrl;ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="&bra;Despesa2010"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#d"/>
-                    </rdf:Description>
-                </rdf:first>
-            </rdf:Description>
-        </swrl:head>
         <swrl:body>
             <rdf:Description>
                 <rdf:type rdf:resource="&swrl;AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="&swrl;ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="&bra;Despesa"/>
+                        <swrl:argument1 rdf:resource="urn:swrl#d"/>
+                    </rdf:Description>
+                </rdf:first>
                 <rdf:rest>
                     <rdf:Description>
                         <rdf:type rdf:resource="&swrl;AtomList"/>
@@ -2086,15 +2094,21 @@ d) linha de crédito: ação realizada mediante empréstimo de recursos aos bene
                         </rdf:first>
                     </rdf:Description>
                 </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="&swrl;AtomList"/>
+                <rdf:rest rdf:resource="&rdf;nil"/>
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="&swrl;ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="&bra;Despesa"/>
+                        <swrl:classPredicate rdf:resource="&bra;Despesa2010"/>
                         <swrl:argument1 rdf:resource="urn:swrl#d"/>
                     </rdf:Description>
                 </rdf:first>
             </rdf:Description>
-        </swrl:body>
+        </swrl:head>
     </rdf:Description>
 </rdf:RDF>
 

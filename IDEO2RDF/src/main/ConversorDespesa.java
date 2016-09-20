@@ -16,6 +16,9 @@ import org.apache.jena.vocabulary.RDF;
 import org.postgresql.util.PSQLException;
 
 public class ConversorDespesa {
+	
+	private int FETCH_SIZE = 500;
+	
 	// Prefixos
 	private static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 
@@ -51,7 +54,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 
@@ -91,7 +94,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 
@@ -132,7 +135,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 
@@ -189,7 +192,7 @@ public class ConversorDespesa {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 

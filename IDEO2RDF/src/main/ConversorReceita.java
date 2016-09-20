@@ -22,6 +22,8 @@ import org.apache.jena.vocabulary.RDF;
 
 public class ConversorReceita {
 
+	private int FETCH_SIZE = 500;
+	
 	// Prefixos
 	private static String bra = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
 	private static String dc = "http://www.semanticweb.org/ontologies/OrcamentoPublicoBrasileiro.owl/";
@@ -61,7 +63,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 
@@ -101,7 +103,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 
@@ -144,7 +146,7 @@ public class ConversorReceita {
 		    System.out.println("");
 		}
 		 */
-		stmt.setFetchSize(1000);
+		stmt.setFetchSize(FETCH_SIZE);
 		return stmt;
 	}
 
